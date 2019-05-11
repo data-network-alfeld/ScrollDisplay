@@ -1,4 +1,5 @@
 #pragma once
+#include <stdint.h>
 
 // Displayzustände
 enum STATE {

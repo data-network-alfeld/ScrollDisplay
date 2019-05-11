@@ -49,7 +49,7 @@ void setDisplayState()
 
 void loop()
 {
-	//Serial.println(encoder.getCount());
+	Serial.println(encoderValue);
 
 	if (P.displayAnimate()) // If finished displaying message
 	{
