@@ -7,6 +7,7 @@
 #include "encoder.h"
 #include "menu.h"
 
+encoder enc; 
 MD_Parola P = MD_Parola(MD_MAX72XX::FC16_HW, MAX7219_CS, 8);
 char textBuffer[] = "Data Network Alfeld e.V.";
 textEffect_t scrollEffect = PA_SCROLL_LEFT;
@@ -21,7 +22,7 @@ void setup()
 	Serial.begin(115200);
 	
 	// Drehencoder initialisieren
-	encoderInit();
+	enc.attachSingleEdge(ENCODER_DT, ENCODER_CLK);
 
 	P.begin();  // Start Parola
 
@@ -49,7 +50,7 @@ void setDisplayState()
 
 void loop()
 {
-	Serial.println(encoderValue);
+	Serial.println(enc.getCount());
 
 	if (P.displayAnimate()) // If finished displaying message
 	{
