@@ -1,7 +1,6 @@
 #include "encoder.h"
 
 // Encoder routines by hephaestus, 2018
-volatile int16_t encoderValue = 0;
 
 encoder *encoder::encoders[MAX_ESP32_ENCODERS] = { NULL, NULL, NULL,
 NULL,
@@ -49,6 +48,7 @@ static void IRAM_ATTR pcnt_example_intr_handler(void *arg) {
 			//pcnt_counter_clear(ptr->unit);
 			PCNT.int_clr.val = BIT(i); // clear the interrupt
 			ptr->count = status + ptr->count;
+            ptr->encoderChanged = 1;
 		}
 	}
 }

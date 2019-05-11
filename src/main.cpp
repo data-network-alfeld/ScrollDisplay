@@ -50,7 +50,13 @@ void setDisplayState()
 
 void loop()
 {
-	Serial.println(enc.getCount());
+Serial.println(enc.getCount());
+Serial.println(enc.encoderChanged);
+	if (enc.encoderChanged == 1)
+	{
+		
+		enc.encoderChanged = 0;
+	}
 
 	if (P.displayAnimate()) // If finished displaying message
 	{

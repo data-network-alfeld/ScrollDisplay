@@ -31,4 +31,5 @@ public:
 	int countsMode = 2;
 	volatile int32_t count=0;
 	pcnt_config_t r_enc_config;
+    volatile uint8_t encoderChanged;
 };
