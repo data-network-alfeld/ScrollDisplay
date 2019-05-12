@@ -3,7 +3,8 @@
 const char* menuitemStrings[_MENUITEMS_LENGTH] = {
 	"Helligkeit",
 	"WLAN-Menü",
-	"Infos",
+	"WLAN-Infos",
+	"Über...",
 	"zurück"
 };
 
@@ -39,6 +40,19 @@ void menuItemPressed(Encoder& enc)
 			Encoder::buttonPressed = 0;
 			enc.setLimits(0, _MENUITEMS_LENGTH - 1);
 			break; 
+		case MENUITEMS::WIFIMENU:
+			wm.startConfigPortal(ssid.c_str(), NULL);
+			disp.displayText(ssid, textPosition_t::PA_LEFT, 50, 2000, textEffect_t::PA_SCROLL_LEFT);
+			disp.animateUntilButtonPress();
+			disp.displayText(ssid, textPosition_t::PA_LEFT, 0, 0, textEffect_t::PA_PRINT);
+			disp.animateUntilButtonPress(true);
+			break;
+		case MENUITEMS::WIFIINFO:
+			disp.displayText(WiFi.SSID(), textPosition_t::PA_LEFT, 50, 2000, textEffect_t::PA_MESH);
+			disp.animateUntilButtonPress(false);
+			disp.displayText(String("IP: ") + WiFi.localIP().toString() , textPosition_t::PA_RIGHT, 50, 5000, textEffect_t::PA_SCROLL_LEFT);
+			disp.animateUntilButtonPress(false);
+			break;
 		default:
 			break;
 	}

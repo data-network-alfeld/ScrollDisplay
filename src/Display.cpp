@@ -83,7 +83,7 @@ void Display::render()
 	}
 }
 
-void Display::animateUntilButtonPress()
+void Display::animateUntilButtonPress(bool repeat)
 {
 	while (!parola.displayAnimate()) 
 	{
@@ -95,5 +95,13 @@ void Display::animateUntilButtonPress()
 			parola.displayClear();
 			return;
 		}
+
+		if (repeat)
+		{
+			if (parola.displayAnimate())
+				parola.displayReset();
+		}
+		
+		wm.process();
 	}
 }
