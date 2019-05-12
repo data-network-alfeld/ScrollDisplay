@@ -82,3 +82,18 @@ void Display::render()
 		}
 	}
 }
+
+void Display::animateUntilButtonPress()
+{
+	while (!parola.displayAnimate()) 
+	{
+		delay(10);
+
+		if (Encoder::buttonPressed) 
+		{
+			Encoder::buttonPressed = 0;
+			parola.displayClear();
+			return;
+		}
+	}
+}

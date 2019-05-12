@@ -23,9 +23,9 @@ void menuItemPressed(Encoder& enc)
 			Serial.println("Written by Tobias Mädel <t.maedel@alfeld.de>");
 			Serial.println("Visit Data Network Alfeld e.V. at https://dna-ev.de");
 			disp.displayText("DNA Scrolldisplay   ", textPosition_t::PA_LEFT, 50, 2000, textEffect_t::PA_SCROLL_LEFT);
-			while (!disp.parola.displayAnimate()) {	delay(10);	}
+			disp.animateUntilButtonPress();
 			disp.displayText("Written by Tobias Mädel  ", textPosition_t::PA_LEFT, 50, 2000, textEffect_t::PA_SCROLL_LEFT);
-			while (!disp.parola.displayAnimate()) {	delay(10);	}
+			disp.animateUntilButtonPress();
 			break;
 		case MENUITEMS::BRIGHTNESS:
 			enc.setLimits(0, 15, disp.intensity);

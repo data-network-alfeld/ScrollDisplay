@@ -34,5 +34,6 @@ public:
     void displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut = PA_NO_EFFECT);
     void setDisplayState();
     void render();
+    void animateUntilButtonPress();
     uint8_t intensity = 15;
 };
