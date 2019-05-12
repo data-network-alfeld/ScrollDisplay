@@ -20,7 +20,7 @@ void Display::setDisplayState()
 	switch (state)
 	{
 		case SCROLLTEXT:
-			displayText("Woohoo \\o/" , PA_CENTER, 50, 2000, textEffect_t::PA_MESH);
+			displayText("Woohoo \\o/" , PA_CENTER, enc.getCount() * 10, 2000, textEffect_t::PA_SCROLL_LEFT);
 			break;
 		case TEMPERATURE: 
 			break; 
@@ -44,7 +44,8 @@ void Display::render()
 				setDisplayState();
 				break;
 			case STATE::SCROLLTEXT:
-			
+				parola.displayClear();
+				setDisplayState();
 				break; 
 			default:
 				break;
@@ -64,7 +65,7 @@ void Display::render()
 				setDisplayState();
 				break;
 			case MENU:
-				menuItemPressed();
+				menuItemPressed(enc);
 				break;
 			default:
 				break;
@@ -75,7 +76,8 @@ void Display::render()
 	{
 		if (state == STATE::SCROLLTEXT)
 		{
-			parola.displayReset();  // Reset and display it again
+			setDisplayState();
+			//parola.displayReset();  // Reset and display it again
 		}
 	}
 }

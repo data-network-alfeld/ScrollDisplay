@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <Arduino.h>
 #include <Display.h>
+#include <Encoder.h>
 
 // Displayzustände
 enum STATE {
@@ -23,4 +24,4 @@ extern const char* menuitemStrings[_MENUITEMS_LENGTH];
 extern volatile uint8_t state; 
 extern volatile uint8_t menuitem; 
 
-extern void menuItemPressed();
+extern void menuItemPressed(Encoder& enc);

@@ -10,13 +10,14 @@ const char* menuitemStrings[_MENUITEMS_LENGTH] = {
 volatile uint8_t state = MENU; 
 volatile uint8_t menuitem = BRIGHTNESS; 
 
-void menuItemPressed()
+void menuItemPressed(Encoder& enc)
 {
 	Display& disp = Display::instance();
 	switch (menuitem)
 	{
 		case MENUITEMS::BACK:
 			state = SCROLLTEXT;
+			enc.setLimits(0, 20);
 			disp.setDisplayState();
 			break;
 		case MENUITEMS::ABOUT:
@@ -28,6 +29,9 @@ void menuItemPressed()
 			while (!disp.parola.displayAnimate()) {	delay(10);	}
 			disp.setDisplayState();
 			break;
+		case MENUITEMS::BRIGHTNESS:
+			
+			break; 
 		default:
 			break;
 	}
