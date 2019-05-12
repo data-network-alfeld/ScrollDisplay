@@ -148,7 +148,7 @@ int32_t Encoder::getCount()
     if (lastHWcount != hwcount)
     {
         lastHWcount = hwcount; 
-        EncoderChanged = 1;
+        encoderChanged = 1;
     }
     int32_t totalcount = hwcount + count; 
 
@@ -167,9 +167,9 @@ int32_t Encoder::getCount()
 uint8_t Encoder::getEncoderChanged()
 {
     getCount(); 
-    if (EncoderChanged)
+    if (encoderChanged)
     {
-        EncoderChanged = 0;
+        encoderChanged = 0;
         return true; 
     }
     else

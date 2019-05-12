@@ -20,6 +20,7 @@ void setup()
 
 	// Display initialisieren
 	disp.init();
+	disp.setDisplayState();
 }
 
 void loop()
@@ -28,11 +29,11 @@ void loop()
 	{
 		Serial.println(enc.getCount());
 
-
 		menuitem = enc.getCount();
 		disp.setDisplayState();
 	}
  
 	disp.render();
+	delay(100);
 }
 

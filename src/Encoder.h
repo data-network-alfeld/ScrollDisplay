@@ -16,7 +16,7 @@ private:
     bool direction;
     bool working;
     int16_t lastHWcount = 0;
-    uint8_t EncoderChanged = 0;
+    uint8_t encoderChanged = 0;
     int16_t min = -30000;
     int16_t max = 30000;
 

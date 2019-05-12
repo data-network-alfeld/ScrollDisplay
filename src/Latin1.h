@@ -5,10 +5,10 @@
 
 #include <Arduino.h>
 
-class CP437 {
+class Latin1 {
 private:
 protected:
     static uint16_t codes[128];
 public:
-    static String utf8tocp437(String utf8);
+    static String utf8tolatin1(String utf8);
 };

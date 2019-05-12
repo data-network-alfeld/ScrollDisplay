@@ -10,7 +10,7 @@ void Display::init()
 
 void Display::displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut)
 {
-	CP437::utf8tocp437(text).toCharArray(textBuffer, sizeof(textBuffer));
+	Latin1::utf8tolatin1(text).toCharArray(textBuffer, sizeof(textBuffer));
 	parola.displayText(textBuffer, align, speed, pause, effectIn, effectOut);
 }
 
