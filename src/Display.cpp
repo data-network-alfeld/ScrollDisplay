@@ -3,15 +3,10 @@
 Display::Display() {
 }
 
-static void buttonISR()
-{
-	
-}
 
-void Display::init(int encoderSwitchPin)
+void Display::init(int encoderSwitchPin, Encoder enc)
 {
-	pinMode(encoderSwitchPin, INPUT_PULLUP);
-	attachInterrupt(encoderSwitchPin, buttonISR, FALLING);
+	this->enc = enc; 
     parola.begin();  // Start Parola
 }
 
@@ -35,11 +30,27 @@ void Display::setDisplayState()
 		default:
 			break;
 	}
-	
 }
 
 void Display::render() 
 {
+	// Wurde am Encoder gedreht? 
+	if (enc.getEncoderChanged())
+	{
+		Serial.println(enc.getCount());
+
+		menuitem = enc.getCount();
+		setDisplayState();
+	}
+	
+	// Wurde der Taster gedrückt? 
+	if (Encoder::buttonPressed)
+	{
+		Encoder::buttonPressed = 0;
+
+		Serial.println(menuitemStrings[menuitem]);
+	}
+
 	if (parola.displayAnimate()) // If finished displaying message
 	{
 		parola.displayReset();  // Reset and display it again

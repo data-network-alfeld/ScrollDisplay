@@ -1,10 +1,14 @@
 #include "Encoder.h"
 
 // Encoder routines by hephaestus, 2018
+// Modified by Tobias Mädel <t.maedel@alfeld.de> / Data Network Alfeld e.V.
 
 Encoder *Encoder::encoders[MAX_ESP32_ENCODERS] = { NULL, NULL, NULL,
 NULL,
 NULL, NULL, NULL, NULL };
+
+volatile uint32_t Encoder::debounceTimeout; 
+volatile uint8_t Encoder::buttonPressed;
 
 bool Encoder::attachedInterrupt=false;
 pcnt_isr_handle_t Encoder::user_isr_handle = NULL;
@@ -184,4 +188,26 @@ void Encoder::setLimits(int16_t _min, int16_t _max)
     max = _max; 
 
     count = count - getCount();
+}
+
+// Routine zur Behandlung von Tasterinterrupts
+portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;
+static void IRAM_ATTR buttonISR()
+{
+	portENTER_CRITICAL_ISR(&mux);
+
+	uint32_t tickCount = xTaskGetTickCount(); 
+	if (tickCount - Encoder::debounceTimeout > DEBOUNCE_PERIOD)
+	{
+		Encoder::buttonPressed = 1;
+	}
+
+	Encoder::debounceTimeout = tickCount;
+	portENTER_CRITICAL_ISR(&mux);
+}
+
+void Encoder::attachButton(int buttonPin)
+{
+	pinMode(buttonPin, INPUT_PULLUP);
+	attachInterrupt(buttonPin, buttonISR, FALLING);
 }

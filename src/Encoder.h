@@ -7,6 +7,8 @@ extern "C" {
 
 #include "driver/pcnt.h"
 #define MAX_ESP32_ENCODERS PCNT_UNIT_MAX
+#define DEBOUNCE_PERIOD 200
+
 class Encoder {
 private:
 	void attach(int aPintNumber, int bPinNumber, boolean fullQuad);
@@ -25,6 +27,7 @@ public:
 	~Encoder();
 	void attachHalfQuad(int aPintNumber, int bPinNumber);
 	void attachSingleEdge(int aPintNumber, int bPinNumber);
+	void attachButton(int buttonPin);
 	//void attachHalfQuad(int aPintNumber, int bPinNumber);
 	int32_t getCount();
 	int32_t getCountRaw();
@@ -42,5 +45,6 @@ public:
 	int countsMode = 2;
 	volatile int32_t count=0;
 	pcnt_config_t r_enc_config;
-
+	static volatile uint32_t debounceTimeout; 
+	static volatile uint8_t buttonPressed;
 };

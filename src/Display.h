@@ -8,6 +8,7 @@
 #include "configuration.h"
 #include "Latin1.h"
 #include "menu.h"
+#include "Encoder.h"
 
 class Display
 {
@@ -18,10 +19,11 @@ private:
     textPosition_t scrollAlign = PA_LEFT;  // how to aligh the text
     int scrollPause = 0; // ms of pause after finished displaying message
     int scrollSpeed = 50;
+    Encoder enc;
 protected:
 public:
     Display();
-    void init(int encoderSwitchPin);
+    void init(int encoderSwitchPin, Encoder enc);
     void displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut = PA_NO_EFFECT);
     void setDisplayState();
     void render();

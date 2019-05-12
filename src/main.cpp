@@ -15,24 +15,17 @@ void setup()
 	
 	// Drehencoder initialisieren
 	enc.attachSingleEdge(ENCODER_DT, ENCODER_CLK);
+	enc.attachButton(ENCODER_SW);
 	enc.setLimits(0, _MENUITEMS_LENGTH - 1);
 
 	// Display initialisieren
-	disp.init(ENCODER_SW);
+	disp.init(ENCODER_SW, enc);
 	disp.setDisplayState();
 }
 
 void loop()
 {
-	if (enc.getEncoderChanged())
-	{
-		Serial.println(enc.getCount());
-
-		menuitem = enc.getCount();
-		disp.setDisplayState();
-	}
- 
 	disp.render();
-	delay(100);
+	delay(10);
 }
 
