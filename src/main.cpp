@@ -17,6 +17,25 @@ int scrollSpeed = 50;
 
 void setDisplayState(); 
 
+
+
+uint8_t iflag = 0;
+void keyPressed()
+{
+	iflag = !iflag; 
+	if (iflag)
+	{
+		Serial.println("-5 +5");
+		enc.setLimits(-5, 5);
+	}
+	else
+	{
+		Serial.println("-10 +10");
+		enc.setLimits(-10, 10);
+	}
+}
+
+
 void setup()
 {
 	Serial.begin(115200);
@@ -24,11 +43,17 @@ void setup()
 	// Drehencoder initialisieren
 	enc.attachSingleEdge(ENCODER_DT, ENCODER_CLK);
 
+	pinMode(ENCODER_SW, INPUT_PULLUP);
+	attachInterrupt(ENCODER_SW, keyPressed, FALLING);
+
 	P.begin();  // Start Parola
 
 	// configure Parola
 	//P.displayText(textBuffer, scrollAlign, scrollSpeed, scrollPause, scrollEffect, scrollEffect);
 	setDisplayState();
+
+	enc.setLimits(0, _MENUITEMS_LENGTH - 1);
+
 }
 
 void setDisplayState()
@@ -50,16 +75,18 @@ void setDisplayState()
 
 void loop()
 {
-Serial.println(enc.getCount());
-Serial.println(enc.encoderChanged);
-	if (enc.encoderChanged == 1)
+	if (enc.getEncoderChanged())
 	{
-		
-		enc.encoderChanged = 0;
-	}
+		Serial.println(enc.getCount());
 
+
+		menuitem = enc.getCount();
+		setDisplayState();
+	}
+ 
 	if (P.displayAnimate()) // If finished displaying message
 	{
 		//P.displayReset();  // Reset and display it again
 	}
 }
+

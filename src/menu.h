@@ -18,7 +18,7 @@ enum MENUITEMS {
 };
 const char* menuitemStrings[_MENUITEMS_LENGTH] = {
 	"Helligkeit",
-	"WLAN-Menü",
+	"WLAN-Men\x81",
 	"Infos"
 };
 

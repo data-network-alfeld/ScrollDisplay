@@ -48,7 +48,6 @@ static void IRAM_ATTR pcnt_example_intr_handler(void *arg) {
 			//pcnt_counter_clear(ptr->unit);
 			PCNT.int_clr.val = BIT(i); // clear the interrupt
 			ptr->count = status + ptr->count;
-            ptr->encoderChanged = 1;
 		}
 	}
 }
@@ -103,7 +102,7 @@ void encoder::attach(int a, int b, boolean fq) {
 	pcnt_unit_config(&r_enc_config);
 
 	// Filter out bounces and noise
-	pcnt_set_filter_value(unit, 250);  // Filter Runt Pulses
+	pcnt_set_filter_value(unit, 1023);  // Filter Runt Pulses
 	pcnt_filter_enable(unit);
 
 
@@ -143,7 +142,46 @@ int32_t encoder::getCountRaw() {
 	pcnt_get_counter_value(unit, &c);
 	return c;
 }
-int32_t encoder::getCount() {
-	return getCountRaw() + count;
+int32_t encoder::getCount()
+{
+    int16_t hwcount = getCountRaw();
+    if (lastHWcount != hwcount)
+    {
+        lastHWcount = hwcount; 
+        encoderChanged = 1;
+    }
+    int32_t totalcount = hwcount + count; 
+
+    if (totalcount > max)
+    {
+        count = count - (max - min + 1);
+    }
+    if (totalcount < min)
+    {
+        count = count + (max - min + 1);
+    }
+
+	return hwcount + count;
 }
 
+uint8_t encoder::getEncoderChanged()
+{
+    getCount(); 
+    if (encoderChanged)
+    {
+        encoderChanged = 0;
+        return true; 
+    }
+    else
+    {
+        return false; 
+    }
+}
+
+void encoder::setLimits(int16_t _min, int16_t _max)
+{
+    min = _min; 
+    max = _max; 
+
+    count = count - getCount();
+}
