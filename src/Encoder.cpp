@@ -203,7 +203,7 @@ static void IRAM_ATTR buttonISR()
 	}
 
 	Encoder::debounceTimeout = tickCount;
-	portENTER_CRITICAL_ISR(&mux);
+	portEXIT_CRITICAL_ISR(&mux);
 }
 
 void Encoder::attachButton(int buttonPin)

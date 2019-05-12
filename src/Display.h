@@ -5,9 +5,9 @@
 #include <SPI.h>
 #include <stdint.h>
 #include <inttypes.h>
-#include "configuration.h"
+#include "Configuration.h"
 #include "Latin1.h"
-#include "menu.h"
+#include "Menu.h"
 #include "Encoder.h"
 
 class Display

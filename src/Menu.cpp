@@ -1,4 +1,4 @@
-#include <menu.h>
+#include <Menu.h>
 
 const char* menuitemStrings[_MENUITEMS_LENGTH] = {
 	"Helligkeit",

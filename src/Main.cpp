@@ -1,8 +1,8 @@
 #include <Arduino.h>
 
-#include "configuration.h"
+#include "Configuration.h"
 #include "Encoder.h"
-#include "menu.h"
+#include "Menu.h"
 #include "Display.h"
 
 Encoder enc; 
