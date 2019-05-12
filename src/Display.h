@@ -6,7 +6,7 @@
 #include <stdint.h>
 #include <inttypes.h>
 #include "configuration.h"
-#include "CP437.h"
+#include "Latin1.h"
 #include "menu.h"
 
 class Display
@@ -21,7 +21,7 @@ private:
 protected:
 public:
     Display();
-    void init();
+    void init(int encoderSwitchPin);
     void displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut = PA_NO_EFFECT);
     void setDisplayState();
     void render();

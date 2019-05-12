@@ -15,11 +15,10 @@ void setup()
 	
 	// Drehencoder initialisieren
 	enc.attachSingleEdge(ENCODER_DT, ENCODER_CLK);
-	enc.attachButton(ENCODER_SW);
 	enc.setLimits(0, _MENUITEMS_LENGTH - 1);
 
 	// Display initialisieren
-	disp.init();
+	disp.init(ENCODER_SW);
 	disp.setDisplayState();
 }
 

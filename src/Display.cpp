@@ -3,8 +3,15 @@
 Display::Display() {
 }
 
-void Display::init()
+static void buttonISR()
 {
+	
+}
+
+void Display::init(int encoderSwitchPin)
+{
+	pinMode(encoderSwitchPin, INPUT_PULLUP);
+	attachInterrupt(encoderSwitchPin, buttonISR, FALLING);
     parola.begin();  // Start Parola
 }
 

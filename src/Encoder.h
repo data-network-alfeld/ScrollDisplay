@@ -28,10 +28,9 @@ public:
 	//void attachHalfQuad(int aPintNumber, int bPinNumber);
 	int32_t getCount();
 	int32_t getCountRaw();
-    uint8_t getEncoderChanged();
-    void setLimits(int16_t min, int16_t max);
-    void attachButton(int buttonPin);
-
+  uint8_t getEncoderChanged();
+  void setLimits(int16_t min, int16_t max);
+	
 	boolean isAttached(){return attached;}
 	void setCount(int32_t value);
 	static Encoder *encoders[MAX_ESP32_ENCODERS];
