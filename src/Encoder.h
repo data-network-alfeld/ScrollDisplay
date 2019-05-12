@@ -32,7 +32,7 @@ public:
 	int32_t getCount();
 	int32_t getCountRaw();
   uint8_t getEncoderChanged();
-  void setLimits(int16_t min, int16_t max);
+  void setLimits(int16_t min, int16_t max, int16_t resetTo = 0);
 	
 	boolean isAttached(){return attached;}
 	void setCount(int32_t value);

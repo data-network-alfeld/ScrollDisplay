@@ -17,8 +17,7 @@ void menuItemPressed(Encoder& enc)
 	{
 		case MENUITEMS::BACK:
 			state = SCROLLTEXT;
-			enc.setLimits(0, 20);
-			disp.setDisplayState();
+			enc.setLimits(0, 20, 5);
 			break;
 		case MENUITEMS::ABOUT:
 			Serial.println("Written by Tobias Mädel <t.maedel@alfeld.de>");
@@ -27,12 +26,21 @@ void menuItemPressed(Encoder& enc)
 			while (!disp.parola.displayAnimate()) {	delay(10);	}
 			disp.displayText("Written by Tobias Mädel  ", textPosition_t::PA_LEFT, 50, 2000, textEffect_t::PA_SCROLL_LEFT);
 			while (!disp.parola.displayAnimate()) {	delay(10);	}
-			disp.setDisplayState();
 			break;
 		case MENUITEMS::BRIGHTNESS:
-			
+			enc.setLimits(0, 15, disp.intensity);
+			while (Encoder::buttonPressed == 0)
+			{
+				disp.intensity = enc.getCount();
+				disp.displayText(String("Helligkeit - ") + String(disp.intensity), textPosition_t::PA_LEFT, 0, 0, textEffect_t::PA_PRINT);
+				disp.parola.setIntensity(disp.intensity);
+				disp.parola.displayAnimate();
+			}
+			Encoder::buttonPressed = 0;
+			enc.setLimits(0, _MENUITEMS_LENGTH - 1);
 			break; 
 		default:
 			break;
 	}
+	disp.setDisplayState();
 }

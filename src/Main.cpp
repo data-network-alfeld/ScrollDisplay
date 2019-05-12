@@ -15,8 +15,7 @@ void setup()
 
 	// Vernünftigen Ausgangszustand definieren
 	state = STATE::SCROLLTEXT;
-	enc.setLimits(0, 20);
-	enc.setCount(5);
+	enc.setLimits(0, 20, 5);
 
 	// Display initialisieren
 	disp.init(ENCODER_SW, enc);

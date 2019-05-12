@@ -182,12 +182,12 @@ uint8_t Encoder::getEncoderChanged()
     }
 }
 
-void Encoder::setLimits(int16_t _min, int16_t _max)
+void Encoder::setLimits(int16_t _min, int16_t _max, int16_t resetTo)
 {
     min = _min; 
     max = _max; 
 
-    count = count - getCount();
+    count = count - getCount() + resetTo;
 }
 
 // Routine zur Behandlung von Tasterinterrupts

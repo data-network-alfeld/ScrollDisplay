@@ -7,6 +7,7 @@ void Display::init(int encoderSwitchPin, Encoder enc)
 {
 	this->enc = enc; 
     parola.begin();  // Start Parola
+	parola.setIntensity(intensity);
 }
 
 void Display::displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut)
