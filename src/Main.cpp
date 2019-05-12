@@ -1,22 +1,21 @@
-#include <Arduino.h>
-
-#include "Configuration.h"
-#include "Encoder.h"
-#include "Menu.h"
-#include "Display.h"
+#include "Main.h"
 
 Encoder enc; 
-Display disp; 
+Display& disp = Display::instance();
 
 void setup()
 {
 	// UART für Debugging
 	Serial.begin(115200);
 	
+	
 	// Drehencoder initialisieren
 	enc.attachSingleEdge(ENCODER_DT, ENCODER_CLK);
 	enc.attachButton(ENCODER_SW);
-	enc.setLimits(0, _MENUITEMS_LENGTH - 1);
+
+	// Vernünftigen Ausgangszustand definieren
+	state = STATE::SCROLLTEXT;
+	enc.setLimits(0, 50);
 
 	// Display initialisieren
 	disp.init(ENCODER_SW, enc);
@@ -26,6 +25,6 @@ void setup()
 void loop()
 {
 	disp.render();
-	delay(10);
+	delay(1);
 }
 

@@ -13,7 +13,8 @@
 class Display
 {
 private:
-    MD_Parola parola = MD_Parola(MD_MAX72XX::FC16_HW, MAX7219_CS, 8);;
+    Display();
+   
     char textBuffer[128];
     textEffect_t scrollEffect = PA_SCROLL_LEFT;
     textPosition_t scrollAlign = PA_LEFT;  // how to aligh the text
@@ -22,7 +23,13 @@ private:
     Encoder enc;
 protected:
 public:
-    Display();
+    static Display& instance()
+    {
+       static Display _instance;
+       return _instance;
+    }
+    ~Display() {}
+    MD_Parola parola = MD_Parola(MD_MAX72XX::FC16_HW, MAX7219_CS, 8);
     void init(int encoderSwitchPin, Encoder enc);
     void displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut = PA_NO_EFFECT);
     void setDisplayState();

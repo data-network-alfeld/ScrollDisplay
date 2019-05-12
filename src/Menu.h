@@ -1,5 +1,7 @@
 #pragma once
 #include <stdint.h>
+#include <Arduino.h>
+#include <Display.h>
 
 // Displayzustände
 enum STATE {
@@ -21,3 +23,4 @@ extern const char* menuitemStrings[_MENUITEMS_LENGTH];
 extern volatile uint8_t state; 
 extern volatile uint8_t menuitem; 
 
+extern void menuItemPressed();

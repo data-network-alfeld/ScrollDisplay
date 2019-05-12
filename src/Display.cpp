@@ -3,7 +3,6 @@
 Display::Display() {
 }
 
-
 void Display::init(int encoderSwitchPin, Encoder enc)
 {
 	this->enc = enc; 
@@ -21,6 +20,7 @@ void Display::setDisplayState()
 	switch (state)
 	{
 		case SCROLLTEXT:
+			displayText("Woohoo \\o/" , PA_CENTER, 50, 2000, textEffect_t::PA_MESH);
 			break;
 		case TEMPERATURE: 
 			break; 
@@ -37,10 +37,18 @@ void Display::render()
 	// Wurde am Encoder gedreht? 
 	if (enc.getEncoderChanged())
 	{
-		Serial.println(enc.getCount());
-
-		menuitem = enc.getCount();
-		setDisplayState();
+		switch (state)
+		{
+			case STATE::MENU:
+				menuitem = enc.getCount();
+				setDisplayState();
+				break;
+			case STATE::SCROLLTEXT:
+			
+				break; 
+			default:
+				break;
+		}
 	}
 	
 	// Wurde der Taster gedrückt? 
@@ -48,11 +56,26 @@ void Display::render()
 	{
 		Encoder::buttonPressed = 0;
 
-		Serial.println(menuitemStrings[menuitem]);
+		switch (state)
+		{
+			case SCROLLTEXT:
+				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
+				state = STATE::MENU;
+				setDisplayState();
+				break;
+			case MENU:
+				menuItemPressed();
+				break;
+			default:
+				break;
+		}
 	}
 
 	if (parola.displayAnimate()) // If finished displaying message
 	{
-		parola.displayReset();  // Reset and display it again
+		if (state == STATE::SCROLLTEXT)
+		{
+			parola.displayReset();  // Reset and display it again
+		}
 	}
 }
