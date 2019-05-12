@@ -6,10 +6,11 @@
 #include "configuration.h"
 #include "encoder.h"
 #include "menu.h"
+#include "CP437.h"
 
 encoder enc; 
 MD_Parola P = MD_Parola(MD_MAX72XX::FC16_HW, MAX7219_CS, 8);
-char textBuffer[] = "Data Network Alfeld e.V.";
+char textBuffer[128];
 textEffect_t scrollEffect = PA_SCROLL_LEFT;
 textPosition_t scrollAlign = PA_LEFT;  // how to aligh the text
 int scrollPause = 0; // ms of pause after finished displaying message
@@ -42,9 +43,7 @@ void setup()
 	
 	// Drehencoder initialisieren
 	enc.attachSingleEdge(ENCODER_DT, ENCODER_CLK);
-
-	pinMode(ENCODER_SW, INPUT_PULLUP);
-	attachInterrupt(ENCODER_SW, keyPressed, FALLING);
+	enc.attachButton(ENCODER_SW);
 
 	P.begin();  // Start Parola
 
@@ -56,6 +55,12 @@ void setup()
 
 }
 
+void displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut = PA_NO_EFFECT)
+{
+	CP437::utf8tocp437(text).toCharArray(textBuffer, sizeof(textBuffer));
+	P.displayText(textBuffer, align, speed, pause, effectIn, effectOut);
+}
+
 void setDisplayState()
 {
 	switch (state)
@@ -65,7 +70,7 @@ void setDisplayState()
 		case TEMPERATURE: 
 			break; 
 		case MENU: 
-			P.displayText((char*) menuitemStrings[menuitem] , PA_LEFT, 0, 0, PA_PRINT);
+			displayText(menuitemStrings[menuitem] , PA_LEFT, 0, 0, PA_PRINT);
 			break; 
 		default:
 			break;

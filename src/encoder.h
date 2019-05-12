@@ -30,6 +30,7 @@ public:
 	int32_t getCountRaw();
     uint8_t getEncoderChanged();
     void setLimits(int16_t min, int16_t max);
+    void attachButton(int buttonPin);
 
 	boolean isAttached(){return attached;}
 	void setCount(int32_t value);

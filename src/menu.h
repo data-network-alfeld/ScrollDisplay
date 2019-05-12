@@ -14,12 +14,14 @@ enum MENUITEMS {
 	BRIGHTNESS, 
 	WIFIMENU, 
 	ABOUT, 
+	BACK,
 	_MENUITEMS_LENGTH /* letzter Eintrag, als Limit */ 
 };
 const char* menuitemStrings[_MENUITEMS_LENGTH] = {
 	"Helligkeit",
-	"WLAN-Men\x81",
-	"Infos"
+	"WLAN-Menü",
+	"Infos",
+	"zurück"
 };
 
 volatile uint8_t state = MENU; 

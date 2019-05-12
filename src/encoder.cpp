@@ -185,3 +185,14 @@ void encoder::setLimits(int16_t _min, int16_t _max)
 
     count = count - getCount();
 }
+
+static void keyPressed()
+{
+    
+}
+
+void encoder::attachButton(int buttonPin )
+{
+    pinMode(buttonPin, INPUT_PULLUP);
+	attachInterrupt(buttonPin, keyPressed, FALLING);
+}
