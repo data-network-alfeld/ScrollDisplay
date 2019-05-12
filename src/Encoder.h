@@ -7,7 +7,7 @@ extern "C" {
 
 #include "driver/pcnt.h"
 #define MAX_ESP32_ENCODERS PCNT_UNIT_MAX
-class encoder {
+class Encoder {
 private:
 	void attach(int aPintNumber, int bPinNumber, boolean fullQuad);
 	boolean attached=false;
@@ -16,13 +16,13 @@ private:
     bool direction;
     bool working;
     int16_t lastHWcount = 0;
-    uint8_t encoderChanged = 0;
+    uint8_t EncoderChanged = 0;
     int16_t min = -30000;
     int16_t max = 30000;
 
 public:
-	encoder();
-	~encoder();
+	Encoder();
+	~Encoder();
 	void attachHalfQuad(int aPintNumber, int bPinNumber);
 	void attachSingleEdge(int aPintNumber, int bPinNumber);
 	//void attachHalfQuad(int aPintNumber, int bPinNumber);
@@ -34,7 +34,7 @@ public:
 
 	boolean isAttached(){return attached;}
 	void setCount(int32_t value);
-	static encoder *encoders[MAX_ESP32_ENCODERS];
+	static Encoder *encoders[MAX_ESP32_ENCODERS];
 	static bool attachedInterrupt;
 	gpio_num_t aPinNumber;
 	gpio_num_t bPinNumber;

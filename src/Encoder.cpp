@@ -1,15 +1,15 @@
-#include "encoder.h"
+#include "Encoder.h"
 
 // Encoder routines by hephaestus, 2018
 
-encoder *encoder::encoders[MAX_ESP32_ENCODERS] = { NULL, NULL, NULL,
+Encoder *Encoder::encoders[MAX_ESP32_ENCODERS] = { NULL, NULL, NULL,
 NULL,
 NULL, NULL, NULL, NULL };
 
-bool encoder::attachedInterrupt=false;
-pcnt_isr_handle_t encoder::user_isr_handle = NULL;
+bool Encoder::attachedInterrupt=false;
+pcnt_isr_handle_t Encoder::user_isr_handle = NULL;
 
-encoder::encoder() {
+Encoder::Encoder() {
 	attached = false;
 	aPinNumber = (gpio_num_t) 0;
 	bPinNumber = (gpio_num_t) 0;
@@ -18,7 +18,7 @@ encoder::encoder() {
 	unit = (pcnt_unit_t) -1;
 }
 
-encoder::~encoder() {
+Encoder::~Encoder() {
 	// TODO Auto-generated destructor stub
 }
 
@@ -27,14 +27,14 @@ encoder::~encoder() {
  * the main program using a queue.
  */
 static void IRAM_ATTR pcnt_example_intr_handler(void *arg) {
-	encoder * ptr;
+	Encoder * ptr;
 
 	uint32_t intr_status = PCNT.int_st.val;
 	int i;
 
 	for (i = 0; i < PCNT_UNIT_MAX; i++) {
 		if (intr_status & (BIT(i))) {
-			ptr = encoder::encoders[i];
+			ptr = Encoder::encoders[i];
 			/* Save the PCNT event type that caused an interrupt
 			 to pass it to the main program */
 
@@ -52,20 +52,20 @@ static void IRAM_ATTR pcnt_example_intr_handler(void *arg) {
 	}
 }
 
-void encoder::attach(int a, int b, boolean fq) {
+void Encoder::attach(int a, int b, boolean fq) {
 	if (attached) {
 		Serial.println("All ready attached, FAIL!");
 		return;
 	}
 	int index = 0;
 	for (; index < MAX_ESP32_ENCODERS; index++) {
-		if (encoder::encoders[index] == NULL) {
+		if (Encoder::encoders[index] == NULL) {
 			encoders[index] = this;
 			break;
 		}
 	}
 	if (index == MAX_ESP32_ENCODERS) {
-		Serial.println("Too many encoders, FAIL!");
+		Serial.println("Too many Encoders, FAIL!");
 		return;
 	}
 
@@ -83,7 +83,7 @@ void encoder::attach(int a, int b, boolean fq) {
 	gpio_pulldown_en(aPinNumber);
 	gpio_pulldown_en(bPinNumber);
 
-	// Set up encoder PCNT configuration
+	// Set up Encoder PCNT configuration
 	r_enc_config.pulse_gpio_num = aPinNumber; //Rotary Encoder Chan A
 	r_enc_config.ctrl_gpio_num = bPinNumber;    //Rotary Encoder Chan B
 
@@ -113,10 +113,10 @@ void encoder::attach(int a, int b, boolean fq) {
 	pcnt_counter_pause(unit); // Initial PCNT init
 	pcnt_counter_clear(unit);
 	/* Register ISR handler and enable interrupts for PCNT unit */
-	if(encoder::attachedInterrupt==false){
-		encoder::attachedInterrupt=true;
+	if(Encoder::attachedInterrupt==false){
+		Encoder::attachedInterrupt=true;
 		esp_err_t er = pcnt_isr_register(pcnt_example_intr_handler,(void *) NULL, (int)0,
-				(pcnt_isr_handle_t *)&encoder::user_isr_handle);
+				(pcnt_isr_handle_t *)&Encoder::user_isr_handle);
 		if (er != ESP_OK){
 			Serial.println("Encoder wrap interupt failed");
 		}
@@ -126,29 +126,29 @@ void encoder::attach(int a, int b, boolean fq) {
 
 }
 
-void encoder::attachHalfQuad(int aPintNumber, int bPinNumber) {
+void Encoder::attachHalfQuad(int aPintNumber, int bPinNumber) {
 	attach(aPintNumber, bPinNumber, true);
 
 }
-void encoder::attachSingleEdge(int aPintNumber, int bPinNumber) {
+void Encoder::attachSingleEdge(int aPintNumber, int bPinNumber) {
 	attach(aPintNumber, bPinNumber, false);
 }
 
-void encoder::setCount(int32_t value) {
+void Encoder::setCount(int32_t value) {
 	count = value - getCountRaw();
 }
-int32_t encoder::getCountRaw() {
+int32_t Encoder::getCountRaw() {
 	int16_t c;
 	pcnt_get_counter_value(unit, &c);
 	return c;
 }
-int32_t encoder::getCount()
+int32_t Encoder::getCount()
 {
     int16_t hwcount = getCountRaw();
     if (lastHWcount != hwcount)
     {
         lastHWcount = hwcount; 
-        encoderChanged = 1;
+        EncoderChanged = 1;
     }
     int32_t totalcount = hwcount + count; 
 
@@ -164,12 +164,12 @@ int32_t encoder::getCount()
 	return hwcount + count;
 }
 
-uint8_t encoder::getEncoderChanged()
+uint8_t Encoder::getEncoderChanged()
 {
     getCount(); 
-    if (encoderChanged)
+    if (EncoderChanged)
     {
-        encoderChanged = 0;
+        EncoderChanged = 0;
         return true; 
     }
     else
@@ -178,7 +178,7 @@ uint8_t encoder::getEncoderChanged()
     }
 }
 
-void encoder::setLimits(int16_t _min, int16_t _max)
+void Encoder::setLimits(int16_t _min, int16_t _max)
 {
     min = _min; 
     max = _max; 
@@ -191,7 +191,7 @@ static void keyPressed()
     
 }
 
-void encoder::attachButton(int buttonPin )
+void Encoder::attachButton(int buttonPin )
 {
     pinMode(buttonPin, INPUT_PULLUP);
 	attachInterrupt(buttonPin, keyPressed, FALLING);
