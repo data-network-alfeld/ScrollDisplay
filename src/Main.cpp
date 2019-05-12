@@ -2,32 +2,15 @@
 
 Encoder enc; 
 Display& disp = Display::instance();
-WiFiManager wm;
-String ssid; 
 
 void setup()
 {
 	// UART für Debugging
 	Serial.begin(115200);
 
-	ssid = String("LED") + String(WIFI_getChipId(),HEX);
+	// WLAN initialisieren
+	initWLAN();
 
-	wm.setClass("invert");
-	wm.setConfigPortalBlocking(false);
-	wm.setConfigPortalTimeout(300);
-
-	if (wm.getWiFiIsSaved())
-	{
-		if(wm.autoConnect())
-		{
-			Serial.println("Connected!");
-		}
-		else
-		{
-			Serial.println("Connect failed :( ");
-		}
-	}
-	
 	// Drehencoder initialisieren
 	enc.attachSingleEdge(ENCODER_DT, ENCODER_CLK);
 	enc.attachButton(ENCODER_SW);
@@ -47,4 +30,3 @@ void loop()
 	disp.render();
 	delay(1);
 }
-

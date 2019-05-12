@@ -1,10 +1,11 @@
 #pragma once
 #include <stdint.h>
 #include <Arduino.h>
-#include <Display.h>
-#include <Encoder.h>
-#include <Main.h>
-#include <FirmwareUpdate.h>
+#include "Display.h"
+#include "Encoder.h"
+#include "Main.h"
+#include "WLAN.h"
+#include "FirmwareUpdate.h"
 
 // Displayzustände
 enum STATE {

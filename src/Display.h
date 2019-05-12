@@ -35,5 +35,5 @@ public:
     void setDisplayState();
     void render();
     void animateUntilButtonPress(bool repeat = false);
-    uint8_t intensity = 15;
+    uint8_t intensity = 0;
 };
