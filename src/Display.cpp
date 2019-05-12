@@ -21,7 +21,7 @@ void Display::setDisplayState()
 	switch (state)
 	{
 		case SCROLLTEXT:
-			displayText("Woohoo \\o/" , PA_CENTER, enc.getCount() * 10, 2000, textEffect_t::PA_SCROLL_LEFT);
+			displayText(scrollText , PA_CENTER, enc.getCount() * 10, pause, (textEffect_t) animation);
 			break;
 		case TEMPERATURE: 
 			break; 

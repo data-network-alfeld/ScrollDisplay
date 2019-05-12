@@ -6,6 +6,7 @@
 #include "Main.h"
 #include "WLAN.h"
 #include "FirmwareUpdate.h"
+#include "Filesystem.h"
 
 // Displayzustände
 enum STATE {

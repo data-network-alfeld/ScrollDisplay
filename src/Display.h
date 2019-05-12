@@ -36,4 +36,8 @@ public:
     void render();
     void animateUntilButtonPress(bool repeat = false);
     uint8_t intensity = 0;
+
+    String scrollText = ""; 
+    uint8_t animation = 4; 
+    uint16_t pause = 2000;
 };

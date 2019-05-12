@@ -17,10 +17,14 @@ String getParam(String name){
   return value;
 }
 
-void saveParamCallback(){
-  Serial.println("PARAM textid = " + getParam("textid"));
-  Serial.println("PARAM animation = " + getParam("animation"));
-  Serial.println("PARAM pauseid = " + getParam("pauseid"));
+void saveParamCallback()
+{
+    Display& disp = Display::instance();
+    disp.scrollText = getParam("textid"); 
+    disp.animation  = getParam("animation").toInt();
+    disp.pause      = getParam("pauseid").toInt();
+
+    saveConfiguration();
 }
 
 void initWLAN()
@@ -33,7 +37,7 @@ void initWLAN()
 
 	if (wm.getWiFiIsSaved())
 	{
-		if(wm.autoConnect())
+		if(wm.autoConnect(ssid.c_str(), NULL))
 		{
 			Serial.println("Connected!");
 		}

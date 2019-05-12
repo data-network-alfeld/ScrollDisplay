@@ -11,6 +11,9 @@ void setup()
 	// WLAN initialisieren
 	initWLAN();
 
+	// Konfiguration aus dem SPIFFS lesen
+	readConfiguration();
+
 	// Drehencoder initialisieren
 	enc.attachSingleEdge(ENCODER_DT, ENCODER_CLK);
 	enc.attachButton(ENCODER_SW);

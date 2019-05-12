@@ -45,6 +45,7 @@ void menuItemPressed(Encoder& enc)
 				disp.parola.setIntensity(disp.intensity);
 				disp.parola.displayAnimate();
 			}
+			file_put_contents("intensity", String(disp.intensity));
 			Encoder::buttonPressed = 0;
 			enc.setLimits(0, _MENUITEMS_LENGTH - 1);
 			break; 
