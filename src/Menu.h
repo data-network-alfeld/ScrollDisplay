@@ -4,6 +4,7 @@
 #include <Display.h>
 #include <Encoder.h>
 #include <Main.h>
+#include <FirmwareUpdate.h>
 
 // Displayzustände
 enum STATE {
@@ -18,6 +19,7 @@ enum MENUITEMS {
 	BRIGHTNESS, 
 	WIFIMENU, 
 	WIFIINFO,
+	FIRMWAREUPDATE,
 	ABOUT, 
 	BACK,
 	_MENUITEMS_LENGTH /* letzter Eintrag, als Limit */ 
