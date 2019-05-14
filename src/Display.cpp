@@ -17,7 +17,7 @@ void Display::displayText(String text, textPosition_t align, uint16_t speed, uin
 	parola.displayText(textBuffer, align, speed, pause, effectIn, effectOut);
 	if (effectIn == (textEffect_t) PA_SPRITE || effectOut == (textEffect_t) PA_SPRITE)
 	{
-		parola.setSpriteData(pacman1, W_PMAN1, F_PMAN1, pacman2, W_PMAN2, F_PMAN2);
+		parola.setSpriteData(sprite[spriteStart].data, sprite[spriteStart].width, sprite[spriteStart].frames, sprite[spriteEnde].data, sprite[spriteEnde].width, sprite[spriteEnde].frames);
 	}
 }
 

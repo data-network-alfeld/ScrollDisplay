@@ -65,3 +65,42 @@ const char* animationEndeHTML = "<label for='animationEnde'>Animation Ende</labe
 <option value='27'>PA_GROW_UP</option>\
 <option value='28'>PA_GROW_DOWN</option>\
 </select><br>";
+
+const char* spriteStartHTML = "<label for='spriteStart'>Sprite Start (nur wenn PA_SPRITE eingestellt ist)</label><br/>\
+<select name='spriteStart' id='spriteStart' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
+<option value='0' selected>Pacman</option>\
+<option value='1'>Pacman und Geist</option>\
+<option value='2'>Rocket</option>\
+<option value='3'>Invader</option>\
+<option value='4'>Chevron</option>\
+<option value='5'>Heart</option>\
+<option value='6'>Steamboat</option>\
+<option value='7'>Sailboat</option>\
+<option value='8'>Fireball</option>\
+<option value='9'>Roll1</option>\
+<option value='10'>Roll2</option>\
+<option value='11'>Arrow1</option>\
+<option value='12'>Arrow2</option>\
+<option value='13'>Wave</option>\
+<option value='14'>Lines</option>\
+</select><br>";
+
+const char* spriteEndeHTML = "<label for='spriteEnde'>Sprite Ende (nur wenn PA_SPRITE eingestellt ist)</label><br/>\
+<select name='spriteEnde' id='spriteEnde' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
+<option value='0' selected>Pacman</option>\
+<option value='1'>Pacman und Geist</option>\
+<option value='2'>Rocket</option>\
+<option value='3'>Invader</option>\
+<option value='4'>Chevron</option>\
+<option value='5'>Heart</option>\
+<option value='6'>Steamboat</option>\
+<option value='7'>Sailboat</option>\
+<option value='8'>Fireball</option>\
+<option value='9'>Roll1</option>\
+<option value='10'>Roll2</option>\
+<option value='11'>Arrow1</option>\
+<option value='12'>Arrow2</option>\
+<option value='13'>Wave</option>\
+<option value='14'>Lines</option>\
+</select><br>";
+

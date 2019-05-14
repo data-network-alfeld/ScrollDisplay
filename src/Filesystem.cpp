@@ -38,6 +38,8 @@ void readConfiguration()
     disp.scrollText = file_get_contents("text"); 
     disp.animationStart = file_get_contents("animationStart").toInt();
     disp.animationEnde = file_get_contents("animationEnde").toInt();
+    disp.spriteStart = file_get_contents("spriteStart").toInt();
+    disp.spriteEnde = file_get_contents("spriteEnde").toInt();
     disp.pause = file_get_contents("pause").toInt();
 
     disp.intensity = file_get_contents("intensity").toInt();
@@ -50,5 +52,7 @@ void saveConfiguration()
     file_put_contents("text", disp.scrollText);
     file_put_contents("animationStart", String(disp.animationStart));
     file_put_contents("animationEnde", String(disp.animationEnde));
+    file_put_contents("spriteStart", String(disp.spriteStart));
+    file_put_contents("spriteEnde", String(disp.spriteEnde));
     file_put_contents("pause", String(disp.pause));
 }
