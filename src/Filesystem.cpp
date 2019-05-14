@@ -36,7 +36,8 @@ void readConfiguration()
     Display& disp = Display::instance();
 
     disp.scrollText = file_get_contents("text"); 
-    disp.animation = file_get_contents("animation").toInt();
+    disp.animationStart = file_get_contents("animationStart").toInt();
+    disp.animationEnde = file_get_contents("animationEnde").toInt();
     disp.pause = file_get_contents("pause").toInt();
 
     disp.intensity = file_get_contents("intensity").toInt();
@@ -47,6 +48,7 @@ void saveConfiguration()
 {
     Display& disp = Display::instance();
     file_put_contents("text", disp.scrollText);
-    file_put_contents("animation", String(disp.animation));
+    file_put_contents("animationStart", String(disp.animationStart));
+    file_put_contents("animationEnde", String(disp.animationEnde));
     file_put_contents("pause", String(disp.pause));
 }

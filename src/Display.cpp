@@ -1,4 +1,5 @@
 #include "Display.h"
+#include "Sprite.h"
 
 Display::Display() {
 }
@@ -14,6 +15,10 @@ void Display::displayText(String text, textPosition_t align, uint16_t speed, uin
 {
 	Latin1::utf8tolatin1(text).toCharArray(textBuffer, sizeof(textBuffer));
 	parola.displayText(textBuffer, align, speed, pause, effectIn, effectOut);
+	if (effectIn == (textEffect_t) PA_SPRITE || effectOut == (textEffect_t) PA_SPRITE)
+	{
+		parola.setSpriteData(pacman1, W_PMAN1, F_PMAN1, pacman2, W_PMAN2, F_PMAN2);
+	}
 }
 
 void Display::setDisplayState()
@@ -21,12 +26,12 @@ void Display::setDisplayState()
 	switch (state)
 	{
 		case SCROLLTEXT:
-			displayText(scrollText , PA_CENTER, enc.getCount() * 10, pause, (textEffect_t) animation);
+			displayText(scrollText , PA_CENTER, enc.getCount() * 10, pause, (textEffect_t) animationStart,(textEffect_t) animationEnde);
 			break;
 		case TEMPERATURE: 
 			break; 
 		case MENU: 
-			displayText(menuitemStrings[menuitem] , PA_LEFT, 0, 0, PA_PRINT);
+			displayText(menuitemStrings[menuitem] , PA_LEFT, 0, 0, PA_PRINT,PA_NO_EFFECT);
 			break; 
 		default:
 			break;

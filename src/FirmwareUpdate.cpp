@@ -62,10 +62,7 @@ uint8_t tryOTAUpdate()
 				break;
 		}
 	}
-    else
-    {
-        return OTAResult::NO_WIFI_CONNECTION;
-    }
+	return OTAResult::NO_WIFI_CONNECTION;
 }
 
 // Set time via NTP, as required for x.509 validation
