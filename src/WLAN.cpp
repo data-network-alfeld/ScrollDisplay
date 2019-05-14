@@ -29,7 +29,13 @@ void saveParamCallback()
 
 void initWLAN()
 {
-    ssid = String("LED") + String(WIFI_getChipId(),HEX);
+  ssid = String("LED") + String(WIFI_getChipId(),HEX);
+
+	#ifdef CUSTOM_HOSTNAME
+		ssid = CUSTOM_HOSTNAME; 
+	#endif
+
+	wm.setHostname(ssid.c_str());
 
 	wm.setClass("invert");
 	wm.setConfigPortalBlocking(false);
