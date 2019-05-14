@@ -5,6 +5,8 @@ WiFiManager wm; // global wm instance
 WiFiManagerParameter text_field; 
 WiFiManagerParameter animationStart_field;
 WiFiManagerParameter animationEnde_field;
+WiFiManagerParameter spriteStart_field;
+WiFiManagerParameter spriteEnde_field;
 WiFiManagerParameter pause_field;
 
 String ssid; 
@@ -24,6 +26,8 @@ void saveParamCallback()
     disp.scrollText = getParam("textid"); 
     disp.animationStart  = getParam("animationStart").toInt();
     disp.animationEnde  = getParam("animationEnde").toInt();
+    disp.spriteStart  = getParam("spriteStart").toInt();
+    disp.spriteEnde  = getParam("spriteEnde").toInt();
     disp.pause      = getParam("pauseid").toInt();
 
     saveConfiguration();
@@ -60,11 +64,15 @@ void initWLAN()
 	new (&text_field) WiFiManagerParameter("textid", "Text", "Ferienpass 19", customFieldLength,"placeholder=\"Ferienpass 19\"");
 	new (&animationStart_field) WiFiManagerParameter(animationStartHTML);
 	new (&animationEnde_field) WiFiManagerParameter(animationEndeHTML);
+	new (&spriteStart_field) WiFiManagerParameter(spriteStartHTML);
+	new (&spriteEnde_field) WiFiManagerParameter(spriteEndeHTML);
 	new (&pause_field) WiFiManagerParameter("pauseid", "Pausendauer (in ms)", "1000", customFieldLength,"placeholder=\"1000\"");
 
 	wm.addParameter(&text_field);
 	wm.addParameter(&animationStart_field);
 	wm.addParameter(&animationEnde_field);
+	wm.addParameter(&spriteStart_field);
+	wm.addParameter(&spriteEnde_field);
 	wm.addParameter(&pause_field);
 
 	wm.setSaveParamsCallback(saveParamCallback);

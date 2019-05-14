@@ -31,7 +31,6 @@ public:
     ~Display() {}
     MD_Parola parola = MD_Parola(MD_MAX72XX::FC16_HW, MAX7219_CS, MAX7219_NUM_DISPLAYS);
     void init(int encoderSwitchPin, Encoder enc);
-//    void displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut = PA_SPRITE);
     void displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut);
     void setDisplayState();
     void render();
@@ -41,5 +40,7 @@ public:
     String scrollText = ""; 
     uint8_t animationStart = 4; 
     uint8_t animationEnde = 4; 
+    uint8_t spriteStart = 4; 
+    uint8_t spriteEnde = 4; 
     uint16_t pause = 2000;
 };
