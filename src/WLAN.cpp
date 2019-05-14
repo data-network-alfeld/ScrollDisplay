@@ -45,19 +45,21 @@ void initWLAN()
 
 	wm.setClass("invert");
 	wm.setConfigPortalBlocking(false);
-	wm.setConfigPortalTimeout(300);
+	wm.setEnableConfigPortal(false);
 
 	if (wm.getWiFiIsSaved())
 	{
 		if(wm.autoConnect(ssid.c_str(), NULL))
 		{
 			Serial.println("Connected!");
+			wm.startWebPortal();
 		}
 		else
 		{
 			Serial.println("Connect failed :( ");
 		}
 	}
+	
 	
 	int customFieldLength = 100;
 	

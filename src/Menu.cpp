@@ -50,6 +50,7 @@ void menuItemPressed(Encoder& enc)
 			enc.setLimits(0, _MENUITEMS_LENGTH - 1);
 			break; 
 		case MENUITEMS::WIFIMENU:
+			wm.setConfigPortalTimeout(300);
 			wm.startConfigPortal(ssid.c_str(), NULL);
 			disp.displayText(ssid, textPosition_t::PA_LEFT, 50, 2000, textEffect_t::PA_SCROLL_LEFT,textEffect_t::PA_NO_EFFECT);
 			disp.animateUntilButtonPress();
