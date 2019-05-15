@@ -1,7 +1,7 @@
 #pragma once
 
 const char* animationStartHTML = "<label for='animationStart'>Animation Start</label><br/>\
-<select name='animationStart' id='animationStart' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
+<select name='animationStart' id='animationStart' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;' onchange=\"if (this.selectedIndex==6){document.getElementById('spriteStartBlock').style.display = 'block'} else {document.getElementById('spriteStartBlock').style.display = 'none'}\")>\
 <option value='0'>PA_NO_EFFECT</option>\
 <option value='1'>PA_PRINT</option>\
 <option value='2'>PA_SCROLL_UP</option>\
@@ -34,7 +34,7 @@ const char* animationStartHTML = "<label for='animationStart'>Animation Start</l
 </select><br>";
 
 const char* animationEndeHTML = "<label for='animationEnde'>Animation Ende</label><br/>\
-<select name='animationEnde' id='animationEnde' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
+<select name='animationEnde' id='animationEnde' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;' onchange=\"if (this.selectedIndex==6){document.getElementById('spriteEndeBlock').style.display = 'block'} else {document.getElementById('spriteEndeBlock').style.display = 'none'}\")>\
 <option value='0'>PA_NO_EFFECT</option>\
 <option value='1'>PA_PRINT</option>\
 <option value='2'>PA_SCROLL_UP</option>\
@@ -66,7 +66,7 @@ const char* animationEndeHTML = "<label for='animationEnde'>Animation Ende</labe
 <option value='28'>PA_GROW_DOWN</option>\
 </select><br>";
 
-const char* spriteStartHTML = "<label for='spriteStart'>Sprite Start (nur wenn PA_SPRITE eingestellt ist)</label><br/>\
+const char* spriteStartHTML = "<span id='spriteStartBlock' style='display: none'><label for='spriteStart'>Sprite Start</label><br/>\
 <select name='spriteStart' id='spriteStart' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
 <option value='0' selected>Pacman</option>\
 <option value='1'>Pacman und Geist</option>\
@@ -83,9 +83,9 @@ const char* spriteStartHTML = "<label for='spriteStart'>Sprite Start (nur wenn P
 <option value='12'>Arrow2</option>\
 <option value='13'>Wave</option>\
 <option value='14'>Lines</option>\
-</select><br>";
+</select><br></span>";
 
-const char* spriteEndeHTML = "<label for='spriteEnde'>Sprite Ende (nur wenn PA_SPRITE eingestellt ist)</label><br/>\
+const char* spriteEndeHTML = "<span id='spriteEndeBlock' style='display: none'><label for='spriteEnde'>Sprite Ende</label><br/>\
 <select name='spriteEnde' id='spriteEnde' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
 <option value='0' selected>Pacman</option>\
 <option value='1'>Pacman und Geist</option>\
@@ -102,5 +102,17 @@ const char* spriteEndeHTML = "<label for='spriteEnde'>Sprite Ende (nur wenn PA_S
 <option value='12'>Arrow2</option>\
 <option value='13'>Wave</option>\
 <option value='14'>Lines</option>\
-</select><br>";
+</select><br></span>";
+
+const char* intensityHTML = "<label for='intensity'>Helligkeit <span id='intensityValue'></span><label><br/>\
+<input type='range' min='0' max='15' value='0' class='slider' id='intensity' name='intensity'>\
+<script>\
+var slider = document.getElementById('intensity');\
+var output = document.getElementById('intensityValue');\
+output.innerHTML = slider.value;\
+slider.oninput = function() {\
+    output.innerHTML = this.value;\
+}\
+</script>\
+<br>";
 
