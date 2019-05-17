@@ -8,6 +8,7 @@ WiFiManagerParameter animationEnde_field;
 WiFiManagerParameter spriteStart_field;
 WiFiManagerParameter spriteEnde_field;
 WiFiManagerParameter pause_field;
+WiFiManagerParameter intensity_field;
 
 String ssid; 
 
@@ -29,7 +30,9 @@ void saveParamCallback()
     disp.spriteStart  = getParam("spriteStart").toInt();
     disp.spriteEnde  = getParam("spriteEnde").toInt();
     disp.pause      = getParam("pauseid").toInt();
-
+    disp.intensity      = getParam("intensity").toInt();
+		disp.parola.setIntensity(disp.intensity);
+		file_put_contents("intensity", String(disp.intensity));
     saveConfiguration();
 }
 
@@ -59,7 +62,7 @@ void initWLAN()
 			Serial.println("Connect failed :( ");
 		}
 	}
-	
+
 	
 	int customFieldLength = 100;
 	
@@ -69,13 +72,15 @@ void initWLAN()
 	new (&spriteStart_field) WiFiManagerParameter(spriteStartHTML);
 	new (&spriteEnde_field) WiFiManagerParameter(spriteEndeHTML);
 	new (&pause_field) WiFiManagerParameter("pauseid", "Pausendauer (in ms)", "1000", customFieldLength,"placeholder=\"1000\"");
+	new (&intensity_field) WiFiManagerParameter(intensityHTML);
 
 	wm.addParameter(&text_field);
 	wm.addParameter(&animationStart_field);
-	wm.addParameter(&animationEnde_field);
 	wm.addParameter(&spriteStart_field);
+	wm.addParameter(&animationEnde_field);
 	wm.addParameter(&spriteEnde_field);
 	wm.addParameter(&pause_field);
+	wm.addParameter(&intensity_field);
 
 	wm.setSaveParamsCallback(saveParamCallback);
 
