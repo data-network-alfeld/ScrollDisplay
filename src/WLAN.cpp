@@ -32,7 +32,6 @@ void saveParamCallback()
     disp.pause      = getParam("pauseid").toInt();
     disp.intensity      = getParam("intensity").toInt();
 		disp.parola.setIntensity(disp.intensity);
-		file_put_contents("intensity", String(disp.intensity));
     saveConfiguration();
 }
 

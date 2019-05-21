@@ -12,6 +12,7 @@ void setup()
 	initWLAN();
 
 	// Konfiguration aus dem SPIFFS lesen
+	beginConfiguration();
 	readConfiguration();
 
 	// Drehencoder initialisieren

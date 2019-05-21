@@ -1,58 +1,35 @@
 #include "Filesystem.h"
 
-String file_get_contents(String filename)
+Preferences prefs;
+
+void beginConfiguration()
 {
-    if(!SPIFFS.begin(true)){
-        Serial.println("SPIFFS Mount Failed");
-        return "spiffs error";
-    }
-
-	String result;
-	File file = SPIFFS.open("/" + filename + ".txt");
-	if(!file || file.isDirectory())
-	{
-	    return "";
-	}
-
-    result = file.readString(); 
-    file.close();
-    return result; 
-}
-
-bool file_put_contents(String filename, String content)
-{
-    File file = SPIFFS.open("/" + filename + ".txt", "w");
-	if(!file)
-	{
-	    return false; 
-	}
-    file.print(content);
-
-    return true;
+    prefs.begin("scroll", false);
 }
 
 void readConfiguration()
 {
     Display& disp = Display::instance();
 
-    disp.scrollText = file_get_contents("text"); 
-    disp.animationStart = file_get_contents("animationStart").toInt();
-    disp.animationEnde = file_get_contents("animationEnde").toInt();
-    disp.spriteStart = file_get_contents("spriteStart").toInt();
-    disp.spriteEnde = file_get_contents("spriteEnde").toInt();
-    disp.pause = file_get_contents("pause").toInt();
+    disp.scrollText = prefs.getString("text", "Ferienpass 19"); 
+    disp.animationStart = prefs.getUChar("animationStart", 4);
+    disp.animationEnde = prefs.getUChar("animationEnde", 4);
+    disp.spriteStart = prefs.getUChar("spriteStart", 4);
+    disp.spriteEnde = prefs.getUChar("spriteEnde", 4);
+    disp.pause = prefs.getUShort("pause", 2000);
 
-    disp.intensity = file_get_contents("intensity").toInt();
+    disp.intensity = prefs.getUChar("intensity", 0);
     disp.parola.setIntensity(disp.intensity);
 }
 
 void saveConfiguration()
 {
     Display& disp = Display::instance();
-    file_put_contents("text", disp.scrollText);
-    file_put_contents("animationStart", String(disp.animationStart));
-    file_put_contents("animationEnde", String(disp.animationEnde));
-    file_put_contents("spriteStart", String(disp.spriteStart));
-    file_put_contents("spriteEnde", String(disp.spriteEnde));
-    file_put_contents("pause", String(disp.pause));
+    prefs.putString("text", disp.scrollText);
+    prefs.putUChar("animationStart", disp.animationStart);
+    prefs.putUChar("animationEnde", disp.animationEnde);
+    prefs.putUChar("spriteStart", disp.spriteStart);
+    prefs.putUChar("spriteEnde", disp.spriteEnde);
+    prefs.putUShort("pause", disp.pause);
+    prefs.putUChar("intensity", disp.intensity);
 }
