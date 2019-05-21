@@ -3,6 +3,7 @@
 #include <Arduino.h>
 
 // Sprite Definitions
+const String N_PMAN1 = "Pacman";
 const uint8_t F_PMAN1 = 6;
 const uint8_t W_PMAN1 = 8;
 const uint8_t PROGMEM pacman1[F_PMAN1 * W_PMAN1] =  // gobbling pacman animation
@@ -15,6 +16,7 @@ const uint8_t PROGMEM pacman1[F_PMAN1 * W_PMAN1] =  // gobbling pacman animation
   0x00, 0x42, 0xe7, 0xe7, 0xff, 0xff, 0x7e, 0x3c,
 };
 
+const String N_PMAN2 = "Pacman und Geist";
 const uint8_t F_PMAN2 = 6;
 const uint8_t W_PMAN2 = 18;
 const uint8_t PROGMEM pacman2[F_PMAN2 * W_PMAN2] =  // ghost pursued by a pacman
@@ -27,6 +29,7 @@ const uint8_t PROGMEM pacman2[F_PMAN2 * W_PMAN2] =  // ghost pursued by a pacman
   0x00, 0x42, 0xe7, 0xe7, 0xff, 0xff, 0x7e, 0x3c, 0x00, 0x00, 0x00, 0xfe, 0x7b, 0xf3, 0x7f, 0xfb, 0x73, 0xfe,
 };
 
+const String N_WAVE = "Wave";
 const uint8_t F_WAVE = 14;
 const uint8_t W_WAVE = 14;
 const uint8_t PROGMEM wave[F_WAVE * W_WAVE] =  // triangular wave / worm
@@ -47,6 +50,7 @@ const uint8_t PROGMEM wave[F_WAVE * W_WAVE] =  // triangular wave / worm
   0x04, 0x02, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x40, 0x20, 0x10, 0x08,
 };
 
+const String N_ROLL1 = "Roll1";
 const uint8_t F_ROLL1 = 4;
 const uint8_t W_ROLL1 = 8;
 const uint8_t PROGMEM roll1[F_ROLL1 * W_ROLL1] =  // rolling square
@@ -57,6 +61,7 @@ const uint8_t PROGMEM roll1[F_ROLL1 * W_ROLL1] =  // rolling square
   0xff, 0x81, 0x81, 0x81, 0x8f, 0x8f, 0x8f, 0xff,
 };
 
+const String N_ROLL2 = "Roll2";
 const uint8_t F_ROLL2 = 4;
 const uint8_t W_ROLL2 = 8;
 const uint8_t PROGMEM roll2[F_ROLL2 * W_ROLL2] =  // rolling octagon
@@ -67,6 +72,7 @@ const uint8_t PROGMEM roll2[F_ROLL2 * W_ROLL2] =  // rolling octagon
   0x3c, 0x42, 0x81, 0x81, 0x8f, 0x8f, 0x4e, 0x3c,
 };
 
+const String N_LINES = "Lines";
 const uint8_t F_LINES = 3;
 const uint8_t W_LINES = 8;
 const uint8_t PROGMEM lines[F_LINES * W_LINES] =  // spaced lines
@@ -76,6 +82,7 @@ const uint8_t PROGMEM lines[F_LINES * W_LINES] =  // spaced lines
   0xff, 0xff, 0x00, 0x00, 0xff, 0x00, 0x00, 0xff,
 };
 
+const String N_ARROW1 = "Arrow1";
 const uint8_t F_ARROW1 = 3;
 const uint8_t W_ARROW1 = 10;
 const uint8_t PROGMEM arrow1[F_ARROW1 * W_ARROW1] =  // arrow fading to center
@@ -85,6 +92,7 @@ const uint8_t PROGMEM arrow1[F_ARROW1 * W_ARROW1] =  // arrow fading to center
   0x18, 0x3c, 0x7e, 0xff, 0x00, 0x00, 0x3c, 0x00, 0x00, 0x18,
 };
 
+const String N_ARROW2 = "Arrow2";
 const uint8_t F_ARROW2 = 3;
 const uint8_t W_ARROW2 = 9;
 const uint8_t PROGMEM arrow2[F_ARROW2 * W_ARROW2] =  // arrow fading to outside
@@ -94,6 +102,7 @@ const uint8_t PROGMEM arrow2[F_ARROW2 * W_ARROW2] =  // arrow fading to outside
   0x18, 0x3c, 0x7e, 0xe7, 0x00, 0xc3, 0x00, 0x00, 0x81,
 };
 
+const String N_SAILBOAT = "Sailboat";
 const uint8_t F_SAILBOAT = 1;
 const uint8_t W_SAILBOAT = 11;
 const uint8_t PROGMEM sailboat[F_SAILBOAT * W_SAILBOAT] =  // sail boat
@@ -101,6 +110,7 @@ const uint8_t PROGMEM sailboat[F_SAILBOAT * W_SAILBOAT] =  // sail boat
   0x10, 0x30, 0x58, 0x94, 0x92, 0x9f, 0x92, 0x94, 0x98, 0x50, 0x30,
 };
 
+const String N_STEAMBOAT = "Steamboat";
 const uint8_t F_STEAMBOAT = 2;
 const uint8_t W_STEAMBOAT = 11;
 const uint8_t PROGMEM steamboat[F_STEAMBOAT * W_STEAMBOAT] =  // steam boat
@@ -109,6 +119,7 @@ const uint8_t PROGMEM steamboat[F_STEAMBOAT * W_STEAMBOAT] =  // steam boat
   0x10, 0x30, 0x50, 0x9c, 0x9c, 0x91, 0x90, 0x9d, 0x9e, 0x91, 0x70,
 };
 
+const String N_HEART = "Heart";
 const uint8_t F_HEART = 5;
 const uint8_t W_HEART = 9;
 const uint8_t PROGMEM heart[F_HEART * W_HEART] =  // beating heart
@@ -120,6 +131,7 @@ const uint8_t PROGMEM heart[F_HEART * W_HEART] =  // beating heart
   0x0e, 0x11, 0x21, 0x42, 0x84, 0x42, 0x21, 0x11, 0x0e,
 };
 
+const String N_INVADER = "Invader";
 const uint8_t F_INVADER = 2;
 const uint8_t W_INVADER = 10;
 const uint8_t PROGMEM invader[F_INVADER * W_INVADER] =  // space invader
@@ -128,6 +140,7 @@ const uint8_t PROGMEM invader[F_INVADER * W_INVADER] =  // space invader
   0x70, 0x18, 0x7d, 0xb6, 0x3c, 0x3c, 0xb6, 0x7d, 0x18, 0x70,
 };
 
+const String N_ROCKET = "Rocket";
 const uint8_t F_ROCKET = 2;
 const uint8_t W_ROCKET = 11;
 const uint8_t PROGMEM rocket[F_ROCKET * W_ROCKET] =  // rocket
@@ -136,6 +149,7 @@ const uint8_t PROGMEM rocket[F_ROCKET * W_ROCKET] =  // rocket
   0x18, 0x24, 0x42, 0x81, 0x18, 0x99, 0x18, 0x99, 0x24, 0x42, 0x99,
 };
 
+const String N_FBALL = "Fireball";
 const uint8_t F_FBALL = 2;
 const uint8_t W_FBALL = 11;
 const uint8_t PROGMEM fireball[F_FBALL * W_FBALL] =  // fireball
@@ -144,6 +158,7 @@ const uint8_t PROGMEM fireball[F_FBALL * W_FBALL] =  // fireball
   0x7e, 0xd5, 0x2a, 0x14, 0x24, 0x0a, 0x30, 0x04, 0x28, 0x08, 0x10,
 };
 
+const String N_CHEVRON = "Chevron";
 const uint8_t F_CHEVRON = 1;
 const uint8_t W_CHEVRON = 9;
 const uint8_t PROGMEM chevron[F_CHEVRON * W_CHEVRON] =  // chevron
@@ -156,22 +171,25 @@ struct
   const uint8_t *data;
   uint8_t width;
   uint8_t frames;
+  const String name;
 } 
 sprite[] =
 {
-  { pacman1, W_PMAN1, F_PMAN1 },
-  { pacman2, W_PMAN2, F_PMAN2 },
-  { rocket, W_ROCKET, F_ROCKET },
-  { invader, W_INVADER, F_INVADER },
-  { chevron, W_CHEVRON, F_CHEVRON },
-  { heart, W_HEART, F_HEART },
-  { steamboat, W_STEAMBOAT, F_STEAMBOAT },
-  { sailboat, W_SAILBOAT, F_SAILBOAT },
-  { fireball, W_FBALL, F_FBALL },
-  { roll1, W_ROLL1, F_ROLL1 },
-  { roll2, W_ROLL2, F_ROLL2 },
-  { arrow1, W_ARROW1, F_ARROW1 },
-  { arrow2, W_ARROW2, F_ARROW2 },
-  { wave, W_WAVE, F_WAVE },
-  { lines, W_LINES, F_LINES }
+  { pacman1, W_PMAN1, F_PMAN1, N_PMAN1 },
+  { pacman2, W_PMAN2, F_PMAN2, N_PMAN2 },
+  { rocket, W_ROCKET, F_ROCKET, N_ROCKET },
+  { invader, W_INVADER, F_INVADER, N_INVADER },
+  { chevron, W_CHEVRON, F_CHEVRON, N_CHEVRON },
+  { heart, W_HEART, F_HEART, N_HEART },
+  { steamboat, W_STEAMBOAT, F_STEAMBOAT, N_STEAMBOAT },
+  { sailboat, W_SAILBOAT, F_SAILBOAT, N_SAILBOAT },
+  { fireball, W_FBALL, F_FBALL, N_FBALL },
+  { roll1, W_ROLL1, F_ROLL1, N_ROLL1 },
+  { roll2, W_ROLL2, F_ROLL2, N_ROLL2 },
+  { arrow1, W_ARROW1, F_ARROW1, N_ARROW1 },
+  { arrow2, W_ARROW2, F_ARROW2, N_ARROW2 },
+  { wave, W_WAVE, F_WAVE, N_WAVE },
+  { lines, W_LINES, F_LINES, N_LINES }
 };
+
+const uint8_t spriteSize = sizeof(sprite) / sizeof(sprite[0]);

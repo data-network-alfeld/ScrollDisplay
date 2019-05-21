@@ -9,8 +9,11 @@ WiFiManagerParameter spriteStart_field;
 WiFiManagerParameter spriteEnde_field;
 WiFiManagerParameter pause_field;
 WiFiManagerParameter intensity_field;
+WiFiManagerParameter javascript_field;
 
 String ssid; 
+String allespritesString = "var allesprites=[";
+
 
 String getParam(String name){
   //read parameter from server, for customhmtl input
@@ -63,7 +66,25 @@ void initWLAN()
 		}
 	}
 
-	
+	char tmp [2];
+	for (int a = 0; a < spriteSize; a++)
+	{
+		if (a != 0)
+		{
+			allespritesString = allespritesString+",";
+		}
+		allespritesString = allespritesString+"['"+sprite[a].name+"',"+sprite[a].frames+","+sprite[a].width+",'";
+
+		for (int i = 0; i < (sprite[a].frames * sprite[a].width); i++)
+		{
+			sprintf(tmp,"%02x",sprite[a].data[i]);
+			allespritesString = allespritesString+tmp;
+		}
+		allespritesString = allespritesString+"']";
+	}
+	allespritesString = allespritesString+"];\n";
+	allespritesString = "<script>" + allespritesString + javascript + "</script>";
+
 	int customFieldLength = 100;
 	
 	new (&text_field) WiFiManagerParameter("textid", "Text", "Ferienpass 19", customFieldLength,"placeholder=\"Ferienpass 19\"");
@@ -73,6 +94,7 @@ void initWLAN()
 	new (&spriteEnde_field) WiFiManagerParameter(spriteEndeHTML);
 	new (&pause_field) WiFiManagerParameter("pauseid", "Pausendauer (in ms)", "1000", customFieldLength,"placeholder=\"1000\"");
 	new (&intensity_field) WiFiManagerParameter(intensityHTML);
+	new (&javascript_field) WiFiManagerParameter(allespritesString.c_str());
 
 	wm.addParameter(&text_field);
 	wm.addParameter(&animationStart_field);
@@ -81,6 +103,7 @@ void initWLAN()
 	wm.addParameter(&spriteEnde_field);
 	wm.addParameter(&pause_field);
 	wm.addParameter(&intensity_field);
+	wm.addParameter(&javascript_field);
 
 	wm.setSaveParamsCallback(saveParamCallback);
 
