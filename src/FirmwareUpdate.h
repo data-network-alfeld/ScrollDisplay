@@ -10,7 +10,7 @@
 #include <time.h>
 
 extern uint8_t tryOTAUpdate();
-extern void setClock();
+//extern void setClock();
 
 extern String otaErrorCode; 
 

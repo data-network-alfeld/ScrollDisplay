@@ -12,6 +12,7 @@
 enum STATE {
 	SCROLLTEXT, 
 	TEMPERATURE, 
+	CLOCK,
 	MENU, 
 	_STATE_LENGTH /* letzter Eintrag, als Limit */ 
 };

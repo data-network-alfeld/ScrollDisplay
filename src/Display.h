@@ -9,6 +9,7 @@
 #include "Latin1.h"
 #include "Menu.h"
 #include "Encoder.h"
+#include "Clock.h"
 
 class Display
 {
@@ -20,7 +21,21 @@ private:
     textPosition_t scrollAlign = PA_LEFT;  // how to aligh the text
     int scrollPause = 0; // ms of pause after finished displaying message
     int scrollSpeed = 50;
+    int curText = 0;
     Encoder enc;
+    Clock clo;
+    int textAnzahl = 0;
+
+    typedef struct 
+    {
+        String text;
+        textPosition_t align;
+        int speed;
+        int pause;
+        textEffect_t effectIn;
+        textEffect_t effectOut;        
+    }texteAusgabe; 
+
 protected:
 public:
     static Display& instance()
@@ -30,8 +45,10 @@ public:
     }
     ~Display() {}
     MD_Parola parola = MD_Parola(MD_MAX72XX::FC16_HW, MAX7219_CS, MAX7219_NUM_DISPLAYS);
-    void init(int encoderSwitchPin, Encoder enc);
+    void init(int encoderSwitchPin, Encoder enc, Clock clo);
     void displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut);
+    void displayTexte(String text[], textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut);
+    void displayTexte(texteAusgabe a[]);
     void setDisplayState();
     void render();
     void animateUntilButtonPress(bool repeat = false);

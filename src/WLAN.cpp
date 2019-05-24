@@ -50,7 +50,7 @@ void initWLAN()
 
 	wm.setClass("invert");
 	wm.setConfigPortalBlocking(false);
-	wm.setEnableConfigPortal(false);
+	wm.setEnableConfigPortal(true);
 
 	if (wm.getWiFiIsSaved())
 	{
