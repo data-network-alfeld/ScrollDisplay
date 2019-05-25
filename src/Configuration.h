@@ -12,4 +12,3 @@
 #define ENCODER_DT 22
 #define ENCODER_SW 21
 
-// foo
