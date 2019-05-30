@@ -40,7 +40,6 @@ String Clock::getTime()
 	time_t now = time(nullptr);
 	struct tm timeinfo;
 	localtime_r(&now, &timeinfo);
-
 	strftime(output, sizeof output, "%T",&timeinfo);
 	return (output);
 }

@@ -24,7 +24,7 @@ private:
     int scrollSpeed = 50;
     Encoder enc;
     Clock clo;
-    int textCount = 0;
+    int textCount = 1;
     int curText = 0;
 
     typedef struct 
@@ -57,6 +57,7 @@ public:
 
     String scrollText = ""; 
 	String clockText[] ; 
+    texteAusgabe clockausgabe;
 
     uint8_t animationStart = 4; 
     uint8_t animationEnde = 4; 

@@ -209,7 +209,7 @@ const char* timeHTML = "<input type='hidden' id='timestamp' value=''name='timest
 <script>var d = new Date(); document.getElementById('timestamp').value = Math.floor(d.getTime() / 1000) - (d.getTimezoneOffset()*60); </script>";
 
 const char* menueHTML = "<label for='textAnzeige'>Anzeige</label><br/>\
-<select name='textAnzeige' id='textAnzeige' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;' onchange=\"if (this.selectedIndex==6){document.getElementById('spriteStartBlock').style.display = 'block'} else {document.getElementById('spriteStartBlock').style.display = 'none'}\")>\
+<select name='textAnzeige' id='textAnzeige' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
 <option value='0'>Scrolltext</option>\
 <option value='2'>Uhr</option>\
 <option value='3'>Uhr und Datum</option>\

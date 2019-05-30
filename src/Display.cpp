@@ -34,7 +34,6 @@ void Display::displayTexte(String text[], textPosition_t align, uint16_t speed, 
 
 void Display::displayTexte(texteAusgabe ausgabe[])
 {
-	Serial.println(ausgabe[curText].text);
 	Latin1::utf8tolatin1(ausgabe[curText].text).toCharArray(textBuffer, sizeof(textBuffer));
 	parola.displayText(textBuffer, ausgabe[curText].align, ausgabe[curText].speed, ausgabe[curText].pause, ausgabe[curText].effectIn, ausgabe[curText].effectOut);
 	if (ausgabe[curText].effectIn == (textEffect_t) PA_SPRITE || ausgabe[curText].effectOut == (textEffect_t) PA_SPRITE)
@@ -62,7 +61,6 @@ void Display::setDisplayState()
 			};
 			textCount = sizeof(clockText) / sizeof(String);
 			displayTexte(clockText, PA_CENTER, enc.getCount() * 10, pause, PA_PRINT ,PA_NO_EFFECT);
-		
 			break;	
 		}
 		case CLOCKANDDATE: 

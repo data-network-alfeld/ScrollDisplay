@@ -107,9 +107,7 @@ void initWLAN()
 	new (&pause_field) WiFiManagerParameter("pauseid", "Pausendauer (in ms)", "1000", customFieldLength,"placeholder=\"1000\"");
 	new (&intensity_field) WiFiManagerParameter(intensityHTML);
 	new (&javascript_field) WiFiManagerParameter(allespritesString.c_str());
-	if (WiFi.status() != WL_CONNECTED) {
-		new (&time_field) WiFiManagerParameter(timeHTML);
-	}
+	new (&time_field) WiFiManagerParameter(timeHTML);
 	new (&menu_field) WiFiManagerParameter(menueHTML);
 
 	wm.addParameter(&text_field);
