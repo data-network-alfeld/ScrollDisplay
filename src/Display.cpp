@@ -45,6 +45,7 @@ void Display::displayTexte(texteAusgabe ausgabe[])
 
 void Display::setDisplayState()
 {
+	parola.setFont(NULL);
 	switch (state)
 	{
 		case SCROLLTEXT:
@@ -54,19 +55,20 @@ void Display::setDisplayState()
 			break; 
 		case CLOCK: 
 		{
-
+			parola.setFont(_sys_fixed_single);
 			String clockText[] = 
 			{
 				clo.getTime(),
 			};
 			textCount = sizeof(clockText) / sizeof(String);
-			displayTexte(clockText, PA_LEFT, enc.getCount() * 10, pause, PA_PRINT ,PA_NO_EFFECT);
+			displayTexte(clockText, PA_CENTER, enc.getCount() * 10, pause, PA_PRINT ,PA_NO_EFFECT);
 		
 			break;	
 		}
 		case CLOCKANDDATE: 
 		{
-			texteAusgabe test3[] = 
+			parola.setFont(_sys_fixed_single);
+			texteAusgabe clockausgabe[] = 
 			{
 				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
 				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
@@ -81,8 +83,8 @@ void Display::setDisplayState()
 //				{ clo.getMonth(),PA_CENTER, enc.getCount()*10,pause,PA_MESH, PA_CLOSING_CURSOR },
 				{ clo.getDate(),PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_UP_LEFT, PA_GROW_DOWN },
 			};
-			textCount = sizeof(test3) / sizeof(test3[0]);
-			displayTexte(test3);
+			textCount = sizeof(clockausgabe) / sizeof(clockausgabe[0]);
+			displayTexte(clockausgabe);
 
 			break; 
 		}

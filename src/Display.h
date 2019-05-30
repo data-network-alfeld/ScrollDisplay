@@ -10,6 +10,7 @@
 #include "Menu.h"
 #include "Encoder.h"
 #include "Clock.h"
+#include "sys_fixed_single.h"
 
 class Display
 {
