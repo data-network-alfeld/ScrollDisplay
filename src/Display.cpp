@@ -6,10 +6,10 @@ Display::Display() {
 
 void Display::init(int encoderSwitchPin, Encoder enc, Clock clo)
 {
+	this->clo = clo;
 	this->enc = enc; 
     parola.begin();  // Start Parola
 	parola.setIntensity(intensity);
-	this->clo = clo;
 }
 
 void Display::displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut)
@@ -32,12 +32,12 @@ void Display::displayTexte(String text[], textPosition_t align, uint16_t speed, 
 	}
 }
 
-void Display::displayTexte(texteAusgabe a[])
+void Display::displayTexte(texteAusgabe ausgabe[])
 {
-	Serial.println(a[curText].text);
-	Latin1::utf8tolatin1(a[curText].text).toCharArray(textBuffer, sizeof(textBuffer));
-	parola.displayText(textBuffer, a[curText].align, a[curText].speed, a[curText].pause, a[curText].effectIn, a[curText].effectOut);
-	if (a[curText].effectIn == (textEffect_t) PA_SPRITE || a[curText].effectOut == (textEffect_t) PA_SPRITE)
+	Serial.println(ausgabe[curText].text);
+	Latin1::utf8tolatin1(ausgabe[curText].text).toCharArray(textBuffer, sizeof(textBuffer));
+	parola.displayText(textBuffer, ausgabe[curText].align, ausgabe[curText].speed, ausgabe[curText].pause, ausgabe[curText].effectIn, ausgabe[curText].effectOut);
+	if (ausgabe[curText].effectIn == (textEffect_t) PA_SPRITE || ausgabe[curText].effectOut == (textEffect_t) PA_SPRITE)
 	{
 		parola.setSpriteData(sprite[spriteStart].data, sprite[spriteStart].width, sprite[spriteStart].frames, sprite[spriteEnde].data, sprite[spriteEnde].width, sprite[spriteEnde].frames);
 	}
@@ -54,30 +54,36 @@ void Display::setDisplayState()
 			break; 
 		case CLOCK: 
 		{
-/*
-			String test2[] = 
+
+			String clockText[] = 
 			{
-//				"Uhrzeit", 
-				clo.getUhrzeit(),
-//				"Datum",
-				clo.getDatum()
-				};
-			textAnzahl = sizeof(test2) / sizeof(String);
-			displayTexte(test2, PA_LEFT, enc.getCount() * 10, pause, PA_PRINT ,PA_NO_EFFECT);
-*/			
+				clo.getTime(),
+			};
+			textCount = sizeof(clockText) / sizeof(String);
+			displayTexte(clockText, PA_LEFT, enc.getCount() * 10, pause, PA_PRINT ,PA_NO_EFFECT);
+		
+			break;	
+		}
+		case CLOCKANDDATE: 
+		{
 			texteAusgabe test3[] = 
 			{
-				{ "Uhrzeit",PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_CLOSING },
-				{ clo.getUhrzeit(),PA_CENTER, enc.getCount()*10,pause,PA_OPENING, PA_CLOSING },
-				{ "Tag :",PA_CENTER, enc.getCount()*10,pause,PA_GROW_DOWN, PA_GROW_UP },
-				{ clo.getWochentag(),PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_DOWN, PA_SCROLL_UP },
-				{ "Monat",PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_UP_LEFT, PA_SCROLL_DOWN_RIGHT },
-				{ clo.getMonat(),PA_CENTER, enc.getCount()*10,pause,PA_MESH, PA_CLOSING_CURSOR },
-				{ "Datum",PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_DOWN, PA_SCROLL_RIGHT },
-				{ clo.getDatum(),PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_UP_LEFT, PA_GROW_DOWN },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getWeekday(),PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_DOWN, PA_SCROLL_UP },
+//				{ "Monat",PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_UP_LEFT, PA_SCROLL_DOWN_RIGHT },
+//				{ clo.getMonth(),PA_CENTER, enc.getCount()*10,pause,PA_MESH, PA_CLOSING_CURSOR },
+				{ clo.getDate(),PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_UP_LEFT, PA_GROW_DOWN },
 			};
-			textAnzahl = sizeof(test3) / sizeof(test3[0]);
+			textCount = sizeof(test3) / sizeof(test3[0]);
 			displayTexte(test3);
+
 			break; 
 		}
 		case MENU: 
@@ -107,6 +113,10 @@ void Display::render()
 				parola.displayClear();
 				setDisplayState();
 				break; 
+			case STATE::CLOCKANDDATE:
+				parola.displayClear();
+				setDisplayState();
+				break; 
 			default:
 				break;
 		}
@@ -129,6 +139,11 @@ void Display::render()
 				state = STATE::MENU;
 				setDisplayState();
 				break;
+			case CLOCKANDDATE:
+				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
+				state = STATE::MENU;
+				setDisplayState();
+				break;
 			case MENU:
 				menuItemPressed(enc);
 				break;
@@ -146,7 +161,13 @@ void Display::render()
 		}
 		if (state == STATE::CLOCK)
 		{
-			curText = (++curText) % textAnzahl;
+			curText = (++curText) % textCount;
+			setDisplayState();
+			//parola.displayReset();  // Reset and display it again
+		}
+		if (state == STATE::CLOCKANDDATE)
+		{
+			curText = (++curText) % textCount;
 			setDisplayState();
 			//parola.displayReset();  // Reset and display it again
 		}

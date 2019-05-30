@@ -13,14 +13,14 @@ Clock::Clock()
 void Clock::init() 
 {
 	
-	//if (WiFi.status() != WL_CONNECTED) {return;}
+	if (WiFi.status() != WL_CONNECTED) {return;}
 	// Achtung kein UTC mehr
 	configTime(timezone_offset_secs, dst_offset_secs, "pool.ntp.org", "time.nist.gov");
 
 	Serial.print(F("Waiting for NTP time sync: "));
 	time_t now = time(nullptr);
 	while (now < 8 * 3600 * 2) 
-    {
+  {
 		yield();
 		delay(500);
 		Serial.print(F("."));
@@ -34,18 +34,18 @@ void Clock::init()
 	Serial.print(asctime(&timeinfo));
 }
 
-String Clock::getUhrzeit() 
+String Clock::getTime() 
 {
 	char output[128];
 	time_t now = time(nullptr);
 	struct tm timeinfo;
 	localtime_r(&now, &timeinfo);
-	
+
 	strftime(output, sizeof output, "%T",&timeinfo);
 	return (output);
 }
 
-String Clock::getDatum() 
+String Clock::getDate() 
 {
 	char output[128];
 	time_t now = time(nullptr);
@@ -55,40 +55,43 @@ String Clock::getDatum()
 	return (output);
 }
 
-String Clock::getWochentag() 
+String Clock::getWeekday() 
 {
 	char output[128];
 	time_t now = time(nullptr);
 	struct tm timeinfo;
 	localtime_r(&now, &timeinfo);
-	sprintf(output,"%s",wochentag[timeinfo.tm_wday]);
+	sprintf(output,"%s",weekday[timeinfo.tm_wday]);
 	return (output);
 }
 
-String Clock::getMonat() 
+String Clock::getMonth() 
 {
 	char output[128];
 	time_t now = time(nullptr);
 	struct tm timeinfo;
 	localtime_r(&now, &timeinfo);
-	sprintf(output,"%s",monat[timeinfo.tm_mon]);
+	sprintf(output,"%s",month[timeinfo.tm_mon]);
 	return (output);
 }
 
-void Clock::setUhrzeit()
+void Clock::setTime(uint16_t jahr,uint16_t monat, uint16_t tag, uint16_t stunde, uint16_t minute, uint16_t sekunde)
 {
 	struct tm tm;
-	tm.tm_year = 2019 - 1900;
-	tm.tm_mon = 4;
-	tm.tm_mday = 24;
-	tm.tm_hour = 16;
-	tm.tm_min = 30;
-	tm.tm_sec = 0;
+	tm.tm_year = jahr - 1900;
+	tm.tm_mon = monat - 1;
+	tm.tm_mday = tag;
+	tm.tm_hour = stunde;
+	tm.tm_min = minute;
+	tm.tm_sec = sekunde;
 	time_t t = mktime(&tm);
-
 	struct timeval now = { .tv_sec = t};
 	settimeofday(&now, NULL);	
+}
 
-//	Serial.println(t);
-	
+void Clock::setTime(uint32_t timestamp)
+{
+	time_t t = timestamp;
+	struct timeval now = { .tv_sec = t};
+	settimeofday(&now, NULL);	
 }

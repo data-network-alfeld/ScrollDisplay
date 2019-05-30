@@ -6,7 +6,9 @@ const char* menuitemStrings[_MENUITEMS_LENGTH] = {
 	"WLAN-Infos",
 	"FW-Update",
 	"Über...",
-	"zurück"
+	"Scrolltext",
+	"Uhr",
+	"Uhr und Datum"
 };
 
 volatile uint8_t state = MENU; 
@@ -17,8 +19,16 @@ void menuItemPressed(Encoder& enc)
 	Display& disp = Display::instance();
 	switch (menuitem)
 	{
-		case MENUITEMS::BACK:
+		case MENUITEMS::TEXT:
 			state = SCROLLTEXT;
+			enc.setLimits(0, 20, 5);
+			break;
+		case MENUITEMS::UHR:
+			state = CLOCK;
+			enc.setLimits(0, 20, 5);
+			break;
+		case MENUITEMS::UHRUNDDATUM:
+			state = CLOCKANDDATE;
 			enc.setLimits(0, 20, 5);
 			break;
 		case MENUITEMS::ABOUT:

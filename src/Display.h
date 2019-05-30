@@ -21,10 +21,10 @@ private:
     textPosition_t scrollAlign = PA_LEFT;  // how to aligh the text
     int scrollPause = 0; // ms of pause after finished displaying message
     int scrollSpeed = 50;
-    int curText = 0;
     Encoder enc;
     Clock clo;
-    int textAnzahl = 0;
+    int textCount = 0;
+    int curText = 0;
 
     typedef struct 
     {
@@ -48,13 +48,15 @@ public:
     void init(int encoderSwitchPin, Encoder enc, Clock clo);
     void displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut);
     void displayTexte(String text[], textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut);
-    void displayTexte(texteAusgabe a[]);
+    void displayTexte(texteAusgabe ausgabe[]);
     void setDisplayState();
     void render();
     void animateUntilButtonPress(bool repeat = false);
     uint8_t intensity = 0;
 
     String scrollText = ""; 
+	String clockText[] ; 
+
     uint8_t animationStart = 4; 
     uint8_t animationEnde = 4; 
     uint8_t spriteStart = 4; 

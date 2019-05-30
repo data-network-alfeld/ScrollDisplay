@@ -9,14 +9,15 @@ class Clock
     public:
         Clock();
         void init();      
-        String getUhrzeit();
-        String getDatum();
-        String getWochentag();
-        String getMonat();
-        void setUhrzeit();
+        String getTime();
+        String getDate();
+        String getWeekday();
+        String getMonth();
+        void setTime(uint16_t jahr,uint16_t monat, uint16_t tag, uint16_t stunde, uint16_t minute, uint16_t sekunde);
+        void setTime(uint32_t timestamp);
 
     private:
-        const char* wochentag[7] 
+        const char* weekday[7] 
         {
             "Sonntag",
             "Montag",
@@ -26,7 +27,7 @@ class Clock
             "Freitag",
             "Samstag"
         };
-        const char* monat[12]
+        const char* month[12]
         {
             "Januar",
             "Februar",

@@ -13,6 +13,7 @@ enum STATE {
 	SCROLLTEXT, 
 	TEMPERATURE, 
 	CLOCK,
+	CLOCKANDDATE,
 	MENU, 
 	_STATE_LENGTH /* letzter Eintrag, als Limit */ 
 };
@@ -24,7 +25,9 @@ enum MENUITEMS {
 	WIFIINFO,
 	FIRMWAREUPDATE,
 	ABOUT, 
-	BACK,
+	TEXT,
+	UHR,
+	UHRUNDDATUM,
 	_MENUITEMS_LENGTH /* letzter Eintrag, als Limit */ 
 };
 extern const char* menuitemStrings[_MENUITEMS_LENGTH];

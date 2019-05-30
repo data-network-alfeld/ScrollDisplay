@@ -17,17 +17,16 @@ void setup()
 	readConfiguration();
 
 	// Uhrzeit stellen
-	if (WiFi.status() == WL_CONNECTED) {clo.init();}
-//	clo.setUhrzeit();
-	Serial.println(clo.getUhrzeit());
-
+	if (WiFi.status() == WL_CONNECTED) {
+		clo.init();
+	}
 
 	// Drehencoder initialisieren
 	enc.attachSingleEdge(ENCODER_DT, ENCODER_CLK);
 	enc.attachButton(ENCODER_SW);
 
 	// Vernünftigen Ausgangszustand definieren
-	state = STATE::CLOCK;
+	state = STATE::SCROLLTEXT;
 	enc.setLimits(0, 20, 5);
 
 	// Display initialisieren
