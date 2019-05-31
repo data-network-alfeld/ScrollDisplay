@@ -1,5 +1,6 @@
 #include "Main.h"
 
+Clock clo;
 Encoder enc; 
 Display& disp = Display::instance();
 
@@ -15,6 +16,11 @@ void setup()
 	beginConfiguration();
 	readConfiguration();
 
+	// Uhrzeit stellen
+	if (WiFi.status() == WL_CONNECTED) {
+		clo.init();
+	}
+
 	// Drehencoder initialisieren
 	enc.attachSingleEdge(ENCODER_DT, ENCODER_CLK);
 	enc.attachButton(ENCODER_SW);
@@ -24,7 +30,7 @@ void setup()
 	enc.setLimits(0, 20, 5);
 
 	// Display initialisieren
-	disp.init(ENCODER_SW, enc);
+	disp.init(ENCODER_SW, enc, clo);
 	disp.setDisplayState();
 }
 

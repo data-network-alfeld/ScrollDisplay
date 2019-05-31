@@ -4,8 +4,9 @@
 Display::Display() {
 }
 
-void Display::init(int encoderSwitchPin, Encoder enc)
+void Display::init(int encoderSwitchPin, Encoder enc, Clock clo)
 {
+	this->clo = clo;
 	this->enc = enc; 
     parola.begin();  // Start Parola
 	parola.setIntensity(intensity);
@@ -21,8 +22,29 @@ void Display::displayText(String text, textPosition_t align, uint16_t speed, uin
 	}
 }
 
+void Display::displayTexte(String text[], textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut)
+{
+	Latin1::utf8tolatin1(text[curText]).toCharArray(textBuffer, sizeof(textBuffer));
+	parola.displayText(textBuffer, align, speed, pause, effectIn, effectOut);
+	if (effectIn == (textEffect_t) PA_SPRITE || effectOut == (textEffect_t) PA_SPRITE)
+	{
+		parola.setSpriteData(sprite[spriteStart].data, sprite[spriteStart].width, sprite[spriteStart].frames, sprite[spriteEnde].data, sprite[spriteEnde].width, sprite[spriteEnde].frames);
+	}
+}
+
+void Display::displayTexte(texteAusgabe ausgabe[])
+{
+	Latin1::utf8tolatin1(ausgabe[curText].text).toCharArray(textBuffer, sizeof(textBuffer));
+	parola.displayText(textBuffer, ausgabe[curText].align, ausgabe[curText].speed, ausgabe[curText].pause, ausgabe[curText].effectIn, ausgabe[curText].effectOut);
+	if (ausgabe[curText].effectIn == (textEffect_t) PA_SPRITE || ausgabe[curText].effectOut == (textEffect_t) PA_SPRITE)
+	{
+		parola.setSpriteData(sprite[spriteStart].data, sprite[spriteStart].width, sprite[spriteStart].frames, sprite[spriteEnde].data, sprite[spriteEnde].width, sprite[spriteEnde].frames);
+	}
+}
+
 void Display::setDisplayState()
 {
+	parola.setFont(NULL);
 	switch (state)
 	{
 		case SCROLLTEXT:
@@ -30,6 +52,40 @@ void Display::setDisplayState()
 			break;
 		case TEMPERATURE: 
 			break; 
+		case CLOCK: 
+		{
+			parola.setFont(_sys_fixed_single);
+			String clockText[] = 
+			{
+				clo.getTime(),
+			};
+			textCount = sizeof(clockText) / sizeof(String);
+			displayTexte(clockText, PA_CENTER, enc.getCount() * 10, pause, PA_PRINT ,PA_NO_EFFECT);
+			break;	
+		}
+		case CLOCKANDDATE: 
+		{
+			parola.setFont(_sys_fixed_single);
+			texteAusgabe clockausgabe[] = 
+			{
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getWeekday(),PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_DOWN, PA_SCROLL_UP },
+//				{ "Monat",PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_UP_LEFT, PA_SCROLL_DOWN_RIGHT },
+//				{ clo.getMonth(),PA_CENTER, enc.getCount()*10,pause,PA_MESH, PA_CLOSING_CURSOR },
+				{ clo.getDate(),PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_UP_LEFT, PA_GROW_DOWN },
+			};
+			textCount = sizeof(clockausgabe) / sizeof(clockausgabe[0]);
+			displayTexte(clockausgabe);
+
+			break; 
+		}
 		case MENU: 
 			displayText(menuitemStrings[menuitem] , PA_LEFT, 0, 0, PA_PRINT,PA_NO_EFFECT);
 			break; 
@@ -53,6 +109,14 @@ void Display::render()
 				parola.displayClear();
 				setDisplayState();
 				break; 
+			case STATE::CLOCK:
+				parola.displayClear();
+				setDisplayState();
+				break; 
+			case STATE::CLOCKANDDATE:
+				parola.displayClear();
+				setDisplayState();
+				break; 
 			default:
 				break;
 		}
@@ -70,6 +134,16 @@ void Display::render()
 				state = STATE::MENU;
 				setDisplayState();
 				break;
+			case CLOCK:
+				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
+				state = STATE::MENU;
+				setDisplayState();
+				break;
+			case CLOCKANDDATE:
+				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
+				state = STATE::MENU;
+				setDisplayState();
+				break;
 			case MENU:
 				menuItemPressed(enc);
 				break;
@@ -82,6 +156,18 @@ void Display::render()
 	{
 		if (state == STATE::SCROLLTEXT)
 		{
+			setDisplayState();
+			//parola.displayReset();  // Reset and display it again
+		}
+		if (state == STATE::CLOCK)
+		{
+			curText = (++curText) % textCount;
+			setDisplayState();
+			//parola.displayReset();  // Reset and display it again
+		}
+		if (state == STATE::CLOCKANDDATE)
+		{
+			curText = (++curText) % textCount;
 			setDisplayState();
 			//parola.displayReset();  // Reset and display it again
 		}

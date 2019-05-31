@@ -68,42 +68,12 @@ const char* animationEndeHTML = "<label for='animationEnde'>Animation Ende</labe
 
 const char* spriteStartHTML = "<span id='spriteStartBlock' style='display: none'><label for='spriteStart'>Sprite Start</label><br/>\
 <select name='spriteStart' id='spriteStart' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
-<option value='0' selected>Pacman</option>\
-<option value='1'>Pacman und Geist</option>\
-<option value='2'>Rocket</option>\
-<option value='3'>Invader</option>\
-<option value='4'>Chevron</option>\
-<option value='5'>Heart</option>\
-<option value='6'>Steamboat</option>\
-<option value='7'>Sailboat</option>\
-<option value='8'>Fireball</option>\
-<option value='9'>Roll1</option>\
-<option value='10'>Roll2</option>\
-<option value='11'>Arrow1</option>\
-<option value='12'>Arrow2</option>\
-<option value='13'>Wave</option>\
-<option value='14'>Lines</option>\
 </select><br> \
 <canvas id='spriteStartCanvas' width='200' height='100' style='border:1px solid #d3d3d3;'>\
 Your browser does not support the HTML5 canvas tag.</canvas></span>";
 
 const char* spriteEndeHTML = "<span id='spriteEndeBlock' style='display: none'><label for='spriteEnde'>Sprite Ende</label><br/>\
 <select name='spriteEnde' id='spriteEnde' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
-<option value='0' selected>Pacman</option>\
-<option value='1'>Pacman und Geist</option>\
-<option value='2'>Rocket</option>\
-<option value='3'>Invader</option>\
-<option value='4'>Chevron</option>\
-<option value='5'>Heart</option>\
-<option value='6'>Steamboat</option>\
-<option value='7'>Sailboat</option>\
-<option value='8'>Fireball</option>\
-<option value='9'>Roll1</option>\
-<option value='10'>Roll2</option>\
-<option value='11'>Arrow1</option>\
-<option value='12'>Arrow2</option>\
-<option value='13'>Wave</option>\
-<option value='14'>Lines</option>\
 </select><br>\
 <canvas id='spriteEndeCanvas' width='200' height='100' style='border:1px solid #d3d3d3;'>\
 Your browser does not support the HTML5 canvas tag.</canvas></span>";
@@ -235,3 +205,12 @@ slider.oninput = function() {\
 </script>\
 <br>";
 
+const char* timeHTML = "<input type='hidden' id='timestamp' value=''name='timestamp'>\
+<script>var d = new Date(); document.getElementById('timestamp').value = Math.floor(d.getTime() / 1000) - (d.getTimezoneOffset()*60); </script>";
+
+const char* menueHTML = "<label for='textAnzeige'>Anzeige</label><br/>\
+<select name='textAnzeige' id='textAnzeige' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
+<option value='0'>Scrolltext</option>\
+<option value='2'>Uhr</option>\
+<option value='3'>Uhr und Datum</option>\
+</select><br>";

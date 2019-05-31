@@ -10,6 +10,8 @@ WiFiManagerParameter spriteEnde_field;
 WiFiManagerParameter pause_field;
 WiFiManagerParameter intensity_field;
 WiFiManagerParameter javascript_field;
+WiFiManagerParameter time_field;
+WiFiManagerParameter menu_field;
 
 String ssid; 
 String allespritesString = "var allesprites=[";
@@ -35,13 +37,16 @@ void saveParamCallback()
     disp.pause      = getParam("pauseid").toInt();
     disp.intensity      = getParam("intensity").toInt();
 		disp.parola.setIntensity(disp.intensity);
+		if (WiFi.status() != WL_CONNECTED) {
+			clo.setTime(getParam("timestamp").toInt());
+		}
+		state = getParam("textAnzeige").toInt();
     saveConfiguration();
 }
 
 void initWLAN()
 {
   ssid = String("LED") + String(WIFI_getChipId(),HEX);
-
 	#ifdef CUSTOM_HOSTNAME
 		ssid = CUSTOM_HOSTNAME; 
 	#endif
@@ -82,6 +87,14 @@ void initWLAN()
 		allespritesString = allespritesString+"']";
 	}
 	allespritesString = allespritesString+"];\n";
+	allespritesString = allespritesString + "\
+		var selectSpritestart = document.getElementById('spriteStart');\
+		var selectSpriteende = document.getElementById('spriteEnde');\
+		for (index in allesprites) {\
+			selectSpritestart.options[selectSpritestart.options.length] = new Option(allesprites[index][0], index);\
+			selectSpriteende.options[selectSpriteende.options.length] = new Option(allesprites[index][0], index);\
+		}\
+	";
 	allespritesString = "<script>" + allespritesString + javascript + "</script>";
 
 	int customFieldLength = 100;
@@ -94,6 +107,8 @@ void initWLAN()
 	new (&pause_field) WiFiManagerParameter("pauseid", "Pausendauer (in ms)", "1000", customFieldLength,"placeholder=\"1000\"");
 	new (&intensity_field) WiFiManagerParameter(intensityHTML);
 	new (&javascript_field) WiFiManagerParameter(allespritesString.c_str());
+	new (&time_field) WiFiManagerParameter(timeHTML);
+	new (&menu_field) WiFiManagerParameter(menueHTML);
 
 	wm.addParameter(&text_field);
 	wm.addParameter(&animationStart_field);
@@ -103,7 +118,10 @@ void initWLAN()
 	wm.addParameter(&pause_field);
 	wm.addParameter(&intensity_field);
 	wm.addParameter(&javascript_field);
-
+	if (WiFi.status() != WL_CONNECTED) {
+		wm.addParameter(&time_field);
+	}
+	wm.addParameter(&menu_field);
 	wm.setSaveParamsCallback(saveParamCallback);
 
 	std::vector<const char *> menu = {"wifi","info","param","sep","restart","exit"};

@@ -43,7 +43,7 @@ uint8_t tryOTAUpdate()
 {
 	if (WiFi.status() == wl_status_t::WL_CONNECTED)
 	{
-		setClock();
+//		getClock();
 		WiFiClientSecure client;
 		client.setCACert(rootCACertificate);
 		client.setTimeout(12000);
@@ -66,6 +66,7 @@ uint8_t tryOTAUpdate()
 }
 
 // Set time via NTP, as required for x.509 validation
+/*
 void setClock() {
 	configTime(0, 0, "pool.ntp.org", "time.nist.gov");  // UTC
 
@@ -84,3 +85,4 @@ void setClock() {
 	Serial.print(F("Current time: "));
 	Serial.print(asctime(&timeinfo));
 }
+*/
