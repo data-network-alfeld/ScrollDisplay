@@ -7,6 +7,7 @@
 #include "Display.h"
 
 
+
 class Gameoflife
 {
     public:
@@ -16,9 +17,7 @@ class Gameoflife
         uint32_t countCells(void);
         void firstGeneration(void);
         void nextGeneration(void);
-        
+
     private:
-        int xMax = 8;
-        int yMax = 1;
 
 };

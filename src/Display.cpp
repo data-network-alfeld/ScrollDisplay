@@ -4,6 +4,13 @@
 
 Gameoflife gol;
 
+			static uint32_t timeLastRun = 0;
+			static uint8_t sameCount = 10;
+			static uint32_t lastCount = 0;
+
+
+
+
 Display::Display() {
 }
 
@@ -207,17 +214,19 @@ void Display::render()
 		{
 			// die sachen vom loop hierrein
 
-			static uint32_t timeLastRun = 0;
+/*			static uint32_t timeLastRun = 0;
 			static uint8_t sameCount = 10;
 			static uint32_t lastCount = 0;
+			*/
 			uint32_t count = gol.countCells();
 			
 			if (lastCount == count) sameCount++; else sameCount = 0;
 
-			if (sameCount >= 10)
+			if (sameCount >= 4)
 			{
 				max72xx.clear();     // mark the end of the display ...
 				delay(1000);    // ... with a minor pause!
+				Serial.println("hier bin ich");
 				gol.firstGeneration();
 				sameCount = 0;
 			}
@@ -230,7 +239,7 @@ void Display::render()
 				gol.nextGeneration();
 			}
 
-			setDisplayState();
+		//	setDisplayState();
 			//parola.displayReset();  // Reset and display it again
 		}
 	}

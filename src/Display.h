@@ -48,8 +48,8 @@ public:
     }
     ~Display() {}
     MD_Parola parola = MD_Parola(MD_MAX72XX::FC16_HW, MAX7219_CS, MAX7219_NUM_DISPLAYS);
-//    MD_MAXPanel max72xx = MD_MAXPanel(parola.getGraphicObject,8,1);
-    MD_MAXPanel max72xx = MD_MAXPanel(MD_MAX72XX::FC16_HW, MAX7219_CS, 8,1); 
+    MD_MAXPanel max72xx = MD_MAXPanel(parola.getGraphicObject(),8,1);
+//    MD_MAXPanel max72xx = MD_MAXPanel(MD_MAX72XX::FC16_HW, MAX7219_CS, 8,1); 
     void init(int encoderSwitchPin, Encoder enc, Clock clo);
     void displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut);
     void displayTexte(String text[], textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut);

@@ -1,5 +1,5 @@
 #include "Clock.h"
-#include <Wifi.h>
+#include "WLAN.h"
 
 
 const int timezone_offset_secs = 1* 60 *60;
