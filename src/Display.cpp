@@ -1,5 +1,8 @@
 #include "Display.h"
 #include "Sprite.h"
+#include "randomseed.h"
+
+Gameoflife gol;
 
 Display::Display() {
 }
@@ -10,6 +13,8 @@ void Display::init(int encoderSwitchPin, Encoder enc, Clock clo)
 	this->enc = enc; 
     parola.begin();  // Start Parola
 	parola.setIntensity(intensity);
+	max72xx.begin();
+
 }
 
 void Display::displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut)
@@ -76,7 +81,7 @@ void Display::setDisplayState()
 				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
 				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
 				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
-				{ clo.getWeekday(),PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_DOWN, PA_SCROLL_UP },
+				{ clo.getWeekday(),PA_CENTER, enc.getCount()*10,pause,PA_SPRITE, PA_SPRITE },
 //				{ "Monat",PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_UP_LEFT, PA_SCROLL_DOWN_RIGHT },
 //				{ clo.getMonth(),PA_CENTER, enc.getCount()*10,pause,PA_MESH, PA_CLOSING_CURSOR },
 				{ clo.getDate(),PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_UP_LEFT, PA_GROW_DOWN },
@@ -86,6 +91,13 @@ void Display::setDisplayState()
 
 			break; 
 		}
+		case GAMEOFLIFE:
+
+			// setup sachen first gen nur einmal
+			max72xx.clear();
+//			gol.init();
+
+			break;
 		case MENU: 
 			displayText(menuitemStrings[menuitem] , PA_LEFT, 0, 0, PA_PRINT,PA_NO_EFFECT);
 			break; 
@@ -102,18 +114,27 @@ void Display::render()
 		switch (state)
 		{
 			case STATE::MENU:
+				max72xx.clear();
 				menuitem = enc.getCount();
 				setDisplayState();
 				break;
 			case STATE::SCROLLTEXT:
+				max72xx.clear();
 				parola.displayClear();
 				setDisplayState();
 				break; 
 			case STATE::CLOCK:
+				max72xx.clear();
 				parola.displayClear();
 				setDisplayState();
 				break; 
 			case STATE::CLOCKANDDATE:
+				max72xx.clear();
+				parola.displayClear();
+				setDisplayState();
+				break; 
+			case STATE::GAMEOFLIFE:
+				max72xx.clear();
 				parola.displayClear();
 				setDisplayState();
 				break; 
@@ -144,6 +165,11 @@ void Display::render()
 				state = STATE::MENU;
 				setDisplayState();
 				break;
+			case GAMEOFLIFE:
+				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
+				state = STATE::MENU;
+				setDisplayState();
+				break;
 			case MENU:
 				menuItemPressed(enc);
 				break;
@@ -161,13 +187,49 @@ void Display::render()
 		}
 		if (state == STATE::CLOCK)
 		{
-			curText = (++curText) % textCount;
+			if (textCount != 0) 
+			{
+				curText = (++curText) % textCount;
+			}
 			setDisplayState();
 			//parola.displayReset();  // Reset and display it again
 		}
 		if (state == STATE::CLOCKANDDATE)
 		{
-			curText = (++curText) % textCount;
+			if (textCount != 0) 
+			{
+				curText = (++curText) % textCount;
+			}
+			setDisplayState();
+			//parola.displayReset();  // Reset and display it again
+		}
+		if (state == STATE::GAMEOFLIFE)
+		{
+			// die sachen vom loop hierrein
+
+			static uint32_t timeLastRun = 0;
+			static uint8_t sameCount = 10;
+			static uint32_t lastCount = 0;
+			uint32_t count = gol.countCells();
+			
+			if (lastCount == count) sameCount++; else sameCount = 0;
+
+			if (sameCount >= 10)
+			{
+				max72xx.clear();     // mark the end of the display ...
+				delay(1000);    // ... with a minor pause!
+				gol.firstGeneration();
+				sameCount = 0;
+			}
+			lastCount = count;
+				
+			// Check if next generation time
+			if (millis() - timeLastRun >= 150)
+			{
+				timeLastRun = millis();
+				gol.nextGeneration();
+			}
+
 			setDisplayState();
 			//parola.displayReset();  // Reset and display it again
 		}

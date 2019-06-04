@@ -14,6 +14,7 @@ enum STATE {
 	TEMPERATURE, 
 	CLOCK,
 	CLOCKANDDATE,
+	GAMEOFLIFE,
 	MENU, 
 	_STATE_LENGTH /* letzter Eintrag, als Limit */ 
 };
@@ -28,6 +29,7 @@ enum MENUITEMS {
 	TEXT,
 	UHR,
 	UHRUNDDATUM,
+	GAMELIFE,
 	_MENUITEMS_LENGTH /* letzter Eintrag, als Limit */ 
 };
 extern const char* menuitemStrings[_MENUITEMS_LENGTH];
