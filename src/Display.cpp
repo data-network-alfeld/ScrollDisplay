@@ -1,5 +1,6 @@
 #include "Display.h"
 #include "Sprite.h"
+#include "randomseed.h"
 
 Display::Display() {
 }
@@ -10,6 +11,8 @@ void Display::init(int encoderSwitchPin, Encoder enc, Clock clo)
 	this->enc = enc; 
     parola.begin();  // Start Parola
 	parola.setIntensity(intensity);
+	maxPan.begin();
+	maxPan.setIntensity(intensity);
 }
 
 void Display::displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut)
@@ -76,7 +79,7 @@ void Display::setDisplayState()
 				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
 				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
 				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
-				{ clo.getWeekday(),PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_DOWN, PA_SCROLL_UP },
+				{ clo.getWeekday(),PA_CENTER, enc.getCount()*10,pause,PA_SPRITE, PA_SPRITE },
 //				{ "Monat",PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_UP_LEFT, PA_SCROLL_DOWN_RIGHT },
 //				{ clo.getMonth(),PA_CENTER, enc.getCount()*10,pause,PA_MESH, PA_CLOSING_CURSOR },
 				{ clo.getDate(),PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_UP_LEFT, PA_GROW_DOWN },
@@ -86,6 +89,9 @@ void Display::setDisplayState()
 
 			break; 
 		}
+		case GAMEOFLIFE:
+			maxPan.clear();
+			break;
 		case MENU: 
 			displayText(menuitemStrings[menuitem] , PA_LEFT, 0, 0, PA_PRINT,PA_NO_EFFECT);
 			break; 
@@ -102,18 +108,27 @@ void Display::render()
 		switch (state)
 		{
 			case STATE::MENU:
+				maxPan.clear();
 				menuitem = enc.getCount();
 				setDisplayState();
 				break;
 			case STATE::SCROLLTEXT:
+				maxPan.clear();
 				parola.displayClear();
 				setDisplayState();
 				break; 
 			case STATE::CLOCK:
+				maxPan.clear();
 				parola.displayClear();
 				setDisplayState();
 				break; 
 			case STATE::CLOCKANDDATE:
+				maxPan.clear();
+				parola.displayClear();
+				setDisplayState();
+				break; 
+			case STATE::GAMEOFLIFE:
+				maxPan.clear();
 				parola.displayClear();
 				setDisplayState();
 				break; 
@@ -144,6 +159,11 @@ void Display::render()
 				state = STATE::MENU;
 				setDisplayState();
 				break;
+			case GAMEOFLIFE:
+				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
+				state = STATE::MENU;
+				setDisplayState();
+				break;
 			case MENU:
 				menuItemPressed(enc);
 				break;
@@ -161,14 +181,45 @@ void Display::render()
 		}
 		if (state == STATE::CLOCK)
 		{
-			curText = (++curText) % textCount;
+			if (textCount != 0) 
+			{
+				curText = (++curText) % textCount;
+			}
 			setDisplayState();
 			//parola.displayReset();  // Reset and display it again
 		}
 		if (state == STATE::CLOCKANDDATE)
 		{
-			curText = (++curText) % textCount;
+			if (textCount != 0) 
+			{
+				curText = (++curText) % textCount;
+			}
 			setDisplayState();
+			//parola.displayReset();  // Reset and display it again
+		}
+		if (state == STATE::GAMEOFLIFE)
+		{
+			Gameoflife gol;
+
+			uint32_t count = gol.countCells();
+			
+			if (gollastCount == count) golsameCount++; else golsameCount = 0;
+
+			if (golsameCount >= 4)
+			{
+				maxPan.clear();     // mark the end of the display ...
+				delay(1000);    // ... with a minor pause!
+				gol.firstGeneration();
+				golsameCount = 0;
+			}
+			gollastCount = count;
+				
+			// Check if next generation time
+			if (millis() - goltimeLastRun >= 150)
+			{
+				goltimeLastRun = millis();
+				gol.nextGeneration();
+			}
 			//parola.displayReset();  // Reset and display it again
 		}
 	}

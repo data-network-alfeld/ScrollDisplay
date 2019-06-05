@@ -3,6 +3,8 @@
 //#define CUSTOM_HOSTNAME "ledmatrix"
 
 #define MAX7219_NUM_DISPLAYS 8
+#define MAX7219_X_DISPLAYS 8
+#define MAX7219_Y_DISPLAYS 1
 
 #define MAX7219_CS  5
 #define MAX7219_DIN 23

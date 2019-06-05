@@ -213,4 +213,5 @@ const char* menueHTML = "<label for='textAnzeige'>Anzeige</label><br/>\
 <option value='0'>Scrolltext</option>\
 <option value='2'>Uhr</option>\
 <option value='3'>Uhr und Datum</option>\
+<option value='4'>Game of Life</option>\
 </select><br>";
