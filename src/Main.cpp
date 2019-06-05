@@ -2,10 +2,7 @@
 
 Clock clo;
 Encoder enc; 
-#ifndef _disp_
-#define _disp_
-	Display& disp = Display::instance();
-#endif
+Display& disp = Display::instance();
 
 void setup()
 {
