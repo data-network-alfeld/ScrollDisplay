@@ -32,18 +32,18 @@ void saveParamCallback()
 {
     Display& disp = Display::instance();
     disp.scrollText = getParam("textid"); 
-    disp.animationStart  = getParam("animationStart").toInt();
-    disp.animationEnde  = getParam("animationEnde").toInt();
-    disp.spriteStart  = getParam("spriteStart").toInt();
-    disp.spriteEnde  = getParam("spriteEnde").toInt();
-    disp.pause      = getParam("pauseid").toInt();
-    disp.intensity      = getParam("intensity").toInt();
-    firmwareauswahl    = getParam("firmware").toInt();
-		disp.parola.setIntensity(disp.intensity);
-		if (WiFi.status() != WL_CONNECTED) {
-			clo.setTime(getParam("timestamp").toInt());
-		}
-		state = getParam("textAnzeige").toInt();
+    disp.animationStart = getParam("animationStart").toInt();
+    disp.animationEnde = getParam("animationEnde").toInt();
+    disp.spriteStart = getParam("spriteStart").toInt();
+    disp.spriteEnde = getParam("spriteEnde").toInt();
+    disp.pause = getParam("pauseid").toInt();
+    disp.intensity = getParam("intensity").toInt();
+    firmwareauswahl = getParam("firmware").toInt();
+	disp.parola.setIntensity(disp.intensity);
+	if (WiFi.status() != WL_CONNECTED) {
+		clo.setTime(getParam("timestamp").toInt());
+	}
+	state = getParam("textAnzeige").toInt();
     saveConfiguration();
 }
 

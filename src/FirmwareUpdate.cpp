@@ -1,8 +1,13 @@
 #include "FirmwareUpdate.h"
 
 String otaErrorCode;
+uint8_t firmwareauswahl;
+
 
 const char* otaURL = "https://ota.tbspace.de/scrolldisplay/update.php?key=KRVZIqfH0l2Q8OT3XPco";
+
+const char* otaURLbeta = "https://ota.tbspace.de/scrolldisplay/update.php?beta=1&key=KRVZIqfH0l2Q8OT3XPco";
+const char* otaURLexperimental = "https://ota.tbspace.de/scrolldisplay/update.php?experimental=1&key=KRVZIqfH0l2Q8OT3XPco";
 
 const char* rootCACertificate = \
 "-----BEGIN CERTIFICATE-----\n" \
@@ -47,7 +52,25 @@ uint8_t tryOTAUpdate()
 		WiFiClientSecure client;
 		client.setCACert(rootCACertificate);
 		client.setTimeout(12000);
-		t_httpUpdate_return ret = httpUpdate.update(client, otaURL);
+		String url;
+		switch (firmwareauswahl)
+		{
+		case 1:
+			url = otaURL;
+			break;
+		case 2:
+			url = otaURLbeta;
+			break;
+		case 3:
+			url = otaURLexperimental;
+			break;
+		
+		default:
+			url = otaURL;
+			break;
+		}
+
+		t_httpUpdate_return ret = httpUpdate.update(client, url);
 		switch (ret) {
 			case HTTP_UPDATE_FAILED:
                 otaErrorCode = httpUpdate.getLastErrorString();

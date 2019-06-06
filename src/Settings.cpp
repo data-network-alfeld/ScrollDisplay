@@ -17,8 +17,8 @@ void readConfiguration()
     disp.spriteStart = prefs.getUChar("spriteStart", 4);
     disp.spriteEnde = prefs.getUChar("spriteEnde", 4);
     disp.pause = prefs.getUShort("pause", 2000);
-
-    disp.intensity = prefs.getUChar("intensity", 0);
+    firmwareauswahl = prefs.getUShort("firmwareauswahl",0);
+    disp.intensity = prefs.getUShort("intensity", 0);
     disp.parola.setIntensity(disp.intensity);
 }
 
@@ -31,5 +31,6 @@ void saveConfiguration()
     prefs.putUChar("spriteStart", disp.spriteStart);
     prefs.putUChar("spriteEnde", disp.spriteEnde);
     prefs.putUShort("pause", disp.pause);
-    prefs.putUChar("intensity", disp.intensity);
+    prefs.getUShort("intensity", disp.intensity);
+    prefs.putUShort("firmwareauswahl", firmwareauswahl);
 }
