@@ -208,10 +208,31 @@ slider.oninput = function() {\
 const char* timeHTML = "<input type='hidden' id='timestamp' value=''name='timestamp'>\
 <script>var d = new Date(); document.getElementById('timestamp').value = Math.floor(d.getTime() / 1000) - (d.getTimezoneOffset()*60); </script>";
 
-const char* menueHTML = "<label for='textAnzeige'>Anzeige</label><br/>\
+const char* menueHTML = "<label for='textAnzeige' onclick='extramenu();'>Anzeige</label><br/>\
 <select name='textAnzeige' id='textAnzeige' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
 <option value='0'>Scrolltext</option>\
 <option value='2'>Uhr</option>\
 <option value='3'>Uhr und Datum</option>\
 <option value='4'>Game of Life</option>\
 </select><br>";
+
+const char* extramenueHTML = "<span id='extramenue' style='display: none'><br><label for='extramenue'>Extra Menü</label><br/>\
+<br>\
+<label for='firmware'>Firmware</label>\
+<select name='firmware' id='firmware' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
+<option value='0'></option>\
+<option value='1'>Stable</option>\
+<option value='2'>Beta</option>\
+<option value='3'>Experimental</option>\
+</select><br>\
+<script>\
+extra=0;\
+function extramenu() {\
+  extra++;\
+  if (extra > 3) {\
+    document.getElementById('extramenue').style.display='block';\
+  }\
+}\
+</script>\
+\
+</span>";

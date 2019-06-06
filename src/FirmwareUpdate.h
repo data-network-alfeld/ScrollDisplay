@@ -13,6 +13,7 @@ extern uint8_t tryOTAUpdate();
 //extern void setClock();
 
 extern String otaErrorCode; 
+extern uint8_t firmwareauswahl;
 
 enum OTAResult {
 	NO_WIFI_CONNECTION,

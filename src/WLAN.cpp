@@ -1,6 +1,7 @@
 #include "WLAN.h"
 #include "HTML.h"
 
+
 WiFiManager wm; // global wm instance
 WiFiManagerParameter text_field; 
 WiFiManagerParameter animationStart_field;
@@ -12,6 +13,7 @@ WiFiManagerParameter intensity_field;
 WiFiManagerParameter javascript_field;
 WiFiManagerParameter time_field;
 WiFiManagerParameter menu_field;
+WiFiManagerParameter extramenu_field;
 
 String ssid; 
 String allespritesString = "var allesprites=[";
@@ -36,6 +38,7 @@ void saveParamCallback()
     disp.spriteEnde  = getParam("spriteEnde").toInt();
     disp.pause      = getParam("pauseid").toInt();
     disp.intensity      = getParam("intensity").toInt();
+    firmwareauswahl    = getParam("firmware").toInt();
 		disp.parola.setIntensity(disp.intensity);
 		if (WiFi.status() != WL_CONNECTED) {
 			clo.setTime(getParam("timestamp").toInt());
@@ -109,6 +112,7 @@ void initWLAN()
 	new (&javascript_field) WiFiManagerParameter(allespritesString.c_str());
 	new (&time_field) WiFiManagerParameter(timeHTML);
 	new (&menu_field) WiFiManagerParameter(menueHTML);
+	new (&extramenu_field) WiFiManagerParameter(extramenueHTML);
 
 	wm.addParameter(&text_field);
 	wm.addParameter(&animationStart_field);
@@ -122,6 +126,7 @@ void initWLAN()
 		wm.addParameter(&time_field);
 	}
 	wm.addParameter(&menu_field);
+	wm.addParameter(&extramenu_field);
 	wm.setSaveParamsCallback(saveParamCallback);
 
 	std::vector<const char *> menu = {"wifi","info","param","sep","restart","exit"};
