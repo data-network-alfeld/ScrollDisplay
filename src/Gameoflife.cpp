@@ -78,9 +78,11 @@ void Gameoflife::nextGeneration(void)
       count += disp.maxPan.getPoint(x, y-1)  ? 1:0;
       count += disp.maxPan.getPoint(x+1, y-1)? 1:0;
 
-      Serial.printf("\n%d %d", x, y);
-      Serial.printf(" count=%d", count);
-      Serial.print(" ->");
+    	delay(1);
+
+//      Serial.printf("\n%d %d", x, y);
+//      Serial.printf(" count=%d", count);
+//      Serial.print(" ->");
       
       if (count < 2)
       {
