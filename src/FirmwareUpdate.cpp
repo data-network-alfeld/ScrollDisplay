@@ -5,9 +5,8 @@ uint8_t firmwareauswahl;
 
 
 const char* otaURL = "https://ota.tbspace.de/scrolldisplay/update.php?key=KRVZIqfH0l2Q8OT3XPco";
-
-const char* otaURLbeta = "https://ota.tbspace.de/scrolldisplay/update.php?beta=1&key=KRVZIqfH0l2Q8OT3XPco";
-const char* otaURLexperimental = "https://ota.tbspace.de/scrolldisplay/update.php?experimental=1&key=KRVZIqfH0l2Q8OT3XPco";
+const char* otaURLbeta = "https://ota.tbspace.de/scrolldisplay/update.php?channel=beta&key=KRVZIqfH0l2Q8OT3XPco";
+const char* otaURLexperimental = "https://ota.tbspace.de/scrolldisplay/update.php?channel=experimental&key=KRVZIqfH0l2Q8OT3XPco";
 
 const char* rootCACertificate = \
 "-----BEGIN CERTIFICATE-----\n" \

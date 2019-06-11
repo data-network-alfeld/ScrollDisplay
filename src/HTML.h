@@ -214,6 +214,7 @@ const char* menueHTML = "<label for='textAnzeige' onclick='extramenu();'>Anzeige
 <option value='2'>Uhr</option>\
 <option value='3'>Uhr und Datum</option>\
 <option value='4'>Game of Life</option>\
+<option value='99'>Automatik</option>\
 </select><br>";
 
 const char* extramenueHTML = "<span id='extramenue' style='display: none'><br><label for='extramenue'>Extra Menü</label><br/>\

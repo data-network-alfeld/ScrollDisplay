@@ -43,7 +43,13 @@ void saveParamCallback()
 	if (WiFi.status() != WL_CONNECTED) {
 		clo.setTime(getParam("timestamp").toInt());
 	}
-	state = getParam("textAnzeige").toInt();
+	if (getParam("textAnzeige").toInt() == 99) {
+		disp.autostate = true;
+		state = STATE::SCROLLTEXT;
+	} else {
+		disp.autostate = false;
+		state = getParam("textAnzeige").toInt();
+	}
     saveConfiguration();
 }
 

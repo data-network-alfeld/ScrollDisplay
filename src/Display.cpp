@@ -134,7 +134,7 @@ void Display::render()
 				break; 
 			default:
 				break;
-		}
+		}		
 	}
 	
 	// Wurde der Taster gedrückt? 
@@ -183,7 +183,7 @@ void Display::render()
 		{
 			if (textCount != 0) 
 			{
-				curText = (++curText) % textCount;
+				curText = (curText+ 1) % textCount;
 			}
 			setDisplayState();
 			//parola.displayReset();  // Reset and display it again
@@ -192,7 +192,7 @@ void Display::render()
 		{
 			if (textCount != 0) 
 			{
-				curText = (++curText) % textCount;
+				curText = (curText+ 1) % textCount;
 			}
 			setDisplayState();
 			//parola.displayReset();  // Reset and display it again
@@ -221,6 +221,33 @@ void Display::render()
 				gol.nextGeneration();
 			}
 			//parola.displayReset();  // Reset and display it again
+		}
+	}
+
+	if (autostate) {
+		if (millis() - statetimeLastRun >= 30000)
+		{
+			statetimeLastRun = millis();
+			Serial.println("neuer state");
+
+ 			if (state == STATE::SCROLLTEXT) {
+				state = STATE::CLOCK;
+			setDisplayState();		
+			} 
+ 			if (state == STATE::CLOCK)
+			{
+				state = STATE::GAMEOFLIFE;
+			setDisplayState();		
+			}
+			else if (state == STATE::CLOCKANDDATE)
+			{
+				state = STATE::CLOCK;
+			}
+			else if (state == STATE::GAMEOFLIFE)
+			{
+				state = STATE::CLOCK;
+			setDisplayState();		
+			}
 		}
 	}
 }
