@@ -9,7 +9,7 @@ const char* menuitemStrings[_MENUITEMS_LENGTH] = {
 	"Scrolltext",
 	"Uhr",
 	"Uhr und Datum",
-	"Gane of Life",
+	"Game of Life",
 	"Automatik"
 };
 

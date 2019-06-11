@@ -28,6 +28,7 @@ private:
     Clock clo;
     int textCount = 0;
     int curText = 0;
+    bool curTextBoll = false;
     uint32_t goltimeLastRun = 0;
     uint8_t golsameCount = 10;
     uint32_t gollastCount = 0;

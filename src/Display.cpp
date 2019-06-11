@@ -52,11 +52,14 @@ void Display::setDisplayState()
 	{
 		case SCROLLTEXT:
 			displayText(scrollText , PA_CENTER, enc.getCount() * 10, pause, (textEffect_t) animationStart,(textEffect_t) animationEnde);
+			curTextBoll = false;
 			break;
 		case TEMPERATURE: 
+			curTextBoll = false;
 			break; 
 		case CLOCK: 
 		{
+			if (!curTextBoll){curText=0;curTextBoll = true;}
 			parola.setFont(_sys_fixed_single);
 			String clockText[] = 
 			{
@@ -68,6 +71,7 @@ void Display::setDisplayState()
 		}
 		case CLOCKANDDATE: 
 		{
+			if (!curTextBoll){curText=0;curTextBoll = true;}
 			parola.setFont(_sys_fixed_single);
 			texteAusgabe clockausgabe[] = 
 			{
@@ -91,9 +95,11 @@ void Display::setDisplayState()
 		}
 		case GAMEOFLIFE:
 			maxPan.clear();
+			curTextBoll = false;
 			break;
 		case MENU: 
 			displayText(menuitemStrings[menuitem] , PA_LEFT, 0, 0, PA_PRINT,PA_NO_EFFECT);
+			curTextBoll = false;
 			break; 
 		default:
 			break;
@@ -228,26 +234,29 @@ void Display::render()
 		if (millis() - statetimeLastRun >= 30000)
 		{
 			statetimeLastRun = millis();
-			Serial.println("neuer state");
+			Serial.print("Alter State = ");
+			Serial.println(state);
 
  			if (state == STATE::SCROLLTEXT) {
 				state = STATE::CLOCK;
 			setDisplayState();		
 			} 
- 			if (state == STATE::CLOCK)
+ 			else if (state == STATE::CLOCK)
 			{
 				state = STATE::GAMEOFLIFE;
 			setDisplayState();		
 			}
 			else if (state == STATE::CLOCKANDDATE)
 			{
-				state = STATE::CLOCK;
+				state = STATE::SCROLLTEXT;
 			}
 			else if (state == STATE::GAMEOFLIFE)
 			{
-				state = STATE::CLOCK;
+				state = STATE::CLOCKANDDATE;
 			setDisplayState();		
 			}
+			Serial.print("neuer State = ");
+			Serial.println(state);
 		}
 	}
 }
