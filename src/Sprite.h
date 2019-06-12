@@ -169,6 +169,18 @@ const uint8_t PROGMEM chevron[F_CHEVRON * W_CHEVRON] =  // chevron
   0x18, 0x3c, 0x66, 0xc3, 0x99, 0x3c, 0x66, 0xc3, 0x81,
 };
 
+const String N_WALKER = "Mann";
+const uint8_t F_WALKER = 5;
+const uint8_t W_WALKER = 7;
+const uint8_t PROGMEM walker[F_WALKER * W_WALKER] =  // walking man
+{
+    0x00, 0x48, 0x77, 0x1f, 0x1c, 0x94, 0x68,
+    0x00, 0x90, 0xee, 0x3e, 0x38, 0x28, 0xd0,
+    0x00, 0x00, 0xae, 0xfe, 0x38, 0x28, 0x40,
+    0x00, 0x00, 0x2e, 0xbe, 0xf8, 0x00, 0x00, 
+    0x00, 0x10, 0x6e, 0x3e, 0xb8, 0xe8, 0x00,
+};
+
 struct 
 {
   const uint8_t *data;
@@ -180,6 +192,7 @@ sprite[] =
 {
   { pacman1, W_PMAN1, F_PMAN1, N_PMAN1 },
   { pacman2, W_PMAN2, F_PMAN2, N_PMAN2 },
+  { walker, W_WALKER, F_WALKER, N_WALKER },
   { rocket, W_ROCKET, F_ROCKET, N_ROCKET },
   { invader, W_INVADER, F_INVADER, N_INVADER },
   { chevron, W_CHEVRON, F_CHEVRON, N_CHEVRON },

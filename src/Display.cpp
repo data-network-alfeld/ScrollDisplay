@@ -229,9 +229,6 @@ void Display::render()
 		if (millis() - statetimeLastRun >= 30000)
 		{
 			statetimeLastRun = millis();
-			Serial.print("Alter State = ");
-			Serial.println(state);
-
  			if (state == STATE::SCROLLTEXT) {
 				state = STATE::CLOCK;
 				setDisplayState();		
@@ -251,8 +248,6 @@ void Display::render()
 				state = STATE::CLOCKANDDATE;
 				setDisplayState();		
 			}
-			Serial.print("neuer State = ");
-			Serial.println(state);
 		}
 	}
 }
