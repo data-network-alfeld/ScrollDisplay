@@ -42,7 +42,14 @@ void selectStringGenerate()
 	selectString = selectString + "document.getElementById('pauseid').value='"+ String (disp.pause) +"';\n";
 	selectString = selectString + "document.getElementById('intensity').value='"+ String (disp.intensity) +"';\n";
 	selectString = selectString + "document.getElementById('intensityValue').innerHTML='"+ String (disp.intensity) +"';\n";
-	
+	if (disp.autostate == true) 
+	{
+		selectString = selectString + "document.getElementById('textAnzeige').value='99';\n";
+	} 
+	else 
+	{
+		selectString = selectString + "document.getElementById('textAnzeige').value='"+ String (state) +"';\n";
+	}
 	selectString = selectString + "</script>";
 }
 

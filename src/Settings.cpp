@@ -20,6 +20,8 @@ void readConfiguration()
     firmwareauswahl = prefs.getUShort("firmwareauswahl",0);
     disp.intensity = prefs.getUShort("intensity", 0);
     disp.parola.setIntensity(disp.intensity);
+    state = prefs.getUShort("state", STATE::SCROLLTEXT);
+    disp.autostate = prefs.getBool("autostate", false);
 }
 
 void saveConfiguration()
@@ -33,4 +35,6 @@ void saveConfiguration()
     prefs.putUShort("pause", disp.pause);
     prefs.getUShort("intensity", disp.intensity);
     prefs.putUShort("firmwareauswahl", firmwareauswahl);
+    prefs.putUShort("state", state);
+    prefs.putBool("autostate", disp.autostate);
 }
