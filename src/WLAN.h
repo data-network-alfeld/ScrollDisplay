@@ -5,6 +5,7 @@
 #include "Settings.h"
 #include "Sprite.h"
 #include "Clock.h"
+#include "FirmwareUpdate.h"
 
 extern WiFiManager wm;
 extern WiFiManagerParameter custom_field;

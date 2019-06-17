@@ -9,12 +9,12 @@ void setup()
 	// UART für Debugging
 	Serial.begin(115200);
 
-	// WLAN initialisieren
-	initWLAN();
-
 	// Konfiguration aus dem SPIFFS lesen
 	beginConfiguration();
 	readConfiguration();
+
+	// WLAN initialisieren
+	initWLAN();
 
 	// Uhrzeit stellen
 	if (WiFi.status() == WL_CONNECTED) {
@@ -26,7 +26,7 @@ void setup()
 	enc.attachButton(ENCODER_SW);
 
 	// Vernünftigen Ausgangszustand definieren
-	state = STATE::SCROLLTEXT;
+//	state = STATE::SCROLLTEXT;
 	enc.setLimits(0, 20, 5);
 
 	// Display initialisieren

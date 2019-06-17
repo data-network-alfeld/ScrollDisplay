@@ -9,7 +9,8 @@ const char* menuitemStrings[_MENUITEMS_LENGTH] = {
 	"Scrolltext",
 	"Uhr",
 	"Uhr und Datum",
-	"Gane of Life"
+	"Game of Life",
+	"Automatik"
 };
 
 volatile uint8_t state = MENU; 
@@ -20,6 +21,7 @@ void menuItemPressed(Encoder& enc)
 	Display& disp = Display::instance();
 	switch (menuitem)
 	{
+		disp.autostate = false;
 		case MENUITEMS::TEXT:
 			state = SCROLLTEXT;
 			enc.setLimits(0, 20, 5);
@@ -34,6 +36,11 @@ void menuItemPressed(Encoder& enc)
 			break;
 		case MENUITEMS::GAMELIFE:
 			state = GAMEOFLIFE;
+			enc.setLimits(0, 20, 5);
+			break;
+		case MENUITEMS::AUTOSTATE:
+			state = SCROLLTEXT;
+			disp.autostate = true;
 			enc.setLimits(0, 20, 5);
 			break;
 		case MENUITEMS::ABOUT:

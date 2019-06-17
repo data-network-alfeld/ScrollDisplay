@@ -30,6 +30,7 @@ enum MENUITEMS {
 	UHR,
 	UHRUNDDATUM,
 	GAMELIFE,
+	AUTOSTATE,
 	_MENUITEMS_LENGTH /* letzter Eintrag, als Limit */ 
 };
 extern const char* menuitemStrings[_MENUITEMS_LENGTH];
