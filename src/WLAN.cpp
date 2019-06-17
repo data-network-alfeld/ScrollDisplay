@@ -14,12 +14,40 @@ WiFiManagerParameter javascript_field;
 WiFiManagerParameter time_field;
 WiFiManagerParameter menu_field;
 WiFiManagerParameter extramenu_field;
+WiFiManagerParameter select_field;
 
 String ssid; 
 String allespritesString = "var allesprites=[";
+String selectString = "<script>";
 
+void selectStringGenerate()
+{
+    Display &disp = Display::instance();
+	selectString = "<script>";
+	selectString = selectString + "document.getElementById('textid').value='"+ String (disp.scrollText) +"';\n";
+	selectString = selectString + "document.getElementById('animationStart').value='"+String (disp.animationStart) +"';\n";
+	if (disp.animationStart == 6)
+	{
+		selectString = selectString + "document.getElementById('spriteStartBlock').style.display = 'block';\n";
+	}
+	selectString = selectString + "document.getElementById('animationEnde').value='"+ String (disp.animationEnde) +"';\n";
+	if (disp.animationEnde == 6)
+	{
+		selectString = selectString + "document.getElementById('spriteEndeBlock').style.display = 'block';\n";
+	}
+	selectString = selectString + "document.getElementById('spriteStart').value='"+ String (disp.spriteStart) +"';\n";
+	selectString = selectString + "spritewechsel("+String (disp.spriteStart)+",0);\n";
+	selectString = selectString + "document.getElementById('spriteEnde').value='"+ String (disp.spriteEnde) +"';\n";
+	selectString = selectString + "spritewechsel("+String (disp.spriteEnde)+",1);\n";
+	selectString = selectString + "document.getElementById('pauseid').value='"+ String (disp.pause) +"';\n";
+	selectString = selectString + "document.getElementById('intensity').value='"+ String (disp.intensity) +"';\n";
+	selectString = selectString + "document.getElementById('intensityValue').innerHTML='"+ String (disp.intensity) +"';\n";
+	
+	selectString = selectString + "</script>";
+}
 
-String getParam(String name){
+String getParam(String name)
+{
   //read parameter from server, for customhmtl input
   String value;
   if(wm.server->hasArg(name)) {
@@ -51,6 +79,9 @@ void saveParamCallback()
 		state = getParam("textAnzeige").toInt();
 	}
     saveConfiguration();
+	selectStringGenerate();
+	new (&select_field) WiFiManagerParameter(selectString.c_str());
+
 }
 
 void initWLAN()
@@ -107,7 +138,9 @@ void initWLAN()
 	allespritesString = "<script>" + allespritesString + javascript + "</script>";
 
 	int customFieldLength = 100;
-	
+//	readConfiguration();
+	selectStringGenerate();
+
 	new (&text_field) WiFiManagerParameter("textid", "Text", "Ferienpass 19", customFieldLength,"placeholder=\"Ferienpass 19\"");
 	new (&animationStart_field) WiFiManagerParameter(animationStartHTML);
 	new (&animationEnde_field) WiFiManagerParameter(animationEndeHTML);
@@ -119,6 +152,7 @@ void initWLAN()
 	new (&time_field) WiFiManagerParameter(timeHTML);
 	new (&menu_field) WiFiManagerParameter(menueHTML);
 	new (&extramenu_field) WiFiManagerParameter(extramenueHTML);
+	new (&select_field) WiFiManagerParameter(selectString.c_str());
 
 	wm.addParameter(&text_field);
 	wm.addParameter(&animationStart_field);
@@ -133,6 +167,7 @@ void initWLAN()
 	}
 	wm.addParameter(&menu_field);
 	wm.addParameter(&extramenu_field);
+	wm.addParameter(&select_field);
 	wm.setSaveParamsCallback(saveParamCallback);
 
 	std::vector<const char *> menu = {"wifi","info","param","sep","restart","exit"};

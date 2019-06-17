@@ -9,12 +9,12 @@ void setup()
 	// UART für Debugging
 	Serial.begin(115200);
 
-	// WLAN initialisieren
-	initWLAN();
-
 	// Konfiguration aus dem SPIFFS lesen
 	beginConfiguration();
 	readConfiguration();
+
+	// WLAN initialisieren
+	initWLAN();
 
 	// Uhrzeit stellen
 	if (WiFi.status() == WL_CONNECTED) {
