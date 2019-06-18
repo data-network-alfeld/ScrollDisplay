@@ -226,6 +226,12 @@ const char* extramenueHTML = "<span id='extramenue' style='display: none'><br><l
 <option value='2'>Beta</option>\
 <option value='3'>Experimental</option>\
 </select><br>\
+<label for='wlanssid'>Wlanssid</label>\
+<input type='text' name='wlanssid' id='wlanssid' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
+<br>\
+<label for='wlanpassword'>Wlanpassword (wichtig mindestens 8 Zeichen!)</label>\
+<input type='text' name='wlanpassword' id='wlanpassword' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
+<br>\
 <script>\
 extra=0;\
 function extramenu() {\

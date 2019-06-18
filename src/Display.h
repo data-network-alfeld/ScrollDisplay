@@ -72,4 +72,6 @@ public:
     uint8_t spriteStart = 4; 
     uint8_t spriteEnde = 4; 
     uint16_t pause = 2000;
+    String wlanPassword = "";
+    String wlanssid = "";
 };
