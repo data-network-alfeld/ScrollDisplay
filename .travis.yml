@@ -11,7 +11,21 @@ install:
 script:
 - platformio run
 
-#deploy:
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file: ".pioenvs/nodemcu-32s/firmware.bin"
+  skip_cleanup: true
+  overwrite: true
+  draft: true
+
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file: ".pioenvs/nodemcu-32s/firmware.bin"
+  skip_cleanup: true
+  on:
+    tags: true
+
 # provider: pages
 # github_token: $GITHUB_TOKEN
 # skip_cleanup: true
@@ -19,11 +33,3 @@ script:
 # verbose: true
 # on:
 #  branch: master
-
-deploy:
-  provider: releases
-  api_key: $GITHUB_TOKEN
-  file: ".pioenvs/nodemcu-32s/firmware.bin"
-  skip_cleanup: true
-  draft: true
-  
