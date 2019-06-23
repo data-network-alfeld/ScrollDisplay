@@ -17,6 +17,7 @@ WiFiManagerParameter extramenu_field;
 WiFiManagerParameter select_field;
 
 String ssid; 
+String wlanpassword = "";
 String allespritesString = "var allesprites=[";
 String selectString = "<script>";
 
@@ -50,6 +51,8 @@ void selectStringGenerate()
 	{
 		selectString = selectString + "document.getElementById('textAnzeige').value='"+ String (state) +"';\n";
 	}
+	selectString = selectString + "document.getElementById('wlanssid').value='"+ String (disp.wlanssid) +"';\n";
+	selectString = selectString + "document.getElementById('wlanPassword').value='"+ String (disp.wlanPassword) +"';\n";
 	selectString = selectString + "</script>";
 }
 
@@ -75,16 +78,23 @@ void saveParamCallback()
     disp.intensity = getParam("intensity").toInt();
     firmwareauswahl = getParam("firmware").toInt();
 	disp.parola.setIntensity(disp.intensity);
-	if (WiFi.status() != WL_CONNECTED) {
+	if (WiFi.status() != WL_CONNECTED) 
+	{
 		clo.setTime(getParam("timestamp").toInt());
 	}
-	if (getParam("textAnzeige").toInt() == 99) {
+	if (getParam("textAnzeige").toInt() == 99) 
+	{
 		disp.autostate = true;
 		state = STATE::SCROLLTEXT;
 	} else {
 		disp.autostate = false;
 		state = getParam("textAnzeige").toInt();
 	}
+	if (getParam("wlanpassword").length() >= 8) 
+	{
+		disp.wlanPassword = getParam("wlanpassword");
+	}
+	disp.wlanssid = getParam("wlanssid");
     saveConfiguration();
 	selectStringGenerate();
 	new (&select_field) WiFiManagerParameter(selectString.c_str());
@@ -93,10 +103,16 @@ void saveParamCallback()
 
 void initWLAN()
 {
-  ssid = String("LED") + String(WIFI_getChipId(),HEX);
-	#ifdef CUSTOM_HOSTNAME
+  	Display& disp = Display::instance();
+	ssid = String("LED") + String(WIFI_getChipId(),HEX);
+ 	#ifdef CUSTOM_HOSTNAME
 		ssid = CUSTOM_HOSTNAME; 
 	#endif
+
+	if (disp.wlanssid != "")
+	{
+		ssid = disp.wlanssid;
+	}
 
 	wm.setHostname(ssid.c_str());
 
@@ -106,7 +122,11 @@ void initWLAN()
 
 	if (wm.getWiFiIsSaved())
 	{
-		if(wm.autoConnect(ssid.c_str(), NULL))
+		if (disp.wlanPassword != "") 
+		{
+			wlanpassword = disp.wlanPassword;
+		}
+		if(wm.autoConnect(ssid.c_str(), wlanpassword.c_str()))
 		{
 			Serial.println("Connected!");
 			wm.startWebPortal();
@@ -135,17 +155,17 @@ void initWLAN()
 	}
 	allespritesString = allespritesString+"];\n";
 	allespritesString = allespritesString + "\
-		var selectSpritestart = document.getElementById('spriteStart');\
-		var selectSpriteende = document.getElementById('spriteEnde');\
-		for (index in allesprites) {\
-			selectSpritestart.options[selectSpritestart.options.length] = new Option(allesprites[index][0], index);\
-			selectSpriteende.options[selectSpriteende.options.length] = new Option(allesprites[index][0], index);\
-		}\
+		var selectSpritestart = document.getElementById('spriteStart');\n\
+		var selectSpriteende = document.getElementById('spriteEnde');\n\
+		for (index in allesprites) {\n\
+			selectSpritestart.options[selectSpritestart.options.length] = new Option(allesprites[index][0], index);\n\
+			selectSpriteende.options[selectSpriteende.options.length] = new Option(allesprites[index][0], index);\n\
+		}\n\
 	";
-	allespritesString = "<script>" + allespritesString + javascript + "</script>";
+	allespritesString = "<script>\n" + allespritesString + javascript + "</script>\n";
 
 	int customFieldLength = 100;
-//	readConfiguration();
+
 	selectStringGenerate();
 
 	new (&text_field) WiFiManagerParameter("textid", "Text", "Ferienpass 19", customFieldLength,"placeholder=\"Ferienpass 19\"");

@@ -22,6 +22,8 @@ void readConfiguration()
     disp.parola.setIntensity(disp.intensity);
     state = prefs.getUShort("state", STATE::SCROLLTEXT);
     disp.autostate = prefs.getBool("autostate", false);
+    disp.wlanPassword = prefs.getString("wlanpassword", "");
+    disp.wlanssid = prefs.getString("wlanssid", "");
 }
 
 void saveConfiguration()
@@ -37,4 +39,6 @@ void saveConfiguration()
     prefs.putUShort("firmwareauswahl", firmwareauswahl);
     prefs.putUShort("state", state);
     prefs.putBool("autostate", disp.autostate);
+    prefs.putString("wlanpassword",disp.wlanPassword);
+    prefs.putString("wlanssid",disp.wlanssid);
 }
