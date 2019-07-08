@@ -211,6 +211,7 @@ const char* timeHTML = "<input type='hidden' id='timestamp' value=''name='timest
 const char* menueHTML = "<label for='textAnzeige' onclick='extramenu();'>Anzeige</label><br/>\
 <select name='textAnzeige' id='textAnzeige' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
 <option value='0'>Scrolltext</option>\
+<option value='1'>Temperatur und Feuchtigkeit</option>\
 <option value='2'>Uhr</option>\
 <option value='3'>Uhr und Datum</option>\
 <option value='4'>Game of Life</option>\

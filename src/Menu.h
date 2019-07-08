@@ -30,6 +30,7 @@ enum MENUITEMS {
 	UHR,
 	UHRUNDDATUM,
 	GAMELIFE,
+	TEMPERATUR,
 	AUTOSTATE,
 	_MENUITEMS_LENGTH /* letzter Eintrag, als Limit */ 
 };

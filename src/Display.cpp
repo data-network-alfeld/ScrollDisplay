@@ -13,6 +13,7 @@ void Display::init(int encoderSwitchPin, Encoder enc, Clock clo)
 	parola.setIntensity(intensity);
 	maxPan.begin();
 	maxPan.setIntensity(intensity);
+	dht.setup(DHT_PIN,DHTesp::AUTO_DETECT);
 }
 
 void Display::displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut)
@@ -55,7 +56,26 @@ void Display::setDisplayState()
 			displayText(scrollText , PA_CENTER, enc.getCount() * 10, pause, (textEffect_t) animationStart,(textEffect_t) animationEnde);
 			break;
 		case TEMPERATURE: 
+		{		
+			sensorData = dht.getTempAndHumidity();
+			if (dht.getStatus() != 0) 
+			{
+				displayText("Keine Werte" , PA_CENTER, enc.getCount() * 10, pause, PA_PRINT ,PA_NO_EFFECT);
+				Serial.println(dht.getStatusString());
+			}
+			 else 
+			{
+				String sensorString[] =
+				{
+					 "Temp. " + String( int (sensorData.temperature)) + String("° C"),
+					 "Feucht. " + String( int (sensorData.humidity)) + String("%"),
+				};
+				textCount = sizeof(sensorString) / sizeof(String);
+				displayTexte(sensorString , PA_CENTER, enc.getCount() * 10, 2000, (textEffect_t) animationStart,(textEffect_t) animationEnde);
+				Serial.printf("Temperatur %.0f , Feuchtigkeit %.0f\n", sensorData.temperature, sensorData.humidity);
+			}
 			break; 
+		}
 		case CLOCK: 
 		{
 			parola.setFont(_sys_fixed_single);
@@ -118,6 +138,11 @@ void Display::render()
 				parola.displayClear();
 				setDisplayState();
 				break; 
+			case STATE::TEMPERATURE:
+				maxPan.clear();
+				parola.displayClear();
+				setDisplayState();
+				break; 
 			case STATE::CLOCK:
 				maxPan.clear();
 				parola.displayClear();
@@ -150,6 +175,11 @@ void Display::render()
 				state = STATE::MENU;
 				setDisplayState();
 				break;
+			case TEMPERATURE:
+				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
+				state = STATE::MENU;
+				setDisplayState();
+				break;
 			case CLOCK:
 				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
 				state = STATE::MENU;
@@ -177,6 +207,15 @@ void Display::render()
 	{
 		if (state == STATE::SCROLLTEXT)
 		{
+			setDisplayState();
+			//parola.displayReset();  // Reset and display it again
+		}
+		if (state == STATE::TEMPERATURE)
+		{
+			if (textCount != 0) 
+			{
+				curText = (curText+ 1) % textCount;
+			}
 			setDisplayState();
 			//parola.displayReset();  // Reset and display it again
 		}
@@ -234,6 +273,11 @@ void Display::render()
 				setDisplayState();		
 			} 
  			else if (state == STATE::CLOCK)
+			{
+				state = STATE::TEMPERATURE;
+				setDisplayState();		
+			}
+ 			else if (state == STATE::TEMPERATURE)
 			{
 				state = STATE::GAMEOFLIFE;
 				setDisplayState();		

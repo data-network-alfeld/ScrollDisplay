@@ -13,6 +13,7 @@
 #include "Clock.h"
 #include "sys_fixed_single.h"
 #include "Gameoflife.h"
+#include "DHTesp.h"
 
 class Display
 {
@@ -26,6 +27,9 @@ private:
     int scrollSpeed = 50;
     Encoder enc;
     Clock clo;
+    DHTesp dht;
+    TempAndHumidity sensorData;
+    String sensorString[];
     int textCount = 0;
     int curText = 0;
     uint32_t goltimeLastRun = 0;
