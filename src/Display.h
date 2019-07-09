@@ -10,9 +10,9 @@
 #include "Latin1.h"
 #include "Menu.h"
 #include "Encoder.h"
-#include "Clock.h"
+#include "clock/Clock.h"
 #include "sys_fixed_single.h"
-#include "Gameoflife.h"
+#include "gameoflife/Gameoflife.h"
 #include "DHTesp.h"
 
 class Display

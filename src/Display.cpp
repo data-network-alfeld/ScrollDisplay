@@ -67,8 +67,9 @@ void Display::setDisplayState()
 			{
 				String sensorString[] =
 				{
-					 "Temp. " + String( int (sensorData.temperature)) + String("° C"),
-					 "Feucht. " + String( int (sensorData.humidity)) + String("%"),
+//					 "Temp. " + String( int (sensorData.temperature)) + String("° C"),
+//					 "Feucht. " + String( int (sensorData.humidity)) + String("%"),
+					 String( int (sensorData.temperature)) + String("° C") +  String( int (sensorData.humidity)) + String("%"),
 				};
 				textCount = sizeof(sensorString) / sizeof(String);
 				displayTexte(sensorString , PA_CENTER, enc.getCount() * 10, 2000, (textEffect_t) animationStart,(textEffect_t) animationEnde);
