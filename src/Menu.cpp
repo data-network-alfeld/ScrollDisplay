@@ -20,9 +20,10 @@ volatile uint8_t menuitem = BRIGHTNESS;
 void menuItemPressed(Encoder& enc)
 {
 	Display& disp = Display::instance();
+
+	disp.autostate = false;
 	switch (menuitem)
 	{
-		disp.autostate = false;
 		case MENUITEMS::TEXT:
 			state = SCROLLTEXT;
 			enc.setLimits(0, 20, 5);
