@@ -53,7 +53,7 @@ void menuItemPressed(Encoder& enc)
 			Serial.println("Visit Data Network Alfeld e.V. at https://dna-ev.de");
 			disp.displayText("DNA Scrolldisplay   ", textPosition_t::PA_LEFT, 50, 2000, textEffect_t::PA_SCROLL_LEFT,textEffect_t::PA_NO_EFFECT);
 			disp.animateUntilButtonPress();
-			disp.displayText("Written by Tobias Mädel  ", textPosition_t::PA_LEFT, 50, 2000, textEffect_t::PA_SCROLL_LEFT,textEffect_t::PA_NO_EFFECT);
+			disp.displayText("Written by Tobias Mädel, Sven Scholz, Peter Leussner ", textPosition_t::PA_LEFT, 50, 2000, textEffect_t::PA_SCROLL_LEFT,textEffect_t::PA_NO_EFFECT);
 			disp.animateUntilButtonPress();
 			disp.displayText("Kompiliert am" , textPosition_t::PA_LEFT, 50, 1000, textEffect_t::PA_MESH,textEffect_t::PA_NO_EFFECT);
 			disp.animateUntilButtonPress();
