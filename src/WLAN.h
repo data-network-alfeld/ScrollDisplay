@@ -4,7 +4,7 @@
 #include "Display.h"
 #include "Settings.h"
 #include "Sprite.h"
-#include "Clock.h"
+#include "clock/Clock.h"
 #include "FirmwareUpdate.h"
 
 extern WiFiManager wm;
