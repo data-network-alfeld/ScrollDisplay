@@ -69,7 +69,7 @@ void Display::setDisplayState()
 				{
 //					 "Temp. " + String( int (sensorData.temperature)) + String("° C"),
 //					 "Feucht. " + String( int (sensorData.humidity)) + String("%"),
-					 String( int (sensorData.temperature)) + String("° C") +  String( int (sensorData.humidity)) + String("%"),
+					 String( int (sensorData.temperature)) + String("°C   ") +  String( int (sensorData.humidity)) + String("%"),
 				};
 				textCount = sizeof(sensorString) / sizeof(String);
 				displayTexte(sensorString , PA_CENTER, enc.getCount() * 10, 2000, (textEffect_t) animationStart,(textEffect_t) animationEnde);
@@ -85,7 +85,7 @@ void Display::setDisplayState()
 				clo.getTime(),
 			};
 			textCount = sizeof(clockText) / sizeof(String);
-			displayTexte(clockText, PA_CENTER, enc.getCount() * 10, pause, PA_PRINT ,PA_NO_EFFECT);
+			displayTexte(clockText, PA_CENTER, enc.getCount() * 10, 1000, PA_PRINT ,PA_NO_EFFECT);
 			break;	
 		}
 		case CLOCKANDDATE: 
@@ -93,14 +93,14 @@ void Display::setDisplayState()
 			parola.setFont(_sys_fixed_single);
 			texteAusgabe clockausgabe[] = 
 			{
-				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
-				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
-				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
-				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
-				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
-				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
-				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
-				{ clo.getTime(),PA_CENTER, enc.getCount()*10,pause,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10, 1000,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10, 1000,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10, 1000,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10, 1000,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10, 1000,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10, 1000,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10, 1000,PA_PRINT, PA_NO_EFFECT },
+				{ clo.getTime(),PA_CENTER, enc.getCount()*10, 1000,PA_PRINT, PA_NO_EFFECT },
 				{ clo.getWeekday(),PA_CENTER, enc.getCount()*10,pause,PA_SPRITE, PA_SPRITE },
 //				{ "Monat",PA_CENTER, enc.getCount()*10,pause,PA_SCROLL_UP_LEFT, PA_SCROLL_DOWN_RIGHT },
 //				{ clo.getMonth(),PA_CENTER, enc.getCount()*10,pause,PA_MESH, PA_CLOSING_CURSOR },
