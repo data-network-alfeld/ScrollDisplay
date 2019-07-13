@@ -15,3 +15,5 @@
 #define ENCODER_SW 32
 
 #define DHT_PIN 22
+
+// \o/
