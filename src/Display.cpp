@@ -85,7 +85,7 @@ void Display::setDisplayState()
 				clo.getTime(),
 			};
 			textCount = sizeof(clockText) / sizeof(String);
-			displayTexte(clockText, PA_CENTER, enc.getCount() * 10, 1000, PA_PRINT ,PA_NO_EFFECT);
+			displayTexte(clockText, PA_CENTER, enc.getCount() * 10, 200, PA_PRINT ,PA_NO_EFFECT);
 			break;	
 		}
 		case CLOCKANDDATE: 
