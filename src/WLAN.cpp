@@ -52,7 +52,7 @@ void selectStringGenerate()
 		selectString = selectString + "document.getElementById('textAnzeige').value='"+ String (state) +"';\n";
 	}
 	selectString = selectString + "document.getElementById('wlanssid').value='"+ String (disp.wlanssid) +"';\n";
-	selectString = selectString + "document.getElementById('wlanPassword').value='"+ String (disp.wlanPassword) +"';\n";
+	selectString = selectString + "document.getElementById('wlanpassword').value='"+ String (disp.wlanPassword) +"';\n";
 	selectString = selectString + "</script>";
 }
 
