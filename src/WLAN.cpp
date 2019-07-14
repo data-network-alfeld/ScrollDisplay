@@ -101,10 +101,19 @@ void saveParamCallback()
 
 }
 
+uint8_t baseMac[6];
+char baseMacChr[18] = {0};
+
 void initWLAN()
 {
   	Display& disp = Display::instance();
-	ssid = String("LED") + String(WIFI_getChipId(),HEX);
+
+	uint8_t baseMac[6];
+	// Get MAC address for WiFi station
+	esp_read_mac(baseMac, ESP_MAC_WIFI_STA);
+	sprintf(baseMacChr, "%02x%02x%02x%02x", baseMac[2], baseMac[3], baseMac[4], baseMac[5]);
+
+	ssid = String("LED") + baseMacChr;
  	#ifdef CUSTOM_HOSTNAME
 		ssid = CUSTOM_HOSTNAME; 
 	#endif
