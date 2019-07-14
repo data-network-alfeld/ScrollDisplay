@@ -36,7 +36,7 @@ void saveConfiguration()
     prefs.putUChar("spriteStart", disp.spriteStart);
     prefs.putUChar("spriteEnde", disp.spriteEnde);
     prefs.putUShort("pause", disp.pause);
-    prefs.getUShort("intensity", disp.intensity);
+    prefs.putUShort("intensity", disp.intensity);
     prefs.putUShort("firmwareauswahl", firmwareauswahl);
     prefs.putUShort("state", state);
     prefs.putBool("autostate", disp.autostate);
