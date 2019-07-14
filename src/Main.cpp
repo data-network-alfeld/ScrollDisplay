@@ -13,14 +13,6 @@ void setup()
 	beginConfiguration();
 	readConfiguration();
 
-	// WLAN initialisieren
-	initWLAN();
-
-	// Uhrzeit stellen
-	if (WiFi.status() == WL_CONNECTED) {
-		clo.init();
-	}
-
 	// Drehencoder initialisieren
 	enc.attachSingleEdge(ENCODER_DT, ENCODER_CLK);
 	enc.attachButton(ENCODER_SW);
@@ -31,6 +23,18 @@ void setup()
 
 	// Display initialisieren
 	disp.init(ENCODER_SW, enc, clo);
+
+	disp.displayText("Bitte warten", textPosition_t::PA_LEFT, 1, 1000, PA_PRINT, PA_NO_EFFECT);
+	disp.parola.displayAnimate();
+
+	// WLAN initialisieren
+	initWLAN();
+
+	// Uhrzeit stellen
+	if (WiFi.status() == WL_CONNECTED) {
+		clo.init();
+	}
+
 	disp.setDisplayState();
 }
 
