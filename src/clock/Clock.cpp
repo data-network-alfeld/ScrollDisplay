@@ -12,27 +12,13 @@ Clock::Clock()
 
 void Clock::init() 
 {
-	
 	if (WiFi.status() != WL_CONNECTED) {return;}
 	// Achtung kein UTC mehr
 	configTime(timezone_offset_secs, dst_offset_secs, "pool.ntp.org", "time.nist.gov");
 
-	Serial.print(F("Waiting for NTP time sync: "));
 	time_t now = time(nullptr);
-	while (now < 8 * 3600 * 2) 
-  {
-		yield();
-		delay(500);
-		Serial.print(F("."));
-		now = time(nullptr);
-	}
-
-	Serial.println(F(""));
-	struct tm timeinfo;
-	gmtime_r(&now, &timeinfo);
-	Serial.print(F("Current time: "));
-	Serial.print(asctime(&timeinfo));
 }
+
 
 String Clock::getTime() 
 {

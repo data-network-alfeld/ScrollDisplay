@@ -20,6 +20,7 @@ void readConfiguration()
     firmwareauswahl = prefs.getUShort("firmwareauswahl",0);
     disp.intensity = prefs.getUShort("intensity", 0);
     disp.parola.setIntensity(disp.intensity);
+
     state = prefs.getUShort("state", STATE::SCROLLTEXT);
     disp.autostate = prefs.getBool("autostate", false);
     disp.wlanPassword = prefs.getString("wlanpassword", "");
