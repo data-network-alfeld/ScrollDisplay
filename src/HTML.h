@@ -2,7 +2,7 @@
 
 const char* animationStartHTML = "<label for='animationStart'>Animation Start</label><br/>\
 <select name='animationStart' id='animationStart' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;' onchange=\"if (this.selectedIndex==6){document.getElementById('spriteStartBlock').style.display = 'block'} else {document.getElementById('spriteStartBlock').style.display = 'none'}\")>\
-<option value='0'>PA_NO_EFFECT</option>\
+<!--<option value='0'>PA_NO_EFFECT</option>-->\
 <option value='1'>PA_PRINT</option>\
 <option value='2'>PA_SCROLL_UP</option>\
 <option value='3'>PA_SCROLL_DOWN</option>\
