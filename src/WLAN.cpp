@@ -72,7 +72,7 @@ void saveParamCallback()
     Display& disp = Display::instance();
 	disp.automatikzaehler = getParam("automatikzaehler").toInt();
 	Serial.println(disp.automatikzaehler);
-	for (uint8_t i = 1; i < disp.automatikzaehler; i++)
+	for (uint8_t i = 1; i <= disp.automatikzaehler; i++)
 	{
 		char tmp[12];
 		sprintf(tmp,"automatik%d",i);

@@ -73,7 +73,7 @@ void Display::setDisplayState()
 				};
 				textCount = sizeof(sensorString) / sizeof(String);
 				displayTexte(sensorString , PA_CENTER, enc.getCount() * 10, 2000, (textEffect_t) animationStart,(textEffect_t) animationEnde);
-				Serial.printf("Temperatur %.0f , Feuchtigkeit %.0f\n", sensorData.temperature, sensorData.humidity);
+//				Serial.printf("Temperatur %.0f , Feuchtigkeit %.0f\n", sensorData.temperature, sensorData.humidity);
 			}
 			break; 
 		}
@@ -274,31 +274,7 @@ void Display::render()
 			if (stateInt > automatikzaehler) {
 				stateInt = 1;
 			}
-/*
-			switch (automatikArray[stateInt])
-			{
-			case 0:
-				state = STATE::SCROLLTEXT;
-				break;
-			case 1:
-				state = STATE::TEMPERATURE;
-				break;
-			case 2:
-				state = STATE::CLOCK;
-				break;
-			case 3:
-				state = STATE::CLOCKANDDATE;
-				break;
-			case 4:
-				state = STATE::GAMEOFLIFE;
-				break;		
-			default:
-				state = STATE::SCROLLTEXT;
-				break;
-			}
-*/
 			state = automatikArray[stateInt];
-			Serial.println(stateInt);
 			setDisplayState();
 		}
 	}
