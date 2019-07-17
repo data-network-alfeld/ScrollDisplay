@@ -16,7 +16,7 @@ void Clock::init()
 	// Achtung kein UTC mehr
 	configTime(timezone_offset_secs, dst_offset_secs, "pool.ntp.org", "time.nist.gov");
 
-	time_t now = time(nullptr);
+//	time_t now = time(nullptr);
 }
 
 

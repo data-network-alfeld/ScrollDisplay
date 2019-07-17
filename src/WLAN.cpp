@@ -13,6 +13,7 @@ WiFiManagerParameter intensity_field;
 WiFiManagerParameter javascript_field;
 WiFiManagerParameter time_field;
 WiFiManagerParameter menu_field;
+WiFiManagerParameter automatik_field;
 WiFiManagerParameter extramenu_field;
 WiFiManagerParameter select_field;
 
@@ -69,7 +70,15 @@ String getParam(String name)
 void saveParamCallback()
 {
     Display& disp = Display::instance();
-    disp.scrollText = getParam("textid"); 
+	disp.automatikzaehler = getParam("automatikzaehler").toInt();
+	Serial.println(disp.automatikzaehler);
+	for (uint8_t i = 1; i < disp.automatikzaehler; i++)
+	{
+		char tmp[12];
+		sprintf(tmp,"automatik%d",i);
+		disp.automatikArray[i] = getParam(tmp).toInt();
+	}
+	disp.scrollText = getParam("textid"); 
     disp.animationStart = getParam("animationStart").toInt();
     disp.animationEnde = getParam("animationEnde").toInt();
     disp.spriteStart = getParam("spriteStart").toInt();
@@ -187,6 +196,7 @@ void initWLAN()
 	new (&javascript_field) WiFiManagerParameter(allespritesString.c_str());
 	new (&time_field) WiFiManagerParameter(timeHTML);
 	new (&menu_field) WiFiManagerParameter(menueHTML);
+	new (&automatik_field) WiFiManagerParameter(automatikHTML);
 	new (&extramenu_field) WiFiManagerParameter(extramenueHTML);
 	new (&select_field) WiFiManagerParameter(selectString.c_str());
 
@@ -202,6 +212,7 @@ void initWLAN()
 		wm.addParameter(&time_field);
 	}
 	wm.addParameter(&menu_field);
+	wm.addParameter(&automatik_field);
 	wm.addParameter(&extramenu_field);
 	wm.addParameter(&select_field);
 	wm.setSaveParamsCallback(saveParamCallback);

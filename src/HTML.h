@@ -218,6 +218,47 @@ const char* menueHTML = "<label for='textAnzeige' onclick='extramenu();'>Anzeige
 <option value='99'>Automatik</option>\
 </select><br>";
 
+const char* automatikHTML = "\n\
+<script type=\"text/javascript\">\n\
+	automatikzaehler=1;\n\
+	function dazu() {\n\
+		automatikzaehler++;\n\
+	document.getElementById('automatikneu').outerHTML = '\\\n\
+			<span id=\"automatikspan'+automatikzaehler+'\">\\\n\
+			<br>\\\n\
+	<select name=\"automatik'+automatikzaehler+'\" id=\"automatik'+automatikzaehler+'\" size=\"1\">\\\n\
+		<option value=\"0\">Scrolltext</option>\\\n\
+		<option value=\"1\">Temperatur</option>\\\n\
+		<option value=\"2\">Uhr</option>\\\n\
+		<option value=\"3\">Uhr und Datum</option>\\\n\
+		<option value=\"4\">Game of Life</option>\\\n\
+	</select>\\\n\
+	</span>\\\n\
+	<span id=\"automatikneu\"></span>\\\n\
+';\n\
+		document.getElementById('automatikzaehler').value = automatikzaehler;\n\
+	}\n\
+	function weniger() {\n\
+		document.getElementById('automatikspan'+automatikzaehler).outerHTML = '';\n\
+		automatikzaehler--;\n\
+		document.getElementById('automatikzaehler').value = automatikzaehler;\n\
+	}\n\
+</script>\n\
+	<input type=\"button\" value=\"dazu\" onclick=\"dazu()\"> \n\
+ 	<br><br>\n\
+	<select name=\"automatik1\" size=\"1\">\n\
+		<option value=\"0\">Scrolltext</option>\n\
+		<option value=\"1\">Temperatur</option>\n\
+		<option value=\"2\">Uhr</option>\n\
+		<option value=\"3\">Uhr und Datum</option>\n\
+		<option value=\"4\">Game of Life</option>\n\
+	</select>\n\
+	<span id=\"automatikneu\"></span>\n\
+ <input type=\"button\" value=\"weniger\" onclick=\"weniger()\">\n\
+ <input type=\"hidden\" id=\"automatikzaehler\" value=\"1\" name=\"automatikzaehler\">\n\
+\n\
+";
+
 const char* extramenueHTML = "<span id='extramenue' style='display: none'><br><label for='extramenue'>Extra Menü</label><br/>\
 <br>\
 <label for='firmware'>Firmware</label>\

@@ -269,30 +269,37 @@ void Display::render()
 		if (millis() - statetimeLastRun >= 30000)
 		{
 			statetimeLastRun = millis();
- 			if (state == STATE::SCROLLTEXT) {
-				state = STATE::CLOCK;
-				setDisplayState();		
-			} 
- 			else if (state == STATE::CLOCK)
-			{
-				state = STATE::TEMPERATURE;
-				setDisplayState();		
+			stateInt++;
+
+			if (stateInt > automatikzaehler) {
+				stateInt = 1;
 			}
- 			else if (state == STATE::TEMPERATURE)
+/*
+			switch (automatikArray[stateInt])
 			{
-				state = STATE::GAMEOFLIFE;
-				setDisplayState();		
-			}
-			else if (state == STATE::CLOCKANDDATE)
-			{
+			case 0:
 				state = STATE::SCROLLTEXT;
-				setDisplayState();		
-			}
-			else if (state == STATE::GAMEOFLIFE)
-			{
+				break;
+			case 1:
+				state = STATE::TEMPERATURE;
+				break;
+			case 2:
+				state = STATE::CLOCK;
+				break;
+			case 3:
 				state = STATE::CLOCKANDDATE;
-				setDisplayState();		
+				break;
+			case 4:
+				state = STATE::GAMEOFLIFE;
+				break;		
+			default:
+				state = STATE::SCROLLTEXT;
+				break;
 			}
+*/
+			state = automatikArray[stateInt];
+			Serial.println(stateInt);
+			setDisplayState();
 		}
 	}
 }

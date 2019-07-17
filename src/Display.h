@@ -36,6 +36,7 @@ private:
     uint8_t golsameCount = 10;
     uint32_t gollastCount = 0;
     uint8_t oldstate;
+   	uint8_t stateInt = 0;
     uint32_t statetimeLastRun = 0;
 
     typedef struct 
@@ -71,6 +72,8 @@ public:
 	String clockText[] ; 
     texteAusgabe clockausgabe;
     bool autostate;
+    uint8_t automatikArray[99];
+    uint8_t automatikzaehler = 1;
     uint8_t animationStart = 4; 
     uint8_t animationEnde = 4; 
     uint8_t spriteStart = 4; 
