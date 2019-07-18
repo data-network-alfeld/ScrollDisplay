@@ -220,13 +220,13 @@ const char* menueHTML = "<label for='textAnzeige' onclick='extramenu();'>Anzeige
 
 const char* automatikHTML = "\n\
 <script type=\"text/javascript\">\n\
-	automatikzaehler=1;\n\
+	autozaehler=1;\n\
 	function dazu() {\n\
-		automatikzaehler++;\n\
+		autozaehler++;\n\
 	document.getElementById('automatikneu').outerHTML = '\\\n\
-			<span id=\"automatikspan'+automatikzaehler+'\">\\\n\
+			<span id=\"automatikspan'+autozaehler+'\">\\\n\
 			<br>\\\n\
-	<select name=\"automatik'+automatikzaehler+'\" id=\"automatik'+automatikzaehler+'\" size=\"1\">\\\n\
+	<select name=\"automatik'+autozaehler+'\" id=\"automatik'+autozaehler+'\" size=\"1\">\\\n\
 		<option value=\"0\">Scrolltext</option>\\\n\
 		<option value=\"1\">Temperatur</option>\\\n\
 		<option value=\"2\">Uhr</option>\\\n\
@@ -236,17 +236,17 @@ const char* automatikHTML = "\n\
 	</span>\\\n\
 	<span id=\"automatikneu\"></span>\\\n\
 ';\n\
-		document.getElementById('automatikzaehler').value = automatikzaehler;\n\
+		document.getElementById('autozaehler').value = autozaehler;\n\
 	}\n\
 	function weniger() {\n\
-		document.getElementById('automatikspan'+automatikzaehler).outerHTML = '';\n\
-		automatikzaehler--;\n\
-		document.getElementById('automatikzaehler').value = automatikzaehler;\n\
+		document.getElementById('automatikspan'+autozaehler).outerHTML = '';\n\
+		autozaehler--;\n\
+		document.getElementById('autozaehler').value = autozaehler;\n\
 	}\n\
 </script>\n\
 	<input type=\"button\" value=\"dazu\" onclick=\"dazu()\"> \n\
  	<br><br>\n\
-	<select name=\"automatik1\" size=\"1\">\n\
+	<select name=\"automatik1\" id=\"automatik1\" size=\"1\">\n\
 		<option value=\"0\">Scrolltext</option>\n\
 		<option value=\"1\">Temperatur</option>\n\
 		<option value=\"2\">Uhr</option>\n\
@@ -255,7 +255,7 @@ const char* automatikHTML = "\n\
 	</select>\n\
 	<span id=\"automatikneu\"></span>\n\
  <input type=\"button\" value=\"weniger\" onclick=\"weniger()\">\n\
- <input type=\"hidden\" id=\"automatikzaehler\" value=\"1\" name=\"automatikzaehler\">\n\
+ <input type=\"hidden\" id=\"autozaehler\" value=\"1\" name=\"autozaehler\">\n\
 \n\
 ";
 

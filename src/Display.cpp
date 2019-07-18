@@ -271,7 +271,7 @@ void Display::render()
 			statetimeLastRun = millis();
 			stateInt++;
 
-			if (stateInt > automatikzaehler) {
+			if (stateInt > autozaehler) {
 				stateInt = 1;
 			}
 			state = automatikArray[stateInt];

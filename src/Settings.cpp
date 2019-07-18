@@ -25,6 +25,8 @@ void readConfiguration()
     disp.autostate = prefs.getBool("autostate", false);
     disp.wlanPassword = prefs.getString("wlanpassword", "");
     disp.wlanssid = prefs.getString("wlanssid", "");
+    disp.autozaehler = prefs.getUShort("autozaehler", disp.autozaehler);
+    prefs.getBytes("automatikArray", disp.automatikArray,sizeof(disp.automatikArray));
 }
 
 void saveConfiguration()
@@ -42,4 +44,6 @@ void saveConfiguration()
     prefs.putBool("autostate", disp.autostate);
     prefs.putString("wlanpassword",disp.wlanPassword);
     prefs.putString("wlanssid",disp.wlanssid);
+    prefs.putUShort("autozaehler", disp.autozaehler);
+    prefs.putBytes("automatikArray", &disp.automatikArray, sizeof(disp.automatikArray));
 }

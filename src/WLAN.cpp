@@ -54,6 +54,13 @@ void selectStringGenerate()
 	}
 	selectString = selectString + "document.getElementById('wlanssid').value='"+ String (disp.wlanssid) +"';\n";
 	selectString = selectString + "document.getElementById('wlanpassword').value='"+ String (disp.wlanPassword) +"';\n";
+	selectString = selectString + "for (var i = 1; i < "+disp.autozaehler+"; i++) {\n\
+		dazu();\n\
+	}\n";
+	for (uint8_t i = 1; i <= disp.autozaehler; i++)
+	{
+		selectString = selectString + "document.getElementById('automatik"+String (i)+"').value='"+String (disp.automatikArray[i])+"';\n";
+	}	
 	selectString = selectString + "</script>";
 }
 
@@ -70,9 +77,8 @@ String getParam(String name)
 void saveParamCallback()
 {
     Display& disp = Display::instance();
-	disp.automatikzaehler = getParam("automatikzaehler").toInt();
-	Serial.println(disp.automatikzaehler);
-	for (uint8_t i = 1; i <= disp.automatikzaehler; i++)
+	disp.autozaehler = getParam("autozaehler").toInt();
+	for (uint8_t i = 1; i <= disp.autozaehler; i++)
 	{
 		char tmp[12];
 		sprintf(tmp,"automatik%d",i);
