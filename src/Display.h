@@ -72,7 +72,8 @@ public:
 	String clockText[] ; 
     texteAusgabe clockausgabe;
     bool autostate;
-    uint8_t automatikArray[99];
+    uint8_t automatikArray[20];
+    uint8_t autozeitArray[20];
     uint8_t autozaehler = 1;
     uint8_t animationStart = 4; 
     uint8_t animationEnde = 4; 

@@ -209,13 +209,13 @@ const char* timeHTML = "<input type='hidden' id='timestamp' value=''name='timest
 <script>var d = new Date(); document.getElementById('timestamp').value = Math.floor(d.getTime() / 1000) - (d.getTimezoneOffset()*60); </script>";
 
 const char* menueHTML = "<label for='textAnzeige' onclick='extramenu();'>Anzeige</label><br/>\
-<select name='textAnzeige' id='textAnzeige' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
+<select name='textAnzeige' id='textAnzeige' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;' onchange=\"if (this.selectedIndex==5){document.getElementById('playlistmenuHTML').style.display = 'block'} else {document.getElementById('playlistmenuHTML').style.display = 'none'}\">\
 <option value='0'>Scrolltext</option>\
 <option value='1'>Temperatur und Feuchtigkeit</option>\
 <option value='2'>Uhr</option>\
 <option value='3'>Uhr und Datum</option>\
 <option value='4'>Game of Life</option>\
-<option value='99'>Automatik</option>\
+<option value='99'>Playlist</option>\
 </select><br>";
 
 const char* automatikHTML = "\n\
@@ -226,13 +226,18 @@ const char* automatikHTML = "\n\
 	document.getElementById('automatikneu').outerHTML = '\\\n\
 			<span id=\"automatikspan'+autozaehler+'\">\\\n\
 			<br>\\\n\
-	<select name=\"automatik'+autozaehler+'\" id=\"automatik'+autozaehler+'\" size=\"1\">\\\n\
+  <div style=\"width:60%; float:left;\">\\\n\
+	<select name=\"automatik'+autozaehler+'\" id=\"automatik'+autozaehler+'\" size=\"1\" style=\"border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;\" >\\\n\
 		<option value=\"0\">Scrolltext</option>\\\n\
 		<option value=\"1\">Temperatur</option>\\\n\
 		<option value=\"2\">Uhr</option>\\\n\
 		<option value=\"3\">Uhr und Datum</option>\\\n\
 		<option value=\"4\">Game of Life</option>\\\n\
 	</select>\\\n\
+  </div>\\\n\
+  <div style=\"width:30%; float:right;\">\\\n\
+    <input name=\"automatikzeit'+autozaehler+'\" id=\"automatikzeit'+autozaehler+'\"  type=\"number\" min=\"1\" max=\"300\" step=\"1\" maxlength=\"100\" value=\"1\" placeholder=\"1\" style=\"border-radius: .3rem;width: 100%; padding: 0px;font-size: 1em;margin: 5px 0; box-sizing: border-box;\">\\\n\
+  </div>\\\n\
 	</span>\\\n\
 	<span id=\"automatikneu\"></span>\\\n\
 ';\n\
@@ -243,23 +248,31 @@ const char* automatikHTML = "\n\
 		autozaehler--;\n\
 		document.getElementById('autozaehler').value = autozaehler;\n\
 	}\n\
-</script>\n\
-	<input type=\"button\" value=\"dazu\" onclick=\"dazu()\"> \n\
- 	<br><br>\n\
-	<select name=\"automatik1\" id=\"automatik1\" size=\"1\">\n\
+</script>\n\ 
+<div id='playlistmenuHTML' style='display: none'>\n\
+  <div>\n\
+	<input type=\"button\" value=\"+\" onclick=\"dazu()\" style=\"width:40%;float:left;\">\
+  <input type=\"button\" value=\"-\" onclick=\"weniger()\" style=\"width:40%;float:right;\">\n\
+  </div>\n\
+  <div style=\"width:60%; float:left;\">\n\
+	<select name=\"automatik1\" id=\"automatik1\" size=\"1\" style=\"border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;\" >\n\
 		<option value=\"0\">Scrolltext</option>\n\
 		<option value=\"1\">Temperatur</option>\n\
 		<option value=\"2\">Uhr</option>\n\
 		<option value=\"3\">Uhr und Datum</option>\n\
 		<option value=\"4\">Game of Life</option>\n\
 	</select>\n\
+  </div>\n\
+  <div style=\"width:30%; float:right;\">\n\
+    <input id=\"automatikzeit1\" name=\"automatikzeit1\" type=\"number\" min=\"1\" max=\"300\" step=\"1\" maxlength=\"100\" value=\"1\" placeholder=\"1\" style=\"border-radius: .3rem;width: 100%; padding: 0px;font-size: 1em;margin: 5px 0; box-sizing: border-box;\">\n\
+  </div>\n\
 	<span id=\"automatikneu\"></span>\n\
- <input type=\"button\" value=\"weniger\" onclick=\"weniger()\">\n\
  <input type=\"hidden\" id=\"autozaehler\" value=\"1\" name=\"autozaehler\">\n\
+ </div>\n\
 \n\
 ";
 
-const char* extramenueHTML = "<span id='extramenue' style='display: none'><br><label for='extramenue'>Extra Menü</label><br/>\
+const char* extramenueHTML = "<div id='extramenue' style='display: none'><br><label for='extramenue'>Extra Menü</label><br/>\
 <br>\
 <label for='firmware'>Firmware</label>\
 <select name='firmware' id='firmware' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
@@ -284,4 +297,4 @@ function extramenu() {\
 }\
 </script>\
 \
-</span>";
+</div>";

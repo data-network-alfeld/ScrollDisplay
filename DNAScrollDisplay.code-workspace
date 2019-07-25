@@ -11,7 +11,7 @@
 			"PLATFORMIO_CALLER": "vscode"
 		},
 		"terminal.integrated.env.osx": {
-			"PATH": "/Users/svenscholz/.platformio/penv/bin:/Users/svenscholz/.platformio/penv:/opt/local/bin:/usr/local/opt/binutils/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Wireshark.app/Contents/MacOS",
+			"PATH": "/opt/local/bin:/usr/local/opt/binutils/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Wireshark.app/Contents/MacOS",
 			"PLATFORMIO_CALLER": "vscode"
 		},
 		"files.associations": {

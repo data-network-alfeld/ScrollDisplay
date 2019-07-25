@@ -26,7 +26,8 @@ void readConfiguration()
     disp.wlanPassword = prefs.getString("wlanpassword", "");
     disp.wlanssid = prefs.getString("wlanssid", "");
     disp.autozaehler = prefs.getUShort("autozaehler", disp.autozaehler);
-    prefs.getBytes("automatikArray", disp.automatikArray,sizeof(disp.automatikArray));
+    prefs.getBytes("automatikArray", disp.automatikArray, 1 + sizeof(disp.automatikArray) * (int)( sizeof(disp.automatikArray) / sizeof(disp.automatikArray[0])));
+    prefs.getBytes("autozeitArray", disp.autozeitArray, 1 + sizeof(disp.autozeitArray) * (int)( sizeof(disp.autozeitArray) / sizeof(disp.autozeitArray[0])));
 }
 
 void saveConfiguration()
@@ -45,5 +46,6 @@ void saveConfiguration()
     prefs.putString("wlanpassword",disp.wlanPassword);
     prefs.putString("wlanssid",disp.wlanssid);
     prefs.putUShort("autozaehler", disp.autozaehler);
-    prefs.putBytes("automatikArray", &disp.automatikArray, sizeof(disp.automatikArray));
+    prefs.putBytes("automatikArray", &disp.automatikArray, 1 + sizeof(&disp.automatikArray) * (int)( sizeof(&disp.automatikArray) / sizeof(&disp.automatikArray[0])));
+    prefs.putBytes("autozeitArray", &disp.autozeitArray, 1 + sizeof(&disp.autozeitArray) * (int)( sizeof(&disp.autozeitArray) / sizeof(&disp.autozeitArray[0])));
 }

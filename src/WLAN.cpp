@@ -47,6 +47,8 @@ void selectStringGenerate()
 	if (disp.autostate == true) 
 	{
 		selectString = selectString + "document.getElementById('textAnzeige').value='99';\n";
+		selectString = selectString + "document.getElementById('playlistmenuHTML').style.display = 'block';\n";
+		
 	} 
 	else 
 	{
@@ -60,6 +62,7 @@ void selectStringGenerate()
 	for (uint8_t i = 1; i <= disp.autozaehler; i++)
 	{
 		selectString = selectString + "document.getElementById('automatik"+String (i)+"').value='"+String (disp.automatikArray[i])+"';\n";
+		selectString = selectString + "document.getElementById('automatikzeit"+String (i)+"').value='"+String (disp.autozeitArray[i])+"';\n";
 	}	
 	selectString = selectString + "</script>";
 }
@@ -80,9 +83,22 @@ void saveParamCallback()
 	disp.autozaehler = getParam("autozaehler").toInt();
 	for (uint8_t i = 1; i <= disp.autozaehler; i++)
 	{
-		char tmp[12];
+		char tmp[16];
 		sprintf(tmp,"automatik%d",i);
 		disp.automatikArray[i] = getParam(tmp).toInt();
+	}
+	for (uint8_t i = 1; i <= disp.autozaehler; i++)
+	{
+		char tmp[16];
+		sprintf(tmp,"automatikzeit%d",i);
+		Serial.println(getParam(tmp).toInt());
+		if ((getParam(tmp).toInt()) < 300 ) 
+		{	
+			disp.autozeitArray[i] = getParam(tmp).toInt();
+		} else 
+		{
+			disp.autozeitArray[i] = 300;
+		}
 	}
 	disp.scrollText = getParam("textid"); 
     disp.animationStart = getParam("animationStart").toInt();
@@ -142,7 +158,7 @@ void initWLAN()
 
 	wm.setClass("invert");
 	wm.setConfigPortalBlocking(false);
-	wm.setEnableConfigPortal(false);
+	wm.setEnableConfigPortal(true);
 
 	if (wm.getWiFiIsSaved())
 	{
