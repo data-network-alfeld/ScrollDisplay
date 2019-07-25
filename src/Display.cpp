@@ -114,6 +114,15 @@ void Display::setDisplayState()
 		case GAMEOFLIFE:
 			maxPan.clear();
 			break;
+		case WEEKDAY:
+			displayText(clo.getWeekday() , PA_CENTER, enc.getCount() * 10, pause, (textEffect_t) animationStart,(textEffect_t) animationEnde);
+			break;
+		case DATE:
+			displayText(clo.getDate() , PA_CENTER, enc.getCount() * 10, pause, (textEffect_t) animationStart,(textEffect_t) animationEnde);
+			break;
+		case MONTH:
+			displayText(clo.getMonth() , PA_CENTER, enc.getCount() * 10, pause, (textEffect_t) animationStart,(textEffect_t) animationEnde);
+			break;
 		case MENU: 
 			displayText(menuitemStrings[menuitem] , PA_LEFT, 0, 0, PA_PRINT,PA_NO_EFFECT);
 			break; 
@@ -159,6 +168,21 @@ void Display::render()
 				parola.displayClear();
 				setDisplayState();
 				break; 
+			case STATE::WEEKDAY:
+				maxPan.clear();
+				parola.displayClear();
+				setDisplayState();
+				break; 
+			case STATE::DATE:
+				maxPan.clear();
+				parola.displayClear();
+				setDisplayState();
+				break; 
+			case STATE::MONTH:
+				maxPan.clear();
+				parola.displayClear();
+				setDisplayState();
+				break; 
 			default:
 				break;
 		}		
@@ -192,6 +216,21 @@ void Display::render()
 				setDisplayState();
 				break;
 			case GAMEOFLIFE:
+				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
+				state = STATE::MENU;
+				setDisplayState();
+				break;
+			case WEEKDAY:
+				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
+				state = STATE::MENU;
+				setDisplayState();
+				break;
+			case DATE:
+				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
+				state = STATE::MENU;
+				setDisplayState();
+				break;
+			case MONTH:
 				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
 				state = STATE::MENU;
 				setDisplayState();
@@ -263,6 +302,34 @@ void Display::render()
 			}
 			//parola.displayReset();  // Reset and display it again
 		}
+		if (state == STATE::WEEKDAY)
+		{
+			if (textCount != 0) 
+			{
+				curText = (curText+ 1) % textCount;
+			}
+			setDisplayState();
+			//parola.displayReset();  // Reset and display it again
+		}
+		if (state == STATE::DATE)
+		{
+			if (textCount != 0) 
+			{
+				curText = (curText+ 1) % textCount;
+			}
+			setDisplayState();
+			//parola.displayReset();  // Reset and display it again
+		}
+		if (state == STATE::MONTH)
+		{
+			if (textCount != 0) 
+			{
+				curText = (curText+ 1) % textCount;
+			}
+			setDisplayState();
+			//parola.displayReset();  // Reset and display it again
+		}
+
 	}
 
 	if (autostate) {

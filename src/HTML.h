@@ -209,12 +209,15 @@ const char* timeHTML = "<input type='hidden' id='timestamp' value=''name='timest
 <script>var d = new Date(); document.getElementById('timestamp').value = Math.floor(d.getTime() / 1000) - (d.getTimezoneOffset()*60); </script>";
 
 const char* menueHTML = "<label for='textAnzeige' onclick='extramenu();'>Anzeige</label><br/>\
-<select name='textAnzeige' id='textAnzeige' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;' onchange=\"if (this.selectedIndex==5){document.getElementById('playlistmenuHTML').style.display = 'block'} else {document.getElementById('playlistmenuHTML').style.display = 'none'}\">\
+<select name='textAnzeige' id='textAnzeige' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;' onchange=\"if (this.options[this.selectedIndex].value==99){document.getElementById('playlistmenuHTML').style.display = 'block'} else {document.getElementById('playlistmenuHTML').style.display = 'none'}\">\
 <option value='0'>Scrolltext</option>\
 <option value='1'>Temperatur und Feuchtigkeit</option>\
 <option value='2'>Uhr</option>\
 <option value='3'>Uhr und Datum</option>\
 <option value='4'>Game of Life</option>\
+<option value='5'>Datum</option>\
+<option value='6'>Monat</option>\
+<option value='7'>Wochentag</option>\
 <option value='99'>Playlist</option>\
 </select><br>";
 
@@ -233,6 +236,9 @@ const char* automatikHTML = "\n\
 		<option value=\"2\">Uhr</option>\\\n\
 		<option value=\"3\">Uhr und Datum</option>\\\n\
 		<option value=\"4\">Game of Life</option>\\\n\
+		<option value=\"5\">Datum</option>\\\n\
+		<option value=\"6\">Monat</option>\\\n\
+		<option value=\"7\">Wochentag</option>\\\n\
 	</select>\\\n\
   </div>\\\n\
   <div style=\"width:30%; float:right;\">\\\n\
@@ -254,6 +260,10 @@ const char* automatikHTML = "\n\
 	<input type=\"button\" value=\"+\" onclick=\"dazu()\" style=\"width:40%;float:left;\">\
   <input type=\"button\" value=\"-\" onclick=\"weniger()\" style=\"width:40%;float:right;\">\n\
   </div>\n\
+  <div>\n\
+	<div style=\"width:40%;float:left;\">Ereigniss</div>\
+  <div style=\"width:40%;float:right;\">Sekunden</div>\n\
+  </div>\n\
   <div style=\"width:60%; float:left;\">\n\
 	<select name=\"automatik1\" id=\"automatik1\" size=\"1\" style=\"border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;\" >\n\
 		<option value=\"0\">Scrolltext</option>\n\
@@ -261,6 +271,9 @@ const char* automatikHTML = "\n\
 		<option value=\"2\">Uhr</option>\n\
 		<option value=\"3\">Uhr und Datum</option>\n\
 		<option value=\"4\">Game of Life</option>\n\
+		<option value=\"5\">Datum</option>\n\
+		<option value=\"6\">Monat</option>\n\
+		<option value=\"7\">Wochentag</option>\n\
 	</select>\n\
   </div>\n\
   <div style=\"width:30%; float:right;\">\n\

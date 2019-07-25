@@ -11,6 +11,9 @@ const char* menuitemStrings[_MENUITEMS_LENGTH] = {
 	"Uhr und Datum",
 	"Game of Life",
 	"Temperatur",
+	"Datum",
+	"Monat",
+	"Wochentag",
 	"Automatik"
 };
 
@@ -42,6 +45,18 @@ void menuItemPressed(Encoder& enc)
 			break;
 		case MENUITEMS::TEMPERATUR:
 			state = TEMPERATURE;
+			enc.setLimits(0, 20, 5);
+			break;
+		case MENUITEMS::DATUM:
+			state = DATE;
+			enc.setLimits(0, 20, 5);
+			break;
+		case MENUITEMS::MONAT:
+			state = MONTH;
+			enc.setLimits(0, 20, 5);
+			break;
+		case MENUITEMS::WOCHENTAG:
+			state = WEEKDAY;
 			enc.setLimits(0, 20, 5);
 			break;
 		case MENUITEMS::AUTOSTATE:
