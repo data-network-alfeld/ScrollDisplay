@@ -242,7 +242,7 @@ const char* automatikHTML = "\n\
 	</select>\\\n\
   </div>\\\n\
   <div style=\"width:30%; float:right;\">\\\n\
-    <input name=\"automatikzeit'+autozaehler+'\" id=\"automatikzeit'+autozaehler+'\"  type=\"number\" min=\"1\" max=\"300\" step=\"1\" maxlength=\"100\" value=\"1\" placeholder=\"1\" style=\"border-radius: .3rem;width: 100%; padding: 0px;font-size: 1em;margin: 5px 0; box-sizing: border-box;\">\\\n\
+    <input name=\"automatikzeit'+autozaehler+'\" id=\"automatikzeit'+autozaehler+'\"  type=\"number\" min=\"1\" max=\"255\" step=\"1\" maxlength=\"100\" value=\"1\" placeholder=\"1\" style=\"border-radius: .3rem;width: 100%; padding: 0px;font-size: 1em;margin: 5px 0; box-sizing: border-box;\">\\\n\
   </div>\\\n\
 	</span>\\\n\
 	<span id=\"automatikneu\"></span>\\\n\
@@ -277,7 +277,7 @@ const char* automatikHTML = "\n\
 	</select>\n\
   </div>\n\
   <div style=\"width:30%; float:right;\">\n\
-    <input id=\"automatikzeit1\" name=\"automatikzeit1\" type=\"number\" min=\"1\" max=\"300\" step=\"1\" maxlength=\"100\" value=\"1\" placeholder=\"1\" style=\"border-radius: .3rem;width: 100%; padding: 0px;font-size: 1em;margin: 5px 0; box-sizing: border-box;\">\n\
+    <input id=\"automatikzeit1\" name=\"automatikzeit1\" type=\"number\" min=\"1\" max=\"255\" step=\"1\" maxlength=\"100\" value=\"1\" placeholder=\"1\" style=\"border-radius: .3rem;width: 100%; padding: 0px;font-size: 1em;margin: 5px 0; box-sizing: border-box;\">\n\
   </div>\n\
 	<span id=\"automatikneu\"></span>\n\
  <input type=\"hidden\" id=\"autozaehler\" value=\"1\" name=\"autozaehler\">\n\

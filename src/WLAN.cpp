@@ -91,13 +91,12 @@ void saveParamCallback()
 	{
 		char tmp[16];
 		sprintf(tmp,"automatikzeit%d",i);
-		Serial.println(getParam(tmp).toInt());
-		if ((getParam(tmp).toInt()) < 300 ) 
+		if ((getParam(tmp).toInt()) < 255 ) 
 		{	
 			disp.autozeitArray[i] = getParam(tmp).toInt();
 		} else 
 		{
-			disp.autozeitArray[i] = 300;
+			disp.autozeitArray[i] = 255;
 		}
 	}
 	disp.scrollText = getParam("textid"); 
