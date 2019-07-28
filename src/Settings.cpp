@@ -26,6 +26,9 @@ void readConfiguration()
     disp.wlanssid = prefs.getString("wlanssid", "");
     disp.xDisplays = prefs.getUChar("xdisplays", MAX7219_X_DISPLAYS);
     disp.yDisplays = prefs.getUChar("ydisplays", MAX7219_Y_DISPLAYS);
+    disp.autozaehler = prefs.getUShort("autozaehler", disp.autozaehler);
+    prefs.getBytes("automatikArray", disp.automatikArray, 1 + sizeof(disp.automatikArray) * (int)( sizeof(disp.automatikArray) / sizeof(disp.automatikArray[0])));
+    prefs.getBytes("autozeitArray", disp.autozeitArray, 1 + sizeof(disp.autozeitArray) * (int)( sizeof(disp.autozeitArray) / sizeof(disp.autozeitArray[0])));
 }
 
 void saveConfiguration()
@@ -45,4 +48,7 @@ void saveConfiguration()
     prefs.putString("wlanssid",disp.wlanssid);
     prefs.putUChar("xdisplays", disp.xDisplays);
     prefs.putUChar("ydisplays", disp.yDisplays);
+    prefs.putUShort("autozaehler", disp.autozaehler);
+    prefs.putBytes("automatikArray", &disp.automatikArray, 1 + sizeof(&disp.automatikArray) * (int)( sizeof(&disp.automatikArray) / sizeof(&disp.automatikArray[0])));
+    prefs.putBytes("autozeitArray", &disp.autozeitArray, 1 + sizeof(&disp.autozeitArray) * (int)( sizeof(&disp.autozeitArray) / sizeof(&disp.autozeitArray[0])));
 }
