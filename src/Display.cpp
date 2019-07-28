@@ -73,7 +73,7 @@ void Display::setDisplayState()
 				};
 				textCount = sizeof(sensorString) / sizeof(String);
 				displayTexte(sensorString , PA_CENTER, enc.getCount() * 10, 2000, (textEffect_t) animationStart,(textEffect_t) animationEnde);
-				Serial.printf("Temperatur %.0f , Feuchtigkeit %.0f\n", sensorData.temperature, sensorData.humidity);
+//				Serial.printf("Temperatur %.0f , Feuchtigkeit %.0f\n", sensorData.temperature, sensorData.humidity);
 			}
 			break; 
 		}
@@ -113,6 +113,15 @@ void Display::setDisplayState()
 		}
 		case GAMEOFLIFE:
 			maxPan.clear();
+			break;
+		case WEEKDAY:
+			displayText(clo.getWeekday() , PA_CENTER, enc.getCount() * 10, pause, (textEffect_t) animationStart,(textEffect_t) animationEnde);
+			break;
+		case DATE:
+			displayText(clo.getDate() , PA_CENTER, enc.getCount() * 10, pause, (textEffect_t) animationStart,(textEffect_t) animationEnde);
+			break;
+		case MONTH:
+			displayText(clo.getMonth() , PA_CENTER, enc.getCount() * 10, pause, (textEffect_t) animationStart,(textEffect_t) animationEnde);
 			break;
 		case MENU: 
 			displayText(menuitemStrings[menuitem] , PA_LEFT, 0, 0, PA_PRINT,PA_NO_EFFECT);
@@ -159,6 +168,21 @@ void Display::render()
 				parola.displayClear();
 				setDisplayState();
 				break; 
+			case STATE::WEEKDAY:
+				maxPan.clear();
+				parola.displayClear();
+				setDisplayState();
+				break; 
+			case STATE::DATE:
+				maxPan.clear();
+				parola.displayClear();
+				setDisplayState();
+				break; 
+			case STATE::MONTH:
+				maxPan.clear();
+				parola.displayClear();
+				setDisplayState();
+				break; 
 			default:
 				break;
 		}		
@@ -192,6 +216,21 @@ void Display::render()
 				setDisplayState();
 				break;
 			case GAMEOFLIFE:
+				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
+				state = STATE::MENU;
+				setDisplayState();
+				break;
+			case WEEKDAY:
+				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
+				state = STATE::MENU;
+				setDisplayState();
+				break;
+			case DATE:
+				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
+				state = STATE::MENU;
+				setDisplayState();
+				break;
+			case MONTH:
 				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
 				state = STATE::MENU;
 				setDisplayState();
@@ -263,36 +302,47 @@ void Display::render()
 			}
 			//parola.displayReset();  // Reset and display it again
 		}
+		if (state == STATE::WEEKDAY)
+		{
+			if (textCount != 0) 
+			{
+				curText = (curText+ 1) % textCount;
+			}
+			setDisplayState();
+			//parola.displayReset();  // Reset and display it again
+		}
+		if (state == STATE::DATE)
+		{
+			if (textCount != 0) 
+			{
+				curText = (curText+ 1) % textCount;
+			}
+			setDisplayState();
+			//parola.displayReset();  // Reset and display it again
+		}
+		if (state == STATE::MONTH)
+		{
+			if (textCount != 0) 
+			{
+				curText = (curText+ 1) % textCount;
+			}
+			setDisplayState();
+			//parola.displayReset();  // Reset and display it again
+		}
+
 	}
 
 	if (autostate) {
-		if (millis() - statetimeLastRun >= 30000)
+		if (millis() - statetimeLastRun >= (autozeitArray[stateInt] * 1000))
 		{
 			statetimeLastRun = millis();
- 			if (state == STATE::SCROLLTEXT) {
-				state = STATE::CLOCK;
-				setDisplayState();		
-			} 
- 			else if (state == STATE::CLOCK)
-			{
-				state = STATE::TEMPERATURE;
-				setDisplayState();		
+			stateInt++;
+
+			if (stateInt > autozaehler) {
+				stateInt = 1;
 			}
- 			else if (state == STATE::TEMPERATURE)
-			{
-				state = STATE::GAMEOFLIFE;
-				setDisplayState();		
-			}
-			else if (state == STATE::CLOCKANDDATE)
-			{
-				state = STATE::SCROLLTEXT;
-				setDisplayState();		
-			}
-			else if (state == STATE::GAMEOFLIFE)
-			{
-				state = STATE::CLOCKANDDATE;
-				setDisplayState();		
-			}
+			state = automatikArray[stateInt];
+			setDisplayState();
 		}
 	}
 }

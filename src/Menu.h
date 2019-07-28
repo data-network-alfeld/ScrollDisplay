@@ -15,6 +15,9 @@ enum STATE {
 	CLOCK,
 	CLOCKANDDATE,
 	GAMEOFLIFE,
+	DATE,
+	MONTH,
+	WEEKDAY,
 	MENU, 
 	_STATE_LENGTH /* letzter Eintrag, als Limit */ 
 };
@@ -31,6 +34,9 @@ enum MENUITEMS {
 	UHRUNDDATUM,
 	GAMELIFE,
 	TEMPERATUR,
+	DATUM,
+	MONAT,
+	WOCHENTAG,
 	AUTOSTATE,
 	_MENUITEMS_LENGTH /* letzter Eintrag, als Limit */ 
 };
