@@ -175,18 +175,18 @@ void Display::render()
 				setDisplayState();
 				break; 
 			case STATE::WEEKDAY:
-				maxPan.clear();
-				parola.displayClear();
+				maxPan->clear();
+				parola->displayClear();
 				setDisplayState();
 				break; 
 			case STATE::DATE:
-				maxPan.clear();
-				parola.displayClear();
+				maxPan->clear();
+				parola->displayClear();
 				setDisplayState();
 				break; 
 			case STATE::MONTH:
-				maxPan.clear();
-				parola.displayClear();
+				maxPan->clear();
+				parola->displayClear();
 				setDisplayState();
 				break; 
 			default:
@@ -315,7 +315,7 @@ void Display::render()
 				curText = (curText+ 1) % textCount;
 			}
 			setDisplayState();
-			//parola.displayReset();  // Reset and display it again
+			//parola->displayReset();  // Reset and display it again
 		}
 		if (state == STATE::DATE)
 		{
@@ -324,7 +324,7 @@ void Display::render()
 				curText = (curText+ 1) % textCount;
 			}
 			setDisplayState();
-			//parola.displayReset();  // Reset and display it again
+			//parola->displayReset();  // Reset and display it again
 		}
 		if (state == STATE::MONTH)
 		{
@@ -333,7 +333,7 @@ void Display::render()
 				curText = (curText+ 1) % textCount;
 			}
 			setDisplayState();
-			//parola.displayReset();  // Reset and display it again
+			//parola->displayReset();  // Reset and display it again
 		}
 
 	}
