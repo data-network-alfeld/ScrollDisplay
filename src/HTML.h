@@ -300,6 +300,12 @@ const char* extramenueHTML = "<div id='extramenue' style='display: none'><br><la
 <label for='wlanpassword'>Wlanpassword (wichtig mindestens 8 Zeichen!)</label>\
 <input type='text' name='wlanpassword' id='wlanpassword' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;'>\
 <br>\
+<label for='xDisplays'>Display-Anzahl horizontal</label>\
+<input type='text' name='xDisplays' id='xDisplays' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;' value='8'>\
+<br>\
+<label for='yDisplays'>Display-Anzahl vertikal</label>\
+<input type='text' name='yDisplays' id='yDisplays' style='border-radius: .3rem;width: 100%; padding: 5px;font-size: 1em;margin: 5px 0; box-sizing: border-box;' value='1'>\
+<br>\
 <script>\
 extra=0;\
 function extramenu() {\

@@ -125,6 +125,9 @@ void saveParamCallback()
 		disp.wlanPassword = getParam("wlanpassword");
 	}
 	disp.wlanssid = getParam("wlanssid");
+	disp.xDisplays = getParam("xDisplays").toInt();
+    disp.yDisplays = getParam("yDisplays").toInt();
+
     saveConfiguration();
 	selectStringGenerate();
 	new (&select_field) WiFiManagerParameter(selectString.c_str());
