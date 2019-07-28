@@ -19,12 +19,13 @@ void readConfiguration()
     disp.pause = prefs.getUShort("pause", 2000);
     firmwareauswahl = prefs.getUShort("firmwareauswahl",0);
     disp.intensity = prefs.getUShort("intensity", 0);
-    disp.parola.setIntensity(disp.intensity);
 
     state = prefs.getUShort("state", STATE::SCROLLTEXT);
     disp.autostate = prefs.getBool("autostate", false);
     disp.wlanPassword = prefs.getString("wlanpassword", "");
     disp.wlanssid = prefs.getString("wlanssid", "");
+    disp.xDisplays = prefs.getUChar("xdisplays", MAX7219_X_DISPLAYS);
+    disp.yDisplays = prefs.getUChar("ydisplays", MAX7219_Y_DISPLAYS);
 }
 
 void saveConfiguration()
@@ -42,4 +43,6 @@ void saveConfiguration()
     prefs.putBool("autostate", disp.autostate);
     prefs.putString("wlanpassword",disp.wlanPassword);
     prefs.putString("wlanssid",disp.wlanssid);
+    prefs.putUChar("xdisplays", disp.xDisplays);
+    prefs.putUChar("ydisplays", disp.yDisplays);
 }

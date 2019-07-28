@@ -70,8 +70,8 @@ void menuItemPressed(Encoder& enc)
 			{
 				disp.intensity = enc.getCount();
 				disp.displayText(String("Helligkeit - ") + String(disp.intensity), textPosition_t::PA_LEFT, 0, 0, textEffect_t::PA_PRINT,textEffect_t::PA_NO_EFFECT);
-				disp.parola.setIntensity(disp.intensity);
-				disp.parola.displayAnimate();
+				disp.parola->setIntensity(disp.intensity);
+				disp.parola->displayAnimate();
 			}
 			saveConfiguration();
 			Encoder::buttonPressed = 0;

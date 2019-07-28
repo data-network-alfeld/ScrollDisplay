@@ -56,8 +56,8 @@ public:
        return _instance;
     }
     ~Display() {}
-    MD_Parola parola = MD_Parola(MD_MAX72XX::FC16_HW, MAX7219_CS, MAX7219_NUM_DISPLAYS);
-    MD_MAXPanel maxPan = MD_MAXPanel(parola.getGraphicObject(),MAX7219_X_DISPLAYS,MAX7219_Y_DISPLAYS);
+    MD_Parola *parola;
+    MD_MAXPanel *maxPan;
     void init(int encoderSwitchPin, Encoder enc, Clock clo);
     void displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut);
     void displayTexte(String text[], textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut);
@@ -78,4 +78,7 @@ public:
     uint16_t pause = 2000;
     String wlanPassword = "";
     String wlanssid = "";
+
+    uint8_t xDisplays = MAX7219_X_DISPLAYS;
+    uint8_t yDisplays = MAX7219_Y_DISPLAYS;
 };

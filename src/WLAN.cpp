@@ -77,7 +77,7 @@ void saveParamCallback()
     disp.pause = getParam("pauseid").toInt();
     disp.intensity = getParam("intensity").toInt();
     firmwareauswahl = getParam("firmware").toInt();
-	disp.parola.setIntensity(disp.intensity);
+	disp.parola->setIntensity(disp.intensity);
 	if (WiFi.status() != WL_CONNECTED) 
 	{
 		clo.setTime(getParam("timestamp").toInt());

@@ -9,47 +9,53 @@ void Display::init(int encoderSwitchPin, Encoder enc, Clock clo)
 {
 	this->clo = clo;
 	this->enc = enc; 
-    parola.begin();  // Start Parola
-	parola.setIntensity(intensity);
-	maxPan.begin();
-	maxPan.setIntensity(intensity);
+
+    parola = new MD_Parola(MD_MAX72XX::FC16_HW, MAX7219_CS, xDisplays * yDisplays);
+    parola->begin();  // Start Parola
+	parola->setIntensity(intensity);
+	
+	maxPan = new MD_MAXPanel(parola->getGraphicObject(), xDisplays, yDisplays);
+	maxPan->begin();
+	maxPan->setIntensity(intensity);
 	dht.setup(DHT_PIN,DHTesp::AUTO_DETECT);
 }
 
 void Display::displayText(String text, textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut)
 {
+	Serial.println(text);
 	Latin1::utf8tolatin1(text).toCharArray(textBuffer, sizeof(textBuffer));
-	parola.displayText(textBuffer, align, speed, pause, effectIn, effectOut);
+	parola->displayText(textBuffer, align, speed, pause, effectIn, effectOut);
 	if (effectIn == (textEffect_t) PA_SPRITE || effectOut == (textEffect_t) PA_SPRITE)
 	{
-		parola.setSpriteData(sprite[spriteStart].data, sprite[spriteStart].width, sprite[spriteStart].frames, sprite[spriteEnde].data, sprite[spriteEnde].width, sprite[spriteEnde].frames);
+		parola->setSpriteData(sprite[spriteStart].data, sprite[spriteStart].width, sprite[spriteStart].frames, sprite[spriteEnde].data, sprite[spriteEnde].width, sprite[spriteEnde].frames);
 	}
 }
 
 void Display::displayTexte(String text[], textPosition_t align, uint16_t speed, uint16_t pause, textEffect_t effectIn, textEffect_t effectOut)
 {
 	Latin1::utf8tolatin1(text[curText]).toCharArray(textBuffer, sizeof(textBuffer));
-	parola.displayText(textBuffer, align, speed, pause, effectIn, effectOut);
+	parola->displayText(textBuffer, align, speed, pause, effectIn, effectOut);
 	if (effectIn == (textEffect_t) PA_SPRITE || effectOut == (textEffect_t) PA_SPRITE)
 	{
-		parola.setSpriteData(sprite[spriteStart].data, sprite[spriteStart].width, sprite[spriteStart].frames, sprite[spriteEnde].data, sprite[spriteEnde].width, sprite[spriteEnde].frames);
+		parola->setSpriteData(sprite[spriteStart].data, sprite[spriteStart].width, sprite[spriteStart].frames, sprite[spriteEnde].data, sprite[spriteEnde].width, sprite[spriteEnde].frames);
 	}
 }
 
 void Display::displayTexte(texteAusgabe ausgabe[])
 {
 	Latin1::utf8tolatin1(ausgabe[curText].text).toCharArray(textBuffer, sizeof(textBuffer));
-	parola.displayText(textBuffer, ausgabe[curText].align, ausgabe[curText].speed, ausgabe[curText].pause, ausgabe[curText].effectIn, ausgabe[curText].effectOut);
+	parola->displayText(textBuffer, ausgabe[curText].align, ausgabe[curText].speed, ausgabe[curText].pause, ausgabe[curText].effectIn, ausgabe[curText].effectOut);
 	if (ausgabe[curText].effectIn == (textEffect_t) PA_SPRITE || ausgabe[curText].effectOut == (textEffect_t) PA_SPRITE)
 	{
-		parola.setSpriteData(sprite[spriteStart].data, sprite[spriteStart].width, sprite[spriteStart].frames, sprite[spriteEnde].data, sprite[spriteEnde].width, sprite[spriteEnde].frames);
+		parola->setSpriteData(sprite[spriteStart].data, sprite[spriteStart].width, sprite[spriteStart].frames, sprite[spriteEnde].data, sprite[spriteEnde].width, sprite[spriteEnde].frames);
 	}
 }
 
 void Display::setDisplayState()
 {
 	if (oldstate != state) {oldstate = state;curText=0;}
-	parola.setFont(NULL);
+	parola->setFont(NULL);
+
 	switch (state)
 	{
 		case SCROLLTEXT:
@@ -79,7 +85,7 @@ void Display::setDisplayState()
 		}
 		case CLOCK: 
 		{
-			parola.setFont(_sys_fixed_single);
+			parola->setFont(_sys_fixed_single);
 			String clockText[] = 
 			{
 				clo.getTime(),
@@ -90,7 +96,7 @@ void Display::setDisplayState()
 		}
 		case CLOCKANDDATE: 
 		{
-			parola.setFont(_sys_fixed_single);
+			parola->setFont(_sys_fixed_single);
 			texteAusgabe clockausgabe[] = 
 			{
 				{ clo.getTime(),PA_CENTER, enc.getCount()*10, 1000,PA_PRINT, PA_NO_EFFECT },
@@ -112,7 +118,7 @@ void Display::setDisplayState()
 			break; 
 		}
 		case GAMEOFLIFE:
-			maxPan.clear();
+			maxPan->clear();
 			break;
 		case MENU: 
 			displayText(menuitemStrings[menuitem] , PA_LEFT, 0, 0, PA_PRINT,PA_NO_EFFECT);
@@ -130,33 +136,33 @@ void Display::render()
 		switch (state)
 		{
 			case STATE::MENU:
-				maxPan.clear();
+				maxPan->clear();
 				menuitem = enc.getCount();
 				setDisplayState();
 				break;
 			case STATE::SCROLLTEXT:
-				maxPan.clear();
-				parola.displayClear();
+				maxPan->clear();
+				parola->displayClear();
 				setDisplayState();
 				break; 
 			case STATE::TEMPERATURE:
-				maxPan.clear();
-				parola.displayClear();
+				maxPan->clear();
+				parola->displayClear();
 				setDisplayState();
 				break; 
 			case STATE::CLOCK:
-				maxPan.clear();
-				parola.displayClear();
+				maxPan->clear();
+				parola->displayClear();
 				setDisplayState();
 				break; 
 			case STATE::CLOCKANDDATE:
-				maxPan.clear();
-				parola.displayClear();
+				maxPan->clear();
+				parola->displayClear();
 				setDisplayState();
 				break; 
 			case STATE::GAMEOFLIFE:
-				maxPan.clear();
-				parola.displayClear();
+				maxPan->clear();
+				parola->displayClear();
 				setDisplayState();
 				break; 
 			default:
@@ -204,12 +210,12 @@ void Display::render()
 		}
 	}
 
-	if (parola.displayAnimate()) // If finished displaying message
+	if (parola->displayAnimate()) // If finished displaying message
 	{
 		if (state == STATE::SCROLLTEXT)
 		{
 			setDisplayState();
-			//parola.displayReset();  // Reset and display it again
+			//parola->displayReset();  // Reset and display it again
 		}
 		if (state == STATE::TEMPERATURE)
 		{
@@ -218,7 +224,7 @@ void Display::render()
 				curText = (curText+ 1) % textCount;
 			}
 			setDisplayState();
-			//parola.displayReset();  // Reset and display it again
+			//parola->displayReset();  // Reset and display it again
 		}
 		if (state == STATE::CLOCK)
 		{
@@ -227,7 +233,7 @@ void Display::render()
 				curText = (curText+ 1) % textCount;
 			}
 			setDisplayState();
-			//parola.displayReset();  // Reset and display it again
+			//parola->displayReset();  // Reset and display it again
 		}
 		if (state == STATE::CLOCKANDDATE)
 		{
@@ -236,7 +242,7 @@ void Display::render()
 				curText = (curText+ 1) % textCount;
 			}
 			setDisplayState();
-			//parola.displayReset();  // Reset and display it again
+			//parola->displayReset();  // Reset and display it again
 		}
 		if (state == STATE::GAMEOFLIFE)
 		{
@@ -248,7 +254,7 @@ void Display::render()
 
 			if (golsameCount >= 4)
 			{
-				maxPan.clear();     // mark the end of the display ...
+				maxPan->clear();     // mark the end of the display ...
 				delay(1000);    // ... with a minor pause!
 				gol.firstGeneration();
 				golsameCount = 0;
@@ -261,7 +267,7 @@ void Display::render()
 				goltimeLastRun = millis();
 				gol.nextGeneration();
 			}
-			//parola.displayReset();  // Reset and display it again
+			//parola->displayReset();  // Reset and display it again
 		}
 	}
 
@@ -299,21 +305,21 @@ void Display::render()
 
 void Display::animateUntilButtonPress(bool repeat)
 {
-	while (!parola.displayAnimate()) 
+	while (!parola->displayAnimate()) 
 	{
 		delay(10);
 
 		if (Encoder::buttonPressed) 
 		{
 			Encoder::buttonPressed = 0;
-			parola.displayClear();
+			parola->displayClear();
 			return;
 		}
 
 		if (repeat)
 		{
-			if (parola.displayAnimate())
-				parola.displayReset();
+			if (parola->displayAnimate())
+				parola->displayReset();
 		}
 		
 		wm.process();
