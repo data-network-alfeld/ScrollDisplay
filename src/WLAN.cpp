@@ -56,6 +56,8 @@ void selectStringGenerate()
 	}
 	selectString = selectString + "document.getElementById('wlanssid').value='"+ String (disp.wlanssid) +"';\n";
 	selectString = selectString + "document.getElementById('wlanpassword').value='"+ String (disp.wlanPassword) +"';\n";
+	selectString = selectString + "document.getElementById('xDisplays').value='"+ String (disp.xDisplays) +"';\n";
+	selectString = selectString + "document.getElementById('yDisplays').value='"+ String (disp.yDisplays) +"';\n";
 	selectString = selectString + "for (var i = 1; i < "+disp.autozaehler+"; i++) {\n\
 		dazu();\n\
 	}\n";
