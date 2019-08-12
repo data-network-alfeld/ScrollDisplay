@@ -64,7 +64,14 @@ void selectStringGenerate()
 	for (uint8_t i = 1; i <= disp.autozaehler; i++)
 	{
 		selectString = selectString + "document.getElementById('automatik"+String (i)+"').value='"+String (disp.automatikArray[i])+"';\n";
-		selectString = selectString + "document.getElementById('automatikzeit"+String (i)+"').value='"+String (disp.autozeitArray[i])+"';\n";
+		if (disp.autozeitArray[i] == 0) 
+		{
+			selectString = selectString + "document.getElementById('automatikzeit"+String (i)+"').value='5';\n";
+		} 
+		else 
+		{
+			selectString = selectString + "document.getElementById('automatikzeit"+String (i)+"').value='"+String (disp.autozeitArray[i])+"';\n";
+		}
 	}	
 	selectString = selectString + "</script>";
 }
