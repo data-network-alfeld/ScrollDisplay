@@ -338,7 +338,7 @@ void Display::render()
 
 	}
 
-	if (autostate) {
+	if (autostate && state != STATE::MENU) {
 		if (millis() - statetimeLastRun >= (autozeitArray[stateInt] * 1000))
 		{
 			statetimeLastRun = millis();

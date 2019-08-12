@@ -254,7 +254,7 @@ const char* automatikHTML = "\n\
 		autozaehler--;\n\
 		document.getElementById('autozaehler').value = autozaehler;\n\
 	}\n\
-</script>\n\ 
+</script>\n\
 <div id='playlistmenuHTML' style='display: none'>\n\
   <div>\n\
 	<input type=\"button\" value=\"+\" onclick=\"dazu()\" style=\"width:40%;float:left;\">\
