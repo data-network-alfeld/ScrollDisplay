@@ -1,9 +1,8 @@
 #include "Clock.h"
 #include "WLAN.h"
+#include "lwip/apps/sntp.h"
 
-
-const int timezone_offset_secs = 1* 60 *60;
-const int dst_offset_secs = 1*60*60;
+#define TZ_INFO "CET-1CEST,M3.5.0,M10.5.0/3" // Europe/Berlin
 
 Clock::Clock()
 {
@@ -14,9 +13,10 @@ void Clock::init()
 {
 	if (WiFi.status() != WL_CONNECTED) {return;}
 	// Achtung kein UTC mehr
-	configTime(timezone_offset_secs, dst_offset_secs, "pool.ntp.org", "time.nist.gov");
 
-//	time_t now = time(nullptr);
+	configTime(0, 0, "pool.ntp.org", "time.nist.gov");
+    setenv("TZ", TZ_INFO, 1);
+    tzset();
 }
 
 
