@@ -25,7 +25,7 @@ jobs:
       - name: Update PlatformIO
         run: |
           cd "$(realpath "$GITHUB_WORKSPACE")"
-          platformio update
+          pio pkg update
 
       - name: Build firmware
         run: |
