@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  create: { }
+  push: { }
+  pull_request: { }
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    outputs:
+      pkgfile: ${{ steps.pkgname.outputs.pkgfile }}
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt update -qq
+          sudo apt install -yqq python3
+          pip install -U platformio
+          
+      - name: Update PlatformIO
+        run: |
+          cd "$(realpath "$GITHUB_WORKSPACE")"
+          platformio update
+
+      - name: Build firmware
+        run: |
+          platformio run
+
+      - name: Upload files
+        uses: actions/upload-artifact@v3
+        with:
+          name: bin
+          path: ".pio/build/nodemcu-32s/*.bin"
+
+      - name: Release build artifacts
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:          
+          files: |
+            ./.pio/build/nodemcu-32s/*.bin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
