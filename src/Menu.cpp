@@ -67,7 +67,7 @@ void menuItemPressed(Encoder& enc)
 		case MENUITEMS::ABOUT:
 			Serial.println("Written by Tobias Mädel <t.maedel@alfeld.de>");
 			Serial.println("Visit Data Network Alfeld e.V. at https://dna-ev.de");
-			disp.displayText("DNA Scrolldisplay   ", textPosition_t::PA_LEFT, 50, 2000, textEffect_t::PA_SCROLL_LEFT,textEffect_t::PA_NO_EFFECT);
+			disp.displayText("DNA Scrolldisplay " PIO_SRC_TAG, textPosition_t::PA_LEFT, 50, 2000, textEffect_t::PA_SCROLL_LEFT,textEffect_t::PA_NO_EFFECT);
 			disp.animateUntilButtonPress();
 			disp.displayText("Written by Tobias Mädel, Sven Scholz, Peter Leussner ", textPosition_t::PA_LEFT, 50, 2000, textEffect_t::PA_SCROLL_LEFT,textEffect_t::PA_NO_EFFECT);
 			disp.animateUntilButtonPress();
