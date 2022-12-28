@@ -29,7 +29,6 @@ private:
     Clock clo;
     DHTesp dht;
     TempAndHumidity sensorData;
-    String sensorString[];
     int textCount = 0;
     int curText = 0;
     uint32_t goltimeLastRun = 0;
@@ -38,6 +37,7 @@ private:
     uint8_t oldstate;
    	uint8_t stateInt = 0;
     uint32_t statetimeLastRun = 0;
+    uint32_t menuTimeout = 0;
 
     typedef struct 
     {
@@ -69,7 +69,6 @@ public:
     uint8_t intensity = 0;
 
     String scrollText = ""; 
-	String clockText[] ; 
     texteAusgabe clockausgabe;
     bool autostate;
     uint8_t automatikArray[20];
@@ -85,4 +84,7 @@ public:
 
     uint8_t xDisplays = MAX7219_X_DISPLAYS;
     uint8_t yDisplays = MAX7219_Y_DISPLAYS;
+
+    String sensorString;
+    String clockText;
 };

@@ -14,11 +14,25 @@ void Clock::init()
 	if (WiFi.status() != WL_CONNECTED) {return;}
 	// Achtung kein UTC mehr
 
-	configTime(0, 0, "pool.ntp.org", "time.nist.gov");
+	configTime(0, 0, "ptbtime2.ptb.de", "ptbtime3.ptb.de");
     setenv("TZ", TZ_INFO, 1);
     tzset();
 }
 
+uint32_t last_clock_sync = 0;
+
+void Clock::process()
+{
+	if (millis() > last_clock_sync + (30 * 60 * 1000))
+	{
+		last_clock_sync = millis();
+
+		Serial.println("forced clock sync");
+		if (WiFi.status() == WL_CONNECTED) {
+			clo.init();
+		}
+	}
+}
 
 String Clock::getTime() 
 {

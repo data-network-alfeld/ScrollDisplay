@@ -71,14 +71,9 @@ void Display::setDisplayState()
 			}
 			 else 
 			{
-				String sensorString[] =
-				{
-//					 "Temp. " + String( int (sensorData.temperature)) + String("° C"),
-//					 "Feucht. " + String( int (sensorData.humidity)) + String("%"),
-					 String( int (sensorData.temperature)) + String("°C   ") +  String( int (sensorData.humidity)) + String("%"),
-				};
-				textCount = sizeof(sensorString) / sizeof(String);
-				displayTexte(sensorString , PA_CENTER, enc.getCount() * 10, 2000, (textEffect_t) animationStart,(textEffect_t) animationEnde);
+				String sensorString = String( int (sensorData.temperature)) + String("°C   ") +  String( int (sensorData.humidity)) + String("%");
+				textCount = 1;
+				displayTexte(&sensorString , PA_CENTER, enc.getCount() * 10, 2000, (textEffect_t) animationStart,(textEffect_t) animationEnde);
 //				Serial.printf("Temperatur %.0f , Feuchtigkeit %.0f\n", sensorData.temperature, sensorData.humidity);
 			}
 			break; 
@@ -86,12 +81,9 @@ void Display::setDisplayState()
 		case CLOCK: 
 		{
 			parola->setFont(_sys_fixed_single);
-			String clockText[] = 
-			{
-				clo.getTime(),
-			};
-			textCount = sizeof(clockText) / sizeof(String);
-			displayTexte(clockText, PA_CENTER, enc.getCount() * 10, 200, PA_PRINT ,PA_NO_EFFECT);
+			String clockText = String(clo.getTime());
+			textCount = 1;
+			displayTexte(&clockText, PA_CENTER, enc.getCount() * 10, 200, PA_PRINT ,PA_NO_EFFECT);
 			break;	
 		}
 		case CLOCKANDDATE: 
@@ -194,6 +186,17 @@ void Display::render()
 		}		
 	}
 	
+	// Check for timeout in menu (avoid spurious button presses)
+	if (state == STATE::MENU)
+	{
+		if (millis() >= menuTimeout + (180 * 1000))
+		{
+			menuTimeout = millis();
+			//Serial.println("menu autoclose");
+			Encoder::buttonPressed = 1;
+		}
+	}
+
 	// Wurde der Taster gedrückt? 
 	if (Encoder::buttonPressed)
 	{
@@ -202,44 +205,17 @@ void Display::render()
 		switch (state)
 		{
 			case SCROLLTEXT:
-				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
-				state = STATE::MENU;
-				setDisplayState();
-				break;
 			case TEMPERATURE:
-				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
-				state = STATE::MENU;
-				setDisplayState();
-				break;
 			case CLOCK:
-				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
-				state = STATE::MENU;
-				setDisplayState();
-				break;
 			case CLOCKANDDATE:
-				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
-				state = STATE::MENU;
-				setDisplayState();
-				break;
 			case GAMEOFLIFE:
-				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
-				state = STATE::MENU;
-				setDisplayState();
-				break;
 			case WEEKDAY:
-				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
-				state = STATE::MENU;
-				setDisplayState();
-				break;
 			case DATE:
-				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
-				state = STATE::MENU;
-				setDisplayState();
-				break;
 			case MONTH:
 				enc.setLimits(0, _MENUITEMS_LENGTH - 1);
 				state = STATE::MENU;
 				setDisplayState();
+				menuTimeout = millis();
 				break;
 			case MENU:
 				menuItemPressed(enc);

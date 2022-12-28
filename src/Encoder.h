@@ -7,7 +7,7 @@ extern "C" {
 
 #include "driver/pcnt.h"
 #define MAX_ESP32_ENCODERS PCNT_UNIT_MAX
-#define DEBOUNCE_PERIOD 200
+#define DEBOUNCE_PERIOD 300
 
 class Encoder {
 private:

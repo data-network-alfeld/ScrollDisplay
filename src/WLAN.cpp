@@ -140,7 +140,6 @@ void saveParamCallback()
     saveConfiguration();
 	selectStringGenerate();
 	new (&select_field) WiFiManagerParameter(selectString.c_str());
-
 }
 
 uint8_t baseMac[6];
@@ -165,14 +164,24 @@ void initWLAN()
 		ssid = disp.wlanssid;
 	}
 
+    WiFi.mode(WIFI_STA);
+    WiFi.persistent(true);
+
 	wm.setHostname(ssid.c_str());
 
 	wm.setClass("invert");
 	wm.setConfigPortalBlocking(false);
 	wm.setEnableConfigPortal(false);
+	wm.setWiFiAutoReconnect(true);
+	
+	Serial.print("WiFi SSID:");
+	Serial.println(wm.getWiFiSSID(true));
 
 	if (wm.getWiFiIsSaved())
 	{
+		Serial.print("Connecting to existing WiFi ");
+		Serial.println(ssid.c_str());
+
 		if (disp.wlanPassword != "") 
 		{
 			wlanpassword = disp.wlanPassword;
@@ -186,6 +195,10 @@ void initWLAN()
 		{
 			Serial.println("Connect failed :( ");
 		}
+	}
+	else
+	{
+		Serial.println("WiFiManager has no WiFi saved.");
 	}
 
 	char tmp [2];

@@ -9,6 +9,7 @@ class Clock
     public:
         Clock();
         void init();      
+        void process();
         String getTime();
         String getDate();
         String getWeekday();
