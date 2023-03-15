@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update -qq
-          sudo apt install -yqq python3 python3-pip
+          sudo apt install -yqq python3 python3-pip python-is-python3
           pip install -U platformio
           echo "PATH=$PATH:$HOME/.local/bin" >> $GITHUB_ENV
           export PATH="$PATH:$HOME/.local/bin"
