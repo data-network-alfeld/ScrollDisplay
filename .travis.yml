@@ -26,6 +26,7 @@ deploy:
 #  skip_cleanup: true
 #  on:
 #    tags: true
+# demo
 
 # provider: pages
 # github_token: $GITHUB_TOKEN
